@@ -1,0 +1,19 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "build server for this project",
+    "main": "server.js",
+    "scripts": {
+      "start": "cd server && npm install && node server.js",
+      "dev": "nodemon ./server/server.js"
+    },
+    "keywords": [
+      "express",
+      "server",
+      "nodejs",
+      "mysql"
+    ],
+    "author": "F9Uf",
+    "license": "ISC"
+  }
+  
