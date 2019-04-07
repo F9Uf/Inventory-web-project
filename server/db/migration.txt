@@ -1,0 +1,153 @@
+CREATE DATABASE Inventory_Database
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_general_ci;
+
+use Inventory_Database
+
+
+CREATE TABLE IF NOT EXISTS `Shop`(
+    `ShopID` VARCHAR(8) NOT NULL,
+    `ShopName` text NOT NULL,
+    `ShopAddress` text NOT NULL,
+    `ShopPhone` text NOT NULL,
+    PRIMARY KEY (`ShopID`)
+);
+
+CREATE TABLE IF NOT EXISTS `Employee`(
+    `EmployeeID` VARCHAR(10) NOT NULL,
+    `EmployeeFirstName` text NOT NULL,
+    `EmployeeLastName` text NOT NULL,
+    `EmployeeAddress` text,
+    `EmployeePhone` text,
+    `EmployeeEmail` text,
+    `Position` text NOT NULL,
+    `Salary` text NOT NULL,
+    `Username` text NOT NULL,
+    `Password` text NOT NULL,
+    `ShopID` VARCHAR(8) NOT NULL,
+    PRIMARY KEY (`EmployeeID`),
+
+    CONSTRAINT `employee_fk_1`
+    FOREIGN KEY (ShopID)
+    REFERENCES shop (ShopID)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Stock`(
+    `StockID` VARCHAR(8) NOT NULL,
+    `StockName` text NOT NULL,
+    PRIMARY KEY (`StockID`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Location`(
+    `LocationID` VARCHAR(10) NOT NULL,
+    `StockID` VARCHAR(8) NOT NULL,
+    `MaxArea` FLOAT Not NULL,
+    `LocationName` text NOT NULL,
+    PRIMARY KEY (`LocationID`),
+    
+    CONSTRAINT `Location_fk_1`
+    FOREIGN KEY (StockID)
+    REFERENCES stock (StockID)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Order` (
+    `OrderID` VARCHAR(10) NOT NULL,
+    `OrderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `DateMove` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `OrderType` text NOT NULL,
+    `EmployeeConfirmID` VARCHAR(10),
+    `EmployeeCreateID` VARCHAR(10) NOT NULL,
+    `Status` VARCHAR(15) DEFAULT 'waiting' NOT NULL,
+    PRIMARY KEY (`OrderID`),
+    
+    CONSTRAINT `Order_fk_1`
+    FOREIGN KEY (EmployeeConfirmID)
+    REFERENCES employee (EmployeeID),
+    
+    CONSTRAINT `Order_fk_2`
+    FOREIGN KEY (EmployeeCreateID)
+    REFERENCES employee (EmployeeID)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Supplier` (
+    `SupplierID` VARCHAR(8) NOT NULL,
+    `SupplierName` text NOT NULL,
+    `SupplierAddress` text,
+    `SupllierPhone` text,
+    `SuplierEmail` text NOT NULL,
+    PRIMARY KEY (`SupplierID`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Item` (
+    `ItemID` VARCHAR(15) NOT NULL,
+    `ItemName` text NOT NULL,
+    `ItemCategory` text NOT NULL,
+    `ItemWeight` FLOAT NOT NULL,
+    `ItemArea` FLOAT NOT NULL,
+    `SupplierID` VARCHAR(8) NOT NULL,
+    PRIMARY KEY (`ItemID`),
+    
+    CONSTRAINT `Item_fk_1`
+    FOREIGN KEY (SupplierID)
+    REFERENCES supplier (SupplierID)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Car` (
+    `CarID` VARCHAR(8) NOT NULL,
+    `CarMax` FLOAT NOT NULL,
+    `CarStatus` VARCHAR(10) DEFAULT 'ready' NOT NULL,
+    PRIMARY KEY (`CarID`)
+);
+
+CREATE TABLE IF NOT EXISTS `Shipping` (
+    `ShippingID` VARCHAR(8) NOT NULL,
+    `CarID` VARCHAR(8) NOT NULL,
+    `EmployeeID` VARCHAR(10) NOT NULL,
+    PRIMARY KEY (`ShippingID`),
+    
+    CONSTRAINT `Shipping_fk_1`
+    FOREIGN KEY (CarID)
+    REFERENCES car(CarID),
+    
+    CONSTRAINT `Shipping_fk_2`
+    FOREIGN KEY (EmployeeID)
+    REFERENCES employee (EmployeeID)
+);
+
+
+CREATE TABLE IF NOT EXISTS `OrderDetailID` (
+    `OrderDetailID` VARCHAR(10) NOT NULL,
+    `LocationID` VARCHAR(8),
+    `OldLocationID` VARCHAR(8),
+    `OrderID` VARCHAR(10) NOT NULL,
+    `ItemID` VARCHAR(15) NOT NULL,
+    `ItemCount` iNT NOT NULL,
+    `ShippingID` VARCHAR(8),
+    PRIMARY KEY (`OrderDetailID`),
+    
+    CONSTRAINT `OrderDetail_fk_1`
+    FOREIGN KEY (LocationID)
+    REFERENCES location (LocationID),
+    
+    CONSTRAINT `OrderDetail_fk_2`
+    FOREIGN KEY (OldLocationID)
+    REFERENCES location (LocationID),
+    
+    CONSTRAINT `OrderDetail_fk_3`
+    FOREIGN KEY (OrderID)
+    REFERENCES `Order` (OrderID),
+    
+    CONSTRAINT `OrderDetail_fk_4`
+    FOREIGN KEY (ItemID)
+    REFERENCES item (ItemID),
+    
+    CONSTRAINT `OrderDetail_fk_5`
+    FOREIGN KEY (ShippingID)
+    REFERENCES shipping (ShippingID)
+);
