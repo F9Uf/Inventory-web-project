@@ -17,7 +17,7 @@ export default {
   },
   data () {
     return {
-      user: {name:'f9uf'}
+      user: null
     }
   }
 }
