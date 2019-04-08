@@ -1,5 +1,8 @@
 <template>
-  <header class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top" v-if="user">
+  <header
+    class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top"
+    v-if="user"
+  >
     <div
       class="navbar-toggler"
       style="border:none;"
@@ -22,12 +25,11 @@
       id="navbarNav"
     >
       <ul class="navbar-nav ml-3">
-		<template v-for="(menu,i) in menus">
-			<li class="nav-item" :key="i" v-if="checkRole(user.role,menu.auth)">
-			<router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
-			</li>
-			
-		</template>
+        <template v-for="(menu,i) in menus">
+          <li class="nav-item" :key="i" v-if="checkRole(user.role,menu.auth)">
+            <router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
+          </li>
+        </template>
       </ul>
     </div>
 
@@ -42,9 +44,9 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-		{{ user.name }}
-		<img :src="user.photoUrl" class="img-avatar">
-		</a>
+          {{ user.name }}
+          <img :src="user.photoUrl" class="img-avatar">
+        </a>
         <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
@@ -57,36 +59,36 @@
 </template>
 
 <script>
-import { setTimeout } from "timers";
 
 export default {
-  name: "the-header",
-  data() {
+  name: 'the-header',
+  data () {
     return {
       togglerMenu: false,
       menus: [
-        { text: "Orders", to: "/about", auth: ["staff", "manager"] },
-        { text: "Shipping", to: "/about", auth: ["staff", "manager"] },
-        { text: "Items", to: "/about", auth: ["staff", "manager"] },
-		{ text: "Employee", to: "/about", auth: ["manager"] },
-		{ text: "Stock", to: "/stock", auth: ["manager"]}
+        { text: 'Orders', to: '/orders', auth: ['staff', 'manager'] },
+        { text: 'Shipping', to: '/about', auth: ['staff', 'manager'] },
+        { text: 'Items', to: '/items', auth: ['staff', 'manager'] },
+        { text: 'Employee', to: '/about', auth: ['manager'] },
+        { text: 'Stock', to: '/stock', auth: ['manager'] }
       ],
       user: {
-		  name: 'Mewnich',
-		  photoUrl: 'https://www.tlcthai.com/education/wp-content/uploads/2018/07/mewnich3.jpg',
-		  role: 'manager'
-	  }
-    };
+        name: 'Mewnich',
+        photoUrl:
+          'https://www.tlcthai.com/education/wp-content/uploads/2018/07/mewnich3.jpg',
+        role: 'manager'
+      }
+    }
   },
   methods: {
-    toggler() {
-      this.togglerMenu = !this.togglerMenu;
-	},
-	checkRole (userRole, requireRole) {
-		return requireRole.indexOf(userRole) > -1
-	}
+    toggler () {
+      this.togglerMenu = !this.togglerMenu
+    },
+    checkRole (userRole, requireRole) {
+      return requireRole.indexOf(userRole) > -1
+    }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -122,13 +124,13 @@ export default {
   opacity: 1;
 }
 a .img-avatar {
-	width: 30px;
-	height: 30px;
-	opacity: .8;
-	border-radius: 50%;
-	transition: all .3s;
+  width: 30px;
+  height: 30px;
+  opacity: 0.8;
+  border-radius: 50%;
+  transition: all 0.3s;
 }
 a:hover .img-avatar {
-	opacity: 1;
+  opacity: 1;
 }
 </style>

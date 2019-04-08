@@ -16,12 +16,22 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      component: () => import('./views/AboutPage.vue')  
+      component: () => import('./views/AboutPage.vue')
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('./views/LoginPage.vue')
+    },
+    {
+      path: '/items',
+      name: 'item',
+      component: () => import('./views/ItemPage.vue')
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: () => import('./views/OrderPage.vue')
     }
   ]
 })
