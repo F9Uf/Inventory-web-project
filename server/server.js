@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use('/api/v1', require('./v1'));
+app.use('/api/v2', require('./v2'));
 
 app.get('/', (req, res) => {
     res.status(200).json({
