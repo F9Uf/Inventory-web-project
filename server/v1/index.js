@@ -19,6 +19,8 @@ router.get('/', (req, res) => {
 // auth
 /**  @todo #1 create orders Api */
 // @todo #2 create employee Api 
+/* @todo #3 fixed something*/
+
 router.post('/login', authController.login);
 router.post('/signup', authController.signup);
 
