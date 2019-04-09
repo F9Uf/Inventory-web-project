@@ -11,7 +11,7 @@ const authController = require('./controllers/auth.controller');
 router.get('/', (req, res) => {
     res.status(200).json({
         success: true,
-        message: 'Api v1 work!'
+        message: 'Api v1 w15151'
     });
 });
 
