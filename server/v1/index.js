@@ -17,11 +17,12 @@ router.get('/', (req, res) => {
 
 
 // auth
+/**  @todo #1 create orders Api */
+// @todo #2 create employee Api 
 router.post('/login', authController.login);
 router.post('/signup', authController.signup);
 
 // order
-// @todo #1 create orders Api
 // router.get('/orders', permit(), ordersController.getOrder);
 
 module.exports = router;
