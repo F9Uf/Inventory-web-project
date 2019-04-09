@@ -21,7 +21,7 @@ router.post('/login', authController.login);
 router.post('/signup', authController.signup);
 
 // order
-// @Todo #1 create orders Api
+// @todo #1 create orders Api
 // router.get('/orders', permit(), ordersController.getOrder);
 
 module.exports = router;
