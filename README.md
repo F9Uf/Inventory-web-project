@@ -17,10 +17,13 @@
    - [JSON Web Token มาตรฐานใหม่ ในการทำ Authentication](https://medium.com/rootusercc/json-web-token-มาตรฐานใหม่-ในการทำ-authentication-b0760dd9acd1)
    - [ทำ Stateless Authentication บน Express ด้วย Passport.js + JWT](https://medium.com/@kennwuttisasiwat/ทำ-authentication-บน-express-ด้วย-passport-js-jwt-34fb1169a410)
 
-- **Vue.js**
+- **Vue.js** (fronted)
    - [สอน Vue.js Basic to Advance](https://www.youtube.com/playlist?list=PLEE74DyIkwEnQ3fqgLNRnBHdGONErIKzL)
    - [สร้าง Single Page Application ด้วย Vue.js และ Firebase authentication](https://medium.com/firebasethailand/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-single-page-application-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-vue-js-%E0%B9%81%E0%B8%A5%E0%B8%B0-firebase-authentication-1c8219aa77bd)
+   - [Vue Document](https://vuejs.org/v2/guide/)
 
+- **Bootstrap** (css)
+   - [Bootstrap Document](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 ## Web Flow
 ![Web Flow](pic/web_flow.png "Web Flow")
 
