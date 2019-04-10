@@ -4,18 +4,17 @@
     v-if="user"
   >
     <div
-      class="navbar-toggler"
+      class="navbar-toggler collapsed"
       style="border:none;"
       data-toggle="collapse"
-      @click="toggler()"
       data-target="#navbarNav"
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <div class="line1" :class="{'active': togglerMenu}"></div>
-      <div class="line2" :class="{'active': togglerMenu}"></div>
-      <div class="line3" :class="{'active': togglerMenu}"></div>
+      <div class="line1" ></div>
+      <div class="line2" ></div>
+      <div class="line3" ></div>
     </div>
 
     <router-link class="navbar-brand mr-auto" to="/">INVENTORY</router-link>
@@ -64,7 +63,6 @@ export default {
   name: 'the-header',
   data () {
     return {
-      togglerMenu: false,
       menus: [
         { text: 'Orders', to: '/orders', auth: ['staff', 'manager'] },
         { text: 'Shipping', to: '/about', auth: ['staff', 'manager'] },
@@ -81,9 +79,6 @@ export default {
     }
   },
   methods: {
-    toggler () {
-      this.togglerMenu = !this.togglerMenu
-    },
     checkRole (userRole, requireRole) {
       return requireRole.indexOf(userRole) > -1
     }
@@ -92,6 +87,31 @@ export default {
 </script>
 
 <style scoped>
+
+.navbar-toggler.collapsed .line1 {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.navbar-toggler.collapsed .line2 {
+  opacity: 1;
+}
+.navbar-toggler.collapsed .line3 {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+.navbar-toggler:not(.collapsed) > .line1 {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg) translate(-7px, 5px);
+}
+.navbar-toggler:not(.collapsed) > .line2 {
+  opacity: 0;
+}
+.navbar-toggler:not(.collapsed) > .line3 {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg) translate(-6px, -5px);
+}
+
 .line1,
 .line2,
 .line3 {
@@ -102,17 +122,7 @@ export default {
   margin: 5px 2.5px;
   transition: all 0.3s;
 }
-.line1.active {
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg) translate(-7px, 5px);
-}
-.line2.active {
-  opacity: 0;
-}
-.line3.active {
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg) translate(-6px, -5px);
-}
+
 .navbar-toggler {
   opacity: 0.5;
   transition: all 0.3s;
