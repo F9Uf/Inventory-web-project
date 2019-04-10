@@ -1,7 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const config_env = require('./config/config_env');
 const app = express();
+
+app.use(cors());
 
 if (config_env.NODE_ENV === 'development') {
     app.use(require('morgan')('dev'));    

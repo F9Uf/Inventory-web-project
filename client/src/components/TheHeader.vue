@@ -4,7 +4,7 @@
     v-if="user"
   >
     <div
-      class="navbar-toggler collapsed"
+      class="navbar-toggler collapsed d-block d-md-block d-lg-none d-xl-none"
       style="border:none;"
       data-toggle="collapse"
       data-target="#navbarNav"
