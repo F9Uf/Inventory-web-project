@@ -35,3 +35,5 @@ export default new Router({
     }
   ]
 })
+
+/** @todo #1 make route secure:Ex. when login can not access 'login page'  */

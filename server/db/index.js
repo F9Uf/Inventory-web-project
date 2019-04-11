@@ -9,8 +9,11 @@ const connection = mysql.createPool({
 });
 
 connection.getConnection( err => {
-    if (err) console.log(err);
-    console.log('Database is connected...');    
+    if (err) {
+        console.log(err);
+        console.log('Database isn\'t connect!...');        
+    }
+    else console.log('Database is connected...');    
 });
 
 module.exports = connection;

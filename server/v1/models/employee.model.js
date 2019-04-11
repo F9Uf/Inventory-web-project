@@ -35,6 +35,7 @@ exports.findUserByUsername = (data, done) => {
     db.query(sql1, [data.username], (err, res) => {
         if (err) {
             done(err, null);
+            
         } else {
             done(null, res);
         }

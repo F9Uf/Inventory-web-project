@@ -23,7 +23,10 @@
         >
         <div class="invalid-feedback">Please enter your password</div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
+      <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true" v-if="loading"></span>
+      Sign in
+      </button>
       <br>
       <div v-if="alert" class="alert alert-danger alert-dismissible fade" :class="{'show': alert}">
         <strong>ERROR!</strong>
@@ -46,7 +49,9 @@ export default {
       usernameInvalid: false,
       passwordInvalid: false,
       alert: false,
-      error: 'Your username & your password is not correct'
+      error: '',
+      loading: false
+      
     }
   },
   methods: {
@@ -54,7 +59,19 @@ export default {
       if (this.username === '') this.usernameInvalid = true
       if (this.password === '') this.passwordInvalid = true
       if (this.username !== '' && this.password !== '') {
-        console.log('login!')
+        this.loading = true
+
+        this.$store.dispatch('AuthUser/login', {username:this.username, password:this.password})
+        .then((result) => {
+          this.loading = false
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          this.alert = true
+          this.error = err.data.message
+          this.loading = false
+          console.log(err)
+        })
       }
     },
     clearAlert () {

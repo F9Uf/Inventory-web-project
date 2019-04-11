@@ -5,7 +5,7 @@ const permit = require('./middleware/permission');
 
 // controllers
 const authController = require('./controllers/auth.controller');
-// const ordersController = require('./controllers/orders.controller');
+const employeeController = require('./controllers/employee.controller');
 
 
 router.get('/', (req, res) => {
@@ -19,5 +19,8 @@ router.get('/', (req, res) => {
 // auth
 router.post('/login', authController.login);
 router.post('/signup', authController.signup);
+
+//employee user
+router.get('/employees/:employee_id', permit(), employeeController.getOneEmployee);
 
 module.exports = router;

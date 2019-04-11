@@ -19,12 +19,7 @@ export default {
     return {
       user: null
     }
-  },
-  created () {
-    fetch('http://localhost:5000/api/v1/')
-    .then(res => res.json())
-    .then(json => console.log(json));
-  },
+  }
   
 }
 </script>

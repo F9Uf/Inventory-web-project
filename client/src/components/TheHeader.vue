@@ -25,7 +25,7 @@
     >
       <ul class="navbar-nav ml-3">
         <template v-for="(menu,i) in menus">
-          <li class="nav-item" :key="i" v-if="checkRole(user.role,menu.auth)">
+          <li class="nav-item" :key="i" v-if="checkRole(user.Position, menu.auth)">
             <router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
           </li>
         </template>
@@ -43,14 +43,14 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {{ user.name }}
+          {{ name }}
           <img :src="user.photoUrl" class="img-avatar">
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Log out</a>
+          <button class="dropdown-item" @click="logout">Log out</button>
         </div>
       </li>
     </ul>
@@ -69,20 +69,28 @@ export default {
         { text: 'Items', to: '/items', auth: ['staff', 'manager'] },
         { text: 'Employee', to: '/about', auth: ['manager'] },
         { text: 'Stock', to: '/stock', auth: ['manager'] }
-      ],
-      user: {
-        name: 'Mewnich',
-        photoUrl:
-          'https://www.tlcthai.com/education/wp-content/uploads/2018/07/mewnich3.jpg',
-        role: 'manager'
-      }
+      ]
     }
   },
   methods: {
     checkRole (userRole, requireRole) {
       return requireRole.indexOf(userRole) > -1
+    },
+    logout () {
+      this.$store.dispatch('AuthUser/logout')
+      .then(() => {
+        this.$router.push('/login')
+      })
     }
-  }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['AuthUser/getUser']
+    },
+    name () {
+      return `${this.user.EmployeeFirstName} ${this.user.EmployeeLastName}`
+    }
+  },
 }
 </script>
 
