@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from './config'
 
 const $axios = axios.create({
-    baseURL: config.apiBaseURL,
+    baseURL: config.API_BASE_URL,
     withCredentials: false,
     headers: {
       'Accept': 'application/json',
