@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted() {
-    console.log(process.env.API_BASE_URL)
+    console.log(process.env.VUE_APP_API_BASE_URL)
   },
   methods: {
     login () {
