@@ -54,6 +54,9 @@ export default {
       
     }
   },
+  mounted() {
+    console.log(process.env.API_BASE_URL)
+  },
   methods: {
     login () {
       if (this.username === '') this.usernameInvalid = true
