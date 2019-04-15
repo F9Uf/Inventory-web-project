@@ -12,7 +12,7 @@ const token = localStorage.getItem('access_token')
 
 if (token) {
   // Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-  store.dispatch('AuthUser/fetchUser')
+  store.dispatch('AuthUser/fetchUser', token)
   
 }
 

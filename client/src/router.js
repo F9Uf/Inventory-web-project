@@ -14,6 +14,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/setting',
+      name: 'setting',
+      component: () => import('./views/SettingPage.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import('./views/AboutPage.vue')
@@ -32,6 +37,11 @@ export default new Router({
       path: '/orders',
       name: 'orders',
       component: () => import('./views/OrderPage.vue')
+    },
+    {
+      path: '*',
+      name: '404',
+      component: () => import('./views/AboutPage.vue')
     }
   ]
 })

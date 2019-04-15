@@ -1,6 +1,6 @@
 <template>
   <header
-    class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top"
+    class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top shadow-sm"
     v-if="user"
   >
     <div
@@ -47,8 +47,7 @@
           <img :src="user.photoUrl" class="img-avatar">
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <router-link class="dropdown-item" to="/setting">Setings</router-link>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" @click="logout">Log out</button>
         </div>
