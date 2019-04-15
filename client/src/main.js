@@ -12,7 +12,8 @@ const token = localStorage.getItem('access_token')
 
 if (token) {
   // Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-  store.dispatch('AuthUser/fetchUser', token)
+  // store.dispatch('AuthUser/fetchUser', token)
+  store.dispatch('AuthUser/autoLogin', token)
   
 }
 
@@ -23,3 +24,4 @@ new Vue({
   store,
   render: function (h) { return h(App) }
 }).$mount('#app')
+

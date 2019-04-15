@@ -25,7 +25,7 @@
     >
       <ul class="navbar-nav ml-3">
         <template v-for="(menu,i) in menus">
-          <li class="nav-item" :key="i" v-if="checkRole(user.Position, menu.auth)">
+          <li class="nav-item" :key="i" v-if="checkRole(user.role, menu.auth)">
             <router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
           </li>
         </template>
@@ -87,7 +87,7 @@ export default {
       return this.$store.getters['AuthUser/getUser']
     },
     name () {
-      return `${this.user.EmployeeFirstName} ${this.user.EmployeeLastName}`
+      return `${this.user.firstName} ${this.user.lastName}`
     }
   },
 }

@@ -36,10 +36,14 @@ exports.login = (req, res) => {
                 if (data[0]) {
                     // if username is exist
                     if (data[0].Password === password) {
+                        
                         const token  = jwt.sign({
-                            sub: data[0].EmployeeID,
+                            _id: data[0].EmployeeID,
                             username: data[0].Username,
-                            role: data[0].Position
+                            role: data[0].Position,
+                            firstName: data[0].EmployeeFirstName,
+                            lastName: data[0].EmployeeLastName,
+                            photoUrl: data[0].photoUrl
                         },
                         config_key.jwtSecret,
                         {
@@ -48,7 +52,7 @@ exports.login = (req, res) => {
     
                         return res.status(200).json({
                             success: true,
-                            message: 'Authentication successful!',
+                            message: 'Authentication successful!xx',
                             token: token
                         });
                     } else {

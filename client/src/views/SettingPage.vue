@@ -41,7 +41,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Firstname</label>
-                <input type="text" class="form-control" placeholder="Firstname" :value="user.EmployeeFirstName" @input="onInput($event)">
+                <input type="text" class="form-control" placeholder="Firstname" :value="user.EmployeeFirstName">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Lastname</label>
@@ -69,7 +69,11 @@
       </div>
       <hr>
       <!--  -->
-      {{ mainUser }}
+      <template v-if="userSetting">
+        {{ userSetting }}
+
+      </template>
+      {{firstName}}
     </div>
   </div>
 </template>
@@ -80,23 +84,21 @@ export default {
   data() {
     return {
       file: null,
-      mainUser: { }
-    };
+      userSetting: null,
+      firstName: null
+    }
   },
   computed: {
     user() {
-      return this.$store.getters["AuthUser/getUser"];
+      return this.$store.state["AuthUser"].user
     }
+  },
+  beforeMount() {
+    // this.firstName = this.user.EmployeeFirstName
   },
   methods: {
     fileSelect(event) {
-      let fileTarget = event.target.files[0];
-    },
-    onInput(e) {
-      console.log(e.target.value);
-      
-      this.mainUser.firstName = e.target.value
-      
+      let fileTarget = event.target.files[0]
     }
   }
 }

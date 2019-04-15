@@ -30,7 +30,7 @@ exports.createNewEmployee = (data, done) => {
 }
 
 exports.findUserByUsername = (data, done) => {
-    const sql1 = 'SELECT EmployeeID, Username, Password, Position FROM employee WHERE Username = ?';
+    const sql1 = 'SELECT EmployeeID, Username, Password, Position, EmployeeFirstName, EmployeeLastName, photoUrl FROM employee WHERE Username = ?';
 
     db.query(sql1, [data.username], (err, res) => {
         if (err) {

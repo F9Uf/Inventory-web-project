@@ -29,7 +29,19 @@ const AuthUserModule = {
       })
     },
 
-    async login ({ commit, dispatch }, payload) {
+    autoLogin ({commit}, token) {
+      const decode = JSON.parse(window.atob(token.split('.')[1]))
+      commit('SETUSER', {
+        firstName: decode.firstName,
+        lastName: decode.lastName,
+        photoUrl: decode.photoUrl,
+        id: decode._id,
+        role: decode.role
+      })
+      
+    },
+
+    login ({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {
 
         $axios.post('/login', payload, {validateStatus: status => true})
@@ -42,7 +54,7 @@ const AuthUserModule = {
             $axios.defaults.headers.common['Authorization'] = token
             commit('SETTOKEN', token)
 
-            dispatch('fetchUser', token)
+            dispatch('autoLogin', token)
 
             resolve(res)
 
