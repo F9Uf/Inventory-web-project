@@ -9,10 +9,10 @@ const employeeController = require('./controllers/employee.controller');
 
 
 router.get('/', (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'Api v1 work!'
-    });
+  res.status(200).json({
+    success: true,
+    message: 'Api v1 work!'
+  });
 });
 
 
