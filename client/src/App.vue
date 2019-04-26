@@ -20,7 +20,7 @@ export default {
       user: null
     }
   }
-  
+
 }
 </script>
 

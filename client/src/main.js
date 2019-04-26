@@ -13,15 +13,23 @@ const token = localStorage.getItem('access_token')
 if (token) {
   // Vue.prototype.$http.defaults.headers.common['Authorization'] = token
   // store.dispatch('AuthUser/fetchUser', token)
-  store.dispatch('AuthUser/autoLogin', token)
-  
+  // store.dispatch('AuthUser/fetchUser', token)
+
 }
 
 Vue.config.productionTip = false
 
+
+
 new Vue({
   router,
   store,
-  render: function (h) { return h(App) }
+  render: function (h) { return h(App) },
+  beforeCreate() {
+    if (token) store.dispatch('Auth/fetchUser', token)
+  },
 }).$mount('#app')
+
+
+
 

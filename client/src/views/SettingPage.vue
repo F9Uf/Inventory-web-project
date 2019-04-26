@@ -41,26 +41,26 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Firstname</label>
-                <input type="text" class="form-control" placeholder="Firstname" :value="user.EmployeeFirstName">
+                <input type="text" class="form-control" placeholder="Firstname" v-model="userSetting.EmployeeFirstName">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Lastname</label>
-                <input type="text" class="form-control" placeholder="Lastname" :value="user.EmployeeLastName">
+                <input type="text" class="form-control" placeholder="Lastname" v-model="userSetting.EmployeeLastName">
               </div>
             </div>
             <div class="form-group">
               <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" :value="user.EmployeeAddress">
+              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" v-model="userSetting.EmployeeAddress">
             </div>
-            
+
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="inputEmail" :value="user.EmployeeEmail">
+                <input type="email" class="form-control" id="inputEmail" v-model="userSetting.EmployeeEmail">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPhone">Phone</label>
-                <input type="text" class="form-control" id="inputPhone" :value="user.EmployeePhone">
+                <input type="text" class="form-control" id="inputPhone" v-model="userSetting.EmployeePhone">
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
@@ -69,11 +69,7 @@
       </div>
       <hr>
       <!--  -->
-      <template v-if="userSetting">
-        {{ userSetting }}
 
-      </template>
-      {{firstName}}
     </div>
   </div>
 </template>
@@ -84,21 +80,24 @@ export default {
   data() {
     return {
       file: null,
-      userSetting: null,
-      firstName: null
+      userSetting: null
     }
   },
   computed: {
-    user() {
-      return this.$store.state["AuthUser"].user
+    user () {
+      return this.$store.state['Auth'].user
     }
   },
-  beforeMount() {
-    // this.firstName = this.user.EmployeeFirstName
+  created() {
+    this.copyUser()
   },
   methods: {
-    fileSelect(event) {
+    fileSelect (event) {
       let fileTarget = event.target.files[0]
+    },
+    copyUser () {
+      const user = this.user
+      return this.userSetting = {...user}
     }
   }
 }

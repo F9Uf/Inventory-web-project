@@ -1,22 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
+
+//components
 import Home from './views/HomePage.vue'
+import Setting from './views/SettingPage.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/setting',
       name: 'setting',
-      component: () => import('./views/SettingPage.vue')
+      component: Setting,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/about',
@@ -26,17 +36,26 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/LoginPage.vue')
+      component: () => import('./views/LoginPage.vue'),
+      meta: {
+        requireNoAuth: true
+      }
     },
     {
       path: '/items',
       name: 'item',
-      component: () => import('./views/ItemPage.vue')
+      component: () => import('./views/ItemPage.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/orders',
       name: 'orders',
-      component: () => import('./views/OrderPage.vue')
+      component: () => import('./views/OrderPage.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '*',
@@ -47,3 +66,25 @@ export default new Router({
 })
 
 /** @todo #1 make route secure:Ex. when login can not access 'login page'  */
+
+router.beforeEach((to, from, next) => {
+  const requireAuth = to.matched.some(record => record.meta.requireAuth)
+  const requireNoAuth = to.matched.some(record => record.meta.requireNoAuth)
+
+  const token = localStorage.getItem('access_token')
+
+  if (requireAuth && !token) {
+    next('/login')
+  } else if (requireNoAuth && token) {
+    next('/')
+  } else {
+    next()
+  }
+
+
+})
+
+
+export default router;
+
+

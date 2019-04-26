@@ -51,7 +51,7 @@ export default {
       alert: false,
       error: '',
       loading: false
-      
+
     }
   },
   methods: {
@@ -61,7 +61,7 @@ export default {
       if (this.username !== '' && this.password !== '') {
         this.loading = true
 
-        this.$store.dispatch('AuthUser/login', {username:this.username, password:this.password})
+        this.$store.dispatch('Auth/login', {username:this.username, password:this.password})
         .then((result) => {
           this.loading = false
           this.$router.push('/')
@@ -70,7 +70,6 @@ export default {
           this.alert = true
           this.error = err.data.message
           this.loading = false
-          console.log(err)
         })
       }
     },

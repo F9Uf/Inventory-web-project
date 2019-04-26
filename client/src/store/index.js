@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import modules
-import AuthUserModule from './modules/AuthUserModule'
+import AuthModule from './modules/AuthModule'
 
 Vue.use(Vuex)
 
 const modules = {
-  AuthUser: AuthUserModule
+  Auth: AuthModule
 }
 
 export default new Vuex.Store({

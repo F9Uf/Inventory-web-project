@@ -1,3 +1,4 @@
+
 <template>
   <header
     class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top shadow-sm"
@@ -25,7 +26,7 @@
     >
       <ul class="navbar-nav ml-3">
         <template v-for="(menu,i) in menus">
-          <li class="nav-item" :key="i" v-if="checkRole(user.role, menu.auth)">
+          <li class="nav-item" :key="i" v-if="checkRole(user.Position, menu.auth)">
             <router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
           </li>
         </template>
@@ -59,7 +60,6 @@
 <script>
 
 export default {
-  name: 'the-header',
   data () {
     return {
       menus: [
@@ -76,18 +76,19 @@ export default {
       return requireRole.indexOf(userRole) > -1
     },
     logout () {
-      this.$store.dispatch('AuthUser/logout')
-      .then(() => {
+      this.$store.dispatch('Auth/logout')
+      .then( () => {
         this.$router.push('/login')
       })
+
     }
   },
   computed: {
     user () {
-      return this.$store.getters['AuthUser/getUser']
+      return this.$store.state['Auth'].user
     },
     name () {
-      return `${this.user.firstName} ${this.user.lastName}`
+      return `${this.user.EmployeeFirstName} ${this.user.EmployeeLastName}`
     }
   },
 }
