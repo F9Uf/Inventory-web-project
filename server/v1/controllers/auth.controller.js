@@ -35,10 +35,7 @@ exports.login = (req, res) => {
             const token = jwt.sign({
               _id: data[0].EmployeeID,
               username: data[0].Username,
-              role: data[0].Position,
-              firstName: data[0].EmployeeFirstName,
-              lastName: data[0].EmployeeLastName,
-              photoUrl: data[0].photoUrl
+              role: data[0].Position
             },
               config_key.jwtSecret,
               {
