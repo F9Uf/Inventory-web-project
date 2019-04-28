@@ -1,5 +1,5 @@
 <template>
-  <div class="row m-3" v-if="user">
+  <div class="row m-3" v-if="userSetting">
     <div class="col bg-white p-3">
       <h3>Profile Settings</h3>
       <!-- profile setting -->
@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-8 d-flex flex-lg-row flex-column justify-content-around">
           <div class="img-select align-self-center align-self-lg-stretch">
-            <img :src="user.photoUrl" width="160px" class="rounded-circle">
+            <img :src="userSetting.photoUrl" width="160px" class="rounded-circle">
           </div>
           <div class="upload align-self-center align-self-lg-stretch">
             <h5>Upload your photo</h5>
@@ -37,7 +37,7 @@
           <p></p>
         </div>
         <div class="col-lg-8">
-          <form>
+          <form @submit.prevent="updateUser">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Firstname</label>
@@ -60,44 +60,105 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPhone">Phone</label>
-                <input type="text" class="form-control" id="inputPhone" v-model="userSetting.EmployeePhone">
+                <input type="number" class="form-control" id="inputPhone" v-model="userSetting.EmployeePhone">
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary" :disabled="loading">
+              <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true" v-if="loading"></span>
+              Update
+            </button>
           </form>
         </div>
       </div>
       <hr>
       <!--  -->
-
+    </div>
+    <div v-if="alert" class="alert alert-dismissible fade fixed-bottom m-5"
+      :class="{'show': alert, 'alert-danger': typeAlert == 'error', 'alert-success': typeAlert == 'success'}">
+      <strong v-if="typeAlert == 'error'">ERROR!</strong>
+      <strong v-if="typeAlert == 'success'">SUCCESS!</strong>
+      {{messageAlert}}
+      <button type="button" class="close" style="outline: none;" @click="clearAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { $api } from '@/service/api'
+
 export default {
   name: "setting-page",
   data() {
     return {
       file: null,
-      userSetting: null
+      userSetting: null,
+      loading: false,
+      alert: false,
+      messageAlert: '',
+      typeAlert: null
     }
   },
   computed: {
     user () {
-      return this.$store.state['Auth'].user
+      return this.$store.getters['Auth/getUser']
     }
   },
   created() {
-    this.copyUser()
+    if (this.user) {
+      // if visit this page from vue-router
+      this.userSetting = {...this.user}
+      // this.userSetting.valid = 'no fetch new data'
+    } else {
+      // if visit this page from browser
+      // there are no user in vuex store
+      // so, i'll fetch user from api again! :)
+      this.$store.dispatch('Auth/fetchUser', localStorage.getItem('access_token' || null))
+      .then(user => {
+        this.userSetting = user
+      })
+      .catch(err => {
+        console.log(err)
+        this.$store.dispatch('Auth/logout')
+      })
+    }
   },
   methods: {
+    clearAlert () {
+      this.alert = false
+      this.messageAlert = ''
+      this.typeAlert = null
+    },
     fileSelect (event) {
       let fileTarget = event.target.files[0]
     },
-    copyUser () {
-      const user = this.user
-      return this.userSetting = {...user}
+    updateUser () {
+      /** @todo #6 modify update
+       * sent some field which edited
+       */
+      this.loading = true
+      $api({path: `/employees/${this.userSetting.EmployeeID}`, method: 'put', data: this.userSetting})
+      .then(resp => {
+        if (!resp.success) {
+          this.alert = true
+          this.messageAlert = resp.message
+          this.typeAlert = 'error'
+        } else {
+          this.alert = true
+          this.messageAlert = 'Plese refresh (F5) for update user information :)'
+          this.typeAlert = 'success'
+        }
+        this.loading = false
+
+      })
+      .catch(err => {
+        console.log(err)
+        this.alert = true
+        this.messageAlert = err
+        this.loading = false
+        this.typeAlert = 'error'
+      })
     }
   }
 }

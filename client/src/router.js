@@ -65,7 +65,6 @@ const router = new Router({
   ]
 })
 
-/** @todo #1 make route secure:Ex. when login can not access 'login page'  */
 
 router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.requireAuth)

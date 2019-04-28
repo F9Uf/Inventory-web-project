@@ -49,6 +49,4 @@ exports.updateOneEmployee = (req, res) => {
       message: 'update error!!'
     })
   })
-
-  res.json({success: true, id: 12})
 }

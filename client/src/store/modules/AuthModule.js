@@ -1,4 +1,4 @@
-import $axios from '../../service/api'
+import { $api } from '@/service/api'
 
 const AuthModule = {
   namespaced: true,
@@ -24,8 +24,10 @@ const AuthModule = {
       return new Promise((resolve, reject) => {
         commit('SETTOKEN', '')
         commit('SETUSER', null)
-        localStorage.removeItem('access_token')
+        // $axios.defaults.headers.common['Authorization'] = ''
         resolve()
+        reject()
+        localStorage.removeItem('access_token')
       })
     },
 
@@ -33,44 +35,56 @@ const AuthModule = {
     login ({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {
 
-        $axios.post('/login', payload, {validateStatus: status => true})
-        .then(res => {
+        $api({path: '/login', method: 'post', data: payload})
+        .then(resp => {
 
-          if (res.data.success) {
-            // if login successfully
-            const token = res.data.token;
-            localStorage.setItem('access_token', token)
-            $axios.defaults.headers.common['Authorization'] = token
-            commit('SETTOKEN', token)
-
-            dispatch('fetchUser', token)
-
-            resolve(res)
-
+          if (resp.success) {
+            localStorage.setItem('access_token', resp.token)
+            commit('SETTOKEN', resp.token)
+            dispatch('fetchUser', resp.token)
+            .then(user=> {
+              if (user) {
+                commit('SETUSER', user)
+              } else {
+                console.log('error in login store')
+              }
+            })
+            .catch(err => {
+              console.log(err)
+              dispatch('logout')
+              reject(err)
+            })
+            resolve(resp)
           } else {
-            localStorage.removeItem('access_token')
-            reject(res)
+            reject(resp)
           }
+
         })
-        .catch(err => {
-          localStorage.removeItem('access_token')
-          reject(err)
+        .catch(error => {
+          reject(error)
         })
+
       })
     },
 
-    async fetchUser ({ commit }, token) {
-      try {
-        const decode = await JSON.parse(window.atob(token.split('.')[1]))
-        const { data } = await $axios.get(`/employees/${decode._id}`)
-
-        if (data.success) {
-          commit('SETUSER', await data.result)
-        }
-
-      } catch (err) {
-        console.log(err)
-      }
+    fetchUser (_cotext, token) {
+      // $axios.defaults.headers.common['Authorization'] = token
+      return new Promise((resolve, reject) => {
+        const decode = JSON.parse(window.atob(token.split('.')[1]))
+        $api({path: `/employees/${decode._id}`, method: 'get'})
+        .then(resp => {
+          if (resp.success) {
+            resolve(resp.result)
+          } else {
+            reject(resp.message)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          reject(err)
+          // Haven't found any error this catch yet
+        })
+      })
 
     }
   }

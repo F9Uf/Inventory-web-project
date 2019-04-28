@@ -24,8 +24,8 @@
         <div class="invalid-feedback">Please enter your password</div>
       </div>
       <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-      <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true" v-if="loading"></span>
-      Sign in
+        <span class="spinner-border spinner-grow-sm" role="status" aria-hidden="true" v-if="loading"></span>
+        Sign in
       </button>
       <br>
       <div v-if="alert" class="alert alert-danger alert-dismissible fade" :class="{'show': alert}">
@@ -68,8 +68,10 @@ export default {
         })
         .catch((err) => {
           this.alert = true
-          this.error = err.data.message
           this.loading = false
+          if (err.message) {
+            this.error = err.message
+          }
         })
       }
     },
