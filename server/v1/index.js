@@ -22,5 +22,6 @@ router.post('/signup', authController.signup);
 
 //employee user
 router.get('/employees/:employee_id', permit(), employeeController.getOneEmployee);
+router.put('/employees/:employee_id', permit(), employeeController.updateOneEmployee);
 
 module.exports = router;

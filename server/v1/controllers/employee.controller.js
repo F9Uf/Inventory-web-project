@@ -27,3 +27,22 @@ exports.getOneEmployee = (req, res) => {
     })
 
 }
+
+exports.updateOneEmployee = (req, res) => {
+  employeeModel.updateEmployee({id: req.params.employee_id, field: req.body})
+  .then(data => {
+    return res.status(200).json({
+      success: true,
+      message: 'update success!'
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    return res.json({
+      success: false,
+      message: 'update error!!'
+    })
+  })
+
+  res.json({success: true, id: 12})
+}
