@@ -28,6 +28,12 @@ exports.getOneEmployee = (req, res) => {
 
 }
 
+/** @todo #5 add permisstion
+ * employee can update only their own information
+ * manager can update all employees
+ * shop manager can update only shop's own information (not sure)
+*/
+
 exports.updateOneEmployee = (req, res) => {
   employeeModel.updateEmployee({id: req.params.employee_id, field: req.body})
   .then(data => {
