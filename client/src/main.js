@@ -28,22 +28,18 @@ new Vue({
   store,
   render: function (h) { return h(App) },
   beforeCreate() {
-    if (token) {
-      const decode = JSON.parse(window.atob(token.split('.')[1]))
-      console.log(decode.exp);
-
-      console.log(new Date().getTime());
-
-    }
-
     if (token && checkTokenExpire(token)) {
+      store.commit('UI/SETLOADING', true)
       store.dispatch('Auth/fetchUser', token)
       .then(user => {
         store.commit('Auth/SETUSER', user)
+        store.commit('UI/SETLOADING', false)
       })
       .catch(err => {
         console.log(err)
+        localStorage.removeItem('access_token')
         store.dispatch('Auth/logout')
+        store.commit('UI/SETLOADING', false)
       })
     } else {
       store.dispatch('Auth/logout')
