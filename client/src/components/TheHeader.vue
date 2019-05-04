@@ -27,7 +27,7 @@
       <ul class="navbar-nav ml-3">
         <template v-for="(menu,i) in menus">
           <li class="nav-item" :key="i" v-if="checkRole(user.Position, menu.auth)">
-            <router-link class="nav-link" :to="menu.to">{{ menu.text }}</router-link>
+            <router-link class="nav-link" :to="menu.to" active-class="active">{{ menu.text }}</router-link>
           </li>
         </template>
       </ul>
