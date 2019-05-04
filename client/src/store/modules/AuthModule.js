@@ -1,9 +1,10 @@
 import { $api } from '@/service/api'
+import { checkTokenExpire } from '@/service/validateToken'
 
 const AuthModule = {
   namespaced: true,
   state: {
-    token: localStorage.getItem('access_token') || '',
+    token: checkTokenExpire(localStorage.getItem('access_token') || '') ? localStorage.getItem('access_token'):'',
     user: null
   },
   getters: {

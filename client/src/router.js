@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
 
+import { checkTokenExpire } from './service/validateToken'
 //components
 import Home from './views/HomePage.vue'
 import Setting from './views/SettingPage.vue'
@@ -71,10 +72,12 @@ router.beforeEach((to, from, next) => {
   const requireNoAuth = to.matched.some(record => record.meta.requireNoAuth)
 
   const token = localStorage.getItem('access_token')
+  const validToken = checkTokenExpire( token || '') ? token : null
 
-  if (requireAuth && !token) {
+  if (requireAuth && !validToken) {
+    store.dispatch('Auth/logout')
     next('/login')
-  } else if (requireNoAuth && token) {
+  } else if (requireNoAuth && validToken) {
     next('/')
   } else {
     next()
