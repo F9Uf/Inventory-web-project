@@ -82,6 +82,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+
+    {{userSetting}}
   </div>
 </template>
 
@@ -138,7 +140,7 @@ export default {
        * sent some field which edited
        */
       this.loading = true
-      $api({path: `/employees/${this.userSetting.EmployeeID}`, method: 'put', data: this.userSetting})
+      $api({path: `/employees/${this.userSetting.employeeID}`, method: 'put', data: this.userSetting})
       .then(resp => {
         if (!resp.success) {
           this.alert = true
