@@ -1,20 +1,18 @@
 const db = require('../../db');
-
 /**
  * Create new employee
  * @param {Object} data
  * @param {string} data.firstName
  * @param {string} data.lastName
- * @param {string} data.addressName
+ * @param {string} data.photoUrl
+ * @param {string} data.adderss
  * @param {number} data.phone
  * @param {string} data.email
+ * @param {string} data.position
+ * @param {number} data.salary
+ * @param {string} data.username
  * @param {string} data.password
  * @param {string} data.shopID
- *
- * @param {requestCallback} done
- * @callback requestCallback
- * @param {Object} err
- * @param {Object} response
  */
 exports.createNewEmployee = (data) => {
   const sql = 'INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?,?,?)'
@@ -32,8 +30,13 @@ exports.createNewEmployee = (data) => {
   })
 }
 
+/**
+ * find user by username
+ * @param {Object} data
+ * @param {string} data.username
+ */
 exports.findUserByUsername = (data) => {
-  const sql1 = 'SELECT EmployeeID, Username, Password, Position, EmployeeFirstName, EmployeeLastName, photoUrl FROM employee WHERE Username = ?';
+  const sql1 = 'SELECT employeeID, username, password, position, employeeFirstName, employeeLastName, employeePhotoUrl FROM employee WHERE username = ?';
   return new Promise((resolve, reject) => {
     db.query(sql1, [data.username], (err, res) => {
       if (err) {
@@ -46,8 +49,13 @@ exports.findUserByUsername = (data) => {
   })
 }
 
+/**
+ * find user by employee id
+ * @param {Object} data
+ * @param {string} data.id
+ */
 exports.findUserById = (data) => {
-  const sql = 'SELECT * FROM employee WHERE EmployeeID = ?'
+  const sql = 'SELECT * FROM employee WHERE employeeID = ?'
 
   return new Promise((resolve, reject) => {
     db.query(sql, [data.id], (err, res) => {
@@ -61,11 +69,17 @@ exports.findUserById = (data) => {
   })
 }
 
+/**
+ * update user by id
+ * @param {Object} data
+ * @param {string} data.id
+ * @param {Object} data.field
+ */
 exports.updateEmployee = (data) => {
   const sql_Update = 'UPDATE employee SET'
   let sql_value = ' '
   let arr_value = []
-  const sql_WHERE = 'WHERE EmployeeID = ?'
+  const sql_WHERE = 'WHERE employeeID = ?'
 
   for (key in data.field) {
     sql_value += `${key} = ?, `

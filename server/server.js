@@ -16,12 +16,12 @@ if (config_env.NODE_ENV === 'development') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/v1', require('./v1'));
+app.use('/api', require('./api'));
 
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'Server is running, Can get api on path "api/v{vertion number}"'
+    message: 'Server is running, Can get api on path "/api"'
   });
 });
 

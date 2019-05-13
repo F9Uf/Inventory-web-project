@@ -30,12 +30,12 @@ exports.login = (req, res) => {
       .then(data => {
         if (data[0]) {
           // if username is exist
-          if (data[0].Password === password) {
+          if (data[0].password === password) {
 
             const token = jwt.sign({
-              _id: data[0].EmployeeID,
-              username: data[0].Username,
-              role: data[0].Position
+              _id: data[0].employeeID,
+              username: data[0].username,
+              role: data[0].position
             },
               config_key.jwtSecret,
               {
