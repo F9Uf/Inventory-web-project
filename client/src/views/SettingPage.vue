@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-8 d-flex flex-lg-row flex-column justify-content-around">
           <div class="img-select align-self-center align-self-lg-stretch">
-            <img :src="userSetting.photoUrl" width="160px" class="rounded-circle">
+            <img :src="userSetting.employeePhotoUrl" width="160px" class="rounded-circle">
           </div>
           <div class="upload align-self-center align-self-lg-stretch">
             <h5>Upload your photo</h5>
@@ -82,8 +82,6 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
-    {{userSetting}}
   </div>
 </template>
 
