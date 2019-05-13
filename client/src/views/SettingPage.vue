@@ -41,26 +41,26 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Firstname</label>
-                <input type="text" class="form-control" placeholder="Firstname" v-model="userSetting.EmployeeFirstName">
+                <input type="text" class="form-control" placeholder="Firstname" v-model="userSetting.employeeFirstName">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Lastname</label>
-                <input type="text" class="form-control" placeholder="Lastname" v-model="userSetting.EmployeeLastName">
+                <input type="text" class="form-control" placeholder="Lastname" v-model="userSetting.employeeLastName">
               </div>
             </div>
             <div class="form-group">
               <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" v-model="userSetting.EmployeeAddress">
+              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" v-model="userSetting.employeeAddress">
             </div>
 
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="inputEmail" v-model="userSetting.EmployeeEmail">
+                <input type="email" class="form-control" id="inputEmail" v-model="userSetting.employeeEmail">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPhone">Phone</label>
-                <input type="number" class="form-control" id="inputPhone" v-model="userSetting.EmployeePhone">
+                <input type="number" class="form-control" id="inputPhone" v-model="userSetting.employeePhone">
               </div>
             </div>
             <button type="submit" class="btn btn-primary" :disabled="loading">

@@ -45,7 +45,7 @@
           aria-expanded="false"
         >
           {{ name }}
-          <img :src="user.photoUrl" class="img-avatar">
+          <img :src="user.employeePhotoUrl" class="img-avatar">
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="navbarDropdown">
           <router-link class="dropdown-item" to="/setting">Setings</router-link>
