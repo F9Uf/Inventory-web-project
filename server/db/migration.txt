@@ -4,150 +4,171 @@ DEFAULT COLLATE utf8_general_ci;
 
 use Inventory_Database
 
-
-CREATE TABLE IF NOT EXISTS `Shop`(
-    `ShopID` VARCHAR(8) NOT NULL,
-    `ShopName` text NOT NULL,
-    `ShopAddress` text NOT NULL,
-    `ShopPhone` text NOT NULL,
-    PRIMARY KEY (`ShopID`)
+CREATE TABLE IF NOT EXISTS `shop`(
+    `shopID` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `shopName` text NOT NULL,
+    `shopAddress` text NOT NULL,
+    `shopPhone` text NOT NULL,
+    PRIMARY KEY (`shopID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Employee`(
-    `EmployeeID` VARCHAR(10) NOT NULL,
-    `EmployeeFirstName` text NOT NULL,
-    `EmployeeLastName` text NOT NULL,
-    `EmployeeAddress` text,
-    `EmployeePhone` text,
-    `EmployeeEmail` text,
-    `Position` text NOT NULL,
-    `Salary` text NOT NULL,
-    `Username` text NOT NULL,
-    `Password` text NOT NULL,
-    `ShopID` VARCHAR(8) NOT NULL,
-    PRIMARY KEY (`EmployeeID`),
+CREATE TABLE IF NOT EXISTS `employee`(
+    `ID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+    `firstName` text NOT NULL,
+    `lastName` text NOT NULL,
+    `photoUrl` text,
+    `address` text,
+    `phone` text,
+    `email` text,
+    `position` text NOT NULL,
+    `salary` text NOT NULL,
+    `username` text NOT NULL,
+    `password` text NOT NULL,
+    `shopID` int(8) UNSIGNED ZEROFILL NOT NULL,
+    PRIMARY KEY (`ID`),
 
     CONSTRAINT `employee_fk_1`
-    FOREIGN KEY (ShopID)
-    REFERENCES shop (ShopID)
+    FOREIGN KEY (shopID)
+    REFERENCES shop (shopID)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Stock`(
-    `StockID` VARCHAR(8) NOT NULL,
-    `StockName` text NOT NULL,
-    PRIMARY KEY (`StockID`)
+CREATE TABLE IF NOT EXISTS `stock`(
+    `stockID` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+    `stockName` text NOT NULL,
+    PRIMARY KEY (`stockID`)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Location`(
-    `LocationID` VARCHAR(10) NOT NULL,
-    `StockID` VARCHAR(8) NOT NULL,
-    `MaxArea` FLOAT Not NULL,
-    `LocationName` text NOT NULL,
+CREATE TABLE IF NOT EXISTS `location`(
+    `locationID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+    `stockID` int(8) UNSIGNED ZEROFILL NOT NULL,
+    `maxArea` FLOAT Not NULL,
+    `locationName` text NOT NULL,
     PRIMARY KEY (`LocationID`),
     
-    CONSTRAINT `Location_fk_1`
-    FOREIGN KEY (StockID)
-    REFERENCES stock (StockID)
+    CONSTRAINT `location_fk_1`
+    FOREIGN KEY (stockID)
+    REFERENCES stock (stockID)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Order` (
-    `OrderID` VARCHAR(10) NOT NULL,
-    `OrderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `DateMove` timestamp DEFAULT CURRENT_TIMESTAMP,
-    `OrderType` text NOT NULL,
-    `EmployeeConfirmID` VARCHAR(10),
-    `EmployeeCreateID` VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS `order` (
+    `orderID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `createAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `moveAt` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `orderType` text NOT NULL,
+    `confirmBy` int(10) UNSIGNED ZEROFILL,
+    `createBy` int(10)  UNSIGNED ZEROFILL NOT NULL,
     `Status` VARCHAR(15) DEFAULT 'waiting' NOT NULL,
     PRIMARY KEY (`OrderID`),
     
-    CONSTRAINT `Order_fk_1`
-    FOREIGN KEY (EmployeeConfirmID)
-    REFERENCES employee (EmployeeID),
+    CONSTRAINT `order_fk_1`
+    FOREIGN KEY (confirmBy)
+    REFERENCES employee (ID),
     
-    CONSTRAINT `Order_fk_2`
-    FOREIGN KEY (EmployeeCreateID)
-    REFERENCES employee (EmployeeID)
+    CONSTRAINT `order_fk_2`
+    FOREIGN KEY (createBy)
+    REFERENCES employee (ID)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Supplier` (
-    `SupplierID` VARCHAR(8) NOT NULL,
-    `SupplierName` text NOT NULL,
-    `SupplierAddress` text,
-    `SupllierPhone` text,
-    `SuplierEmail` text NOT NULL,
-    PRIMARY KEY (`SupplierID`)
+CREATE TABLE IF NOT EXISTS `supplier` (
+    `supplierID` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `supplierName` text NOT NULL,
+    `supplierAddress` text,
+    `supllierPhone` text,
+    `suplierEmail` text NOT NULL,
+    PRIMARY KEY (`supplierID`)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Item` (
-    `ItemID` VARCHAR(15) NOT NULL,
-    `ItemName` text NOT NULL,
-    `ItemCategory` text NOT NULL,
-    `ItemWeight` FLOAT NOT NULL,
-    `ItemArea` FLOAT NOT NULL,
-    `SupplierID` VARCHAR(8) NOT NULL,
-    PRIMARY KEY (`ItemID`),
+CREATE TABLE IF NOT EXISTS `item` (
+    `itemID` int(15) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+    `itemName` text NOT NULL,
+    `category` text NOT NULL,
+    `weight` FLOAT NOT NULL,
+    `area` FLOAT NOT NULL,
+    `supplierID` int(8) UNSIGNED ZEROFILL NOT NULL,
+    PRIMARY KEY (`itemID`),
     
-    CONSTRAINT `Item_fk_1`
-    FOREIGN KEY (SupplierID)
-    REFERENCES supplier (SupplierID)
+    CONSTRAINT `item_fk_1`
+    FOREIGN KEY (supplierID)
+    REFERENCES supplier (supplierID)
 );
 
 
-CREATE TABLE IF NOT EXISTS `Car` (
-    `CarID` VARCHAR(8) NOT NULL,
-    `CarMax` FLOAT NOT NULL,
-    `CarStatus` VARCHAR(10) DEFAULT 'ready' NOT NULL,
-    PRIMARY KEY (`CarID`)
+CREATE TABLE IF NOT EXISTS `car` (
+    `carID` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `carArea` FLOAT NOT NULL,
+    `weight` FLOAT NOT NULL,
+    `carStatus` VARCHAR(10) DEFAULT 'ready' NOT NULL,
+    `licensePlate` text,
+    `model` text,
+    PRIMARY KEY (`carID`)
 );
 
-CREATE TABLE IF NOT EXISTS `Shipping` (
-    `ShippingID` VARCHAR(8) NOT NULL,
-    `CarID` VARCHAR(8) NOT NULL,
-    `EmployeeID` VARCHAR(10) NOT NULL,
-    PRIMARY KEY (`ShippingID`),
+CREATE TABLE IF NOT EXISTS `shipping` (
+    `shippingID` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `carID` int(8) UNSIGNED ZEROFILL NOT NULL,
+    `shipperID` int(10) UNSIGNED ZEROFILL NOT  NULL,
+    PRIMARY KEY (`shippingID`),
     
-    CONSTRAINT `Shipping_fk_1`
-    FOREIGN KEY (CarID)
-    REFERENCES car(CarID),
+    CONSTRAINT `shipping_fk_1`
+    FOREIGN KEY (carID)
+    REFERENCES car(carID),
     
-    CONSTRAINT `Shipping_fk_2`
-    FOREIGN KEY (EmployeeID)
-    REFERENCES employee (EmployeeID)
+    CONSTRAINT `shipping_fk_2`
+    FOREIGN KEY (shipperID)
+    REFERENCES employee (ID)
 );
 
 
-CREATE TABLE IF NOT EXISTS `OrderDetailID` (
-    `OrderDetailID` VARCHAR(10) NOT NULL,
-    `LocationID` VARCHAR(8),
-    `OldLocationID` VARCHAR(8),
-    `OrderID` VARCHAR(10) NOT NULL,
-    `ItemID` VARCHAR(15) NOT NULL,
-    `ItemCount` iNT NOT NULL,
-    `ShippingID` VARCHAR(8),
-    PRIMARY KEY (`OrderDetailID`),
+CREATE TABLE IF NOT EXISTS `orderDetail` (
+    `orderDetailID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    `locationID` int(8)  UNSIGNED ZEROFILL,
+    `oldLocationID` int(8)  UNSIGNED ZEROFILL,
+    `orderID` int(10) UNSIGNED ZEROFILL NOT NULL,
+    `itemID` int(15) UNSIGNED ZEROFILL NOT NULL,
+    `itemCount` iNT NOT NULL,
+    `shippingID` int(8) UNSIGNED ZEROFILL,
+    PRIMARY KEY (`orderDetailID`),
     
-    CONSTRAINT `OrderDetail_fk_1`
-    FOREIGN KEY (LocationID)
-    REFERENCES location (LocationID),
+    CONSTRAINT `orderDetail_fk_1`
+    FOREIGN KEY (locationID)
+    REFERENCES location (locationID),
     
-    CONSTRAINT `OrderDetail_fk_2`
-    FOREIGN KEY (OldLocationID)
-    REFERENCES location (LocationID),
+    CONSTRAINT `orderDetail_fk_2`
+    FOREIGN KEY (oldLocationID)
+    REFERENCES location (locationID),
     
-    CONSTRAINT `OrderDetail_fk_3`
-    FOREIGN KEY (OrderID)
-    REFERENCES `Order` (OrderID),
+    CONSTRAINT `orderDetail_fk_3`
+    FOREIGN KEY (orderID)
+    REFERENCES `order` (orderID),
     
-    CONSTRAINT `OrderDetail_fk_4`
-    FOREIGN KEY (ItemID)
-    REFERENCES item (ItemID),
+    CONSTRAINT `orderDetail_fk_4`
+    FOREIGN KEY (itemID)
+    REFERENCES item (itemID),
     
-    CONSTRAINT `OrderDetail_fk_5`
-    FOREIGN KEY (ShippingID)
-    REFERENCES shipping (ShippingID)
+    CONSTRAINT `orderDetail_fk_5`
+    FOREIGN KEY (shippingID)
+    REFERENCES shipping (shippingID)
 );
+
+## insert data
+INSERT INTO `car` (`carArea`, `weight`, `carStatus`, `licensePlate`, `model`) 
+VALUES ('1.8', '1000', 'ready', 'AA 9999', 'ford - ranger');
+
+
+INSERT INTO `car` (`carArea`, `weight`, `carStatus`, `licensePlate`, `model`) 
+VALUES ('7.14', '2000', 'ready', 'BB 1234', 'isuzu - ftr240');
+
+INSERT INTO `shop` (`carName`, `shopAddress`, `shopPhone`) 
+VALUES ('Main Inventory', '2 ??????????? ????????? ???????? ????????????? 10300', '023456789');
+
+
+
+
+
+
+
