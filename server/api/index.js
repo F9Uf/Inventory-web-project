@@ -5,8 +5,8 @@ const permit = require('./middleware/permission');
 
 // controllers
 const authLogin = require('./auth/authLogin');
-// const employeeController = require('./controllers/employee.controller');
 
+// const employeeController = require('./controllers/employee.controller');
 const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
 const employeeGetOne = require('./employees/employeeGetOne')
@@ -56,14 +56,9 @@ router.delete('/cars/:car_id', permit(), deleteOneCar);
 
 
 //supplier
-
 router.get('/suppliers',permit(),allSup);
 router.post('/suppliers',permit(),addOneSup);
 router.put('/suppliers/:sup_id',permit(),updateSup);
-
-
-router.get('/suppliers', permit(), allSup);
-router.post('/suppliers', permit(), addOneSup);
 router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
 //item
