@@ -12,6 +12,7 @@ const employeeUpdateOne = require('./employees/employeeUpdateOne')
 
 //const car
 const allCar = require('./car/allCar')
+const addOneCar = require('./car/addOneCar')
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -30,6 +31,7 @@ router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 
 //car
 router.get('/car',permit(), allCar);
+router.post('/car',permit(),addOneCar);
 
 
 module.exports = router;
