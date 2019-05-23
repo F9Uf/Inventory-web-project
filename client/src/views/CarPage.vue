@@ -2,19 +2,33 @@
   <layout>
     <h3>Cars Information</h3>
 
-    <div class="row my-4">
+    <the-table :header="header" :body="body"  @onDelete="deleteData"></the-table>
 
-    </div>
   </layout>
 </template>
 
 <script>
 import layout from './LAYOUT'
+import TheTable from '../components/TheTable'
 
 export default {
   components: {
-    layout
-  }
+    layout, TheTable
+  },
+  data() {
+    return {
+      header: ['ID', 'Name'],
+      body: [
+        {id: '01', name: 'zero'},
+        {id: '02', name: 'two'}
+      ]
+    }
+  },
+  methods: {
+    deleteData (value) {
+      console.log(value)
+    }
+  },
 }
 </script>
 
