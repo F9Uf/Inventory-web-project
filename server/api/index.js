@@ -30,6 +30,7 @@ const allItem = require('./items/allItem');
 const deleteOneItem = require('./items/deleteOneItem');
 const itembyid = require('./items/itembyid');
 const updateItem = require('./items/updateItem')
+const addOneItem = require('./items/addOneItem')
 
 //stock
 const allStock = require('./stocks/allStock')
@@ -71,6 +72,7 @@ router.get('/items', permit(), allItem);
 router.get('/items/:item_id',permit(),itembyid);
 router.put('/items/:item_id', permit(), updateItem);
 router.delete('/items/:item_id', permit(), deleteOneItem);
+router.post('/items', permit(), addOneItem);
 
 //stock
 router.get('/stocks', permit(),allStock);
