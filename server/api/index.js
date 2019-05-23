@@ -68,13 +68,10 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
 //item
 router.get('/items', permit(), allItem);
-<<<<<<< HEAD
 router.delete('/items', permit(), deleteOneItem);
 router.get('/items/:item_id',permit(),itembyid);
-=======
 router.delete('/items/:item_id', permit(), deleteOneItem);
 
->>>>>>> 3fec63113b8859bf4a204b3af338c70df2483158
 
 //stock
 router.get('/stocks', permit(),allStock);
