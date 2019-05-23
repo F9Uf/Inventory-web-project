@@ -22,10 +22,14 @@ const deleteOneCar = require('./cars/deleteOneCar')
 //supplier
 const allSup = require('./suppliers/allSup')
 const addOneSup = require('./suppliers/addOneSup')
+const updateSup = require('./suppliers/updateSup')
 const deleteOneSup = require('./suppliers/deleteOneSup')
 
+<<<<<<< HEAD
 //item
 const allItem = require('./items/allItem')
+=======
+>>>>>>> 43a6864bfe33d5c78d5096f0ed7c887a7bc6d8c1
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -51,6 +55,12 @@ router.delete('/cars/:car_id', permit(), deleteOneCar);
 
 
 //supplier
+
+router.get('/suppliers',permit(),allSup);
+router.post('/suppliers',permit(),addOneSup);
+router.put('/suppliers/:sup_id',permit(),updateSup);
+
+
 router.get('/suppliers', permit(), allSup);
 router.post('/suppliers', permit(), addOneSup);
 router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
