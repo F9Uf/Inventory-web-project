@@ -26,15 +26,25 @@ const updateSup = require('./suppliers/updateSup');
 const deleteOneSup = require('./suppliers/deleteOneSup');
 
 //item
+<<<<<<< HEAD
 const allItem = require('./items/allItem');
 const deleteOneItem = require('./items/deleteOneItem');
 const itembyid = require('./items/itembyid');
+=======
+const allItem = require('./items/allItem')
+const deleteOneItem = require('./items/deleteOneItem')
+<<<<<<< HEAD
+const updateItem = require('./items/updateItem')
+
+=======
+>>>>>>> 16fa2094b922eac52ec3d60937fda4037908868e
 
 //stock
 const allStock = require('./stocks/allStock')
 const deleteOneStock = require('./stocks/deleteOneStock')
 const addOneStock = require('./stocks/addOneStock')
 const updateStock = require('./stocks/updateStock')
+>>>>>>> 2e8c5668cf619e1deb291196e07caea7e3c5caa0
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -68,10 +78,18 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
 //item
 router.get('/items', permit(), allItem);
+<<<<<<< HEAD
 router.delete('/items', permit(), deleteOneItem);
 router.get('/items/:item_id',permit(),itembyid);
+=======
+<<<<<<< HEAD
+router.delete('/items', permit(), deleteOneItem);
+router.put('/items/:item_id', permit(), updateItem);
+=======
+>>>>>>> 16fa2094b922eac52ec3d60937fda4037908868e
 router.delete('/items/:item_id', permit(), deleteOneItem);
 
+>>>>>>> 2e8c5668cf619e1deb291196e07caea7e3c5caa0
 
 //stock
 router.get('/stocks', permit(),allStock);

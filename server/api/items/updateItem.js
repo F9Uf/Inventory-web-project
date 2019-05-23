@@ -6,16 +6,15 @@ module.exports = (req, res) => {
   const category = req.body.category;
   const weight = req.body.weight;
   const area = req.body.area;
-  const supplier = req.body.supplierID;
-  const sql = 'UPDATE itemNa'
+  const supplierName = req.body.supplierName;
+  const sql = 'UPDATE item SET itemName = ?, category = ?, weight = ?, area = ?, supplierID = (SELECT supplierID FROM supplier WHERE supplierName LIKE ?) WHERE itemID = ?;'
 
-
-  db.query(sql,[area,weight,status,licensePlate,model,car], (err, data) => {
+  db.query(sql,[itemName,category,weight,area,supplierName,id], (err, data) => {
     if (err) {
         console.log(err)
       return res.json({
         success: false,
-        message: 'Update error!!'
+        message: err
       })
     } else {
       return res.json({
