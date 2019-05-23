@@ -1,6 +1,5 @@
 <template>
-  <div class="row m-3" v-if="userSetting">
-    <div class="col bg-white p-3">
+  <layout>
       <h3>Profile Settings</h3>
       <!-- profile setting -->
       <div class="row my-4">
@@ -72,7 +71,6 @@
       </div>
       <hr>
       <!--  -->
-    </div>
     <div v-if="alert" class="alert alert-dismissible fade fixed-bottom m-5"
       :class="{'show': alert, 'alert-danger': typeAlert == 'error', 'alert-success': typeAlert == 'success'}">
       <strong v-if="typeAlert == 'error'">ERROR!</strong>
@@ -82,14 +80,18 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  </div>
+  </layout>
 </template>
 
 <script>
 import { $api } from '@/service/api'
+import layout from './LAYOUT'
 
 export default {
   name: "setting-page",
+  components: {
+    layout
+  },
   data() {
     return {
       file: null,

@@ -22,6 +22,11 @@ const router = new Router({
       }
     },
     {
+      path: '/cars',
+      name: 'cars',
+      component: () => import('./views/CarPage.vue')
+    },
+    {
       path: '/setting',
       name: 'setting',
       component: Setting,

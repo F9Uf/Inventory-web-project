@@ -67,7 +67,8 @@ export default {
         { text: 'Shipping', to: '/about', auth: ['staff', 'manager'] },
         { text: 'Items', to: '/items', auth: ['staff', 'manager'] },
         { text: 'Employee', to: '/about', auth: ['manager'] },
-        { text: 'Stock', to: '/stock', auth: ['manager'] }
+        { text: 'Stock', to: '/stock', auth: ['manager'] },
+        { text: 'Cars', to: '/cars', auth: ['manager']}
       ]
     }
   },
