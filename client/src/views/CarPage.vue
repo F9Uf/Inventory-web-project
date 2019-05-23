@@ -10,6 +10,7 @@
 <script>
 import layout from './LAYOUT'
 import TheTable from '../components/TheTable'
+import { $api } from '../service/api'
 
 export default {
   components: {
@@ -17,16 +18,22 @@ export default {
   },
   data() {
     return {
-      header: ['ID', 'Name'],
-      body: [
-        {id: '01', name: 'zero'},
-        {id: '02', name: 'two'}
-      ]
+      header: ['Car ID', 'Area', 'Status', 'License Plate', 'Model', 'Weight'],
+      body: []
     }
+  },
+  created() {
+    this.fetchCars()
   },
   methods: {
     deleteData (value) {
       console.log(value)
+    },
+    fetchCars () {
+      $api({ path: '/car', method: 'get'})
+      .then( data => {
+        this.body = data.result
+      })
     }
   },
 }
