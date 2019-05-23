@@ -1,0 +1,25 @@
+const db = require('../../db');
+
+module.exports = (req, res) => {
+  const area = req.body.carArea;
+  const weight = req.body.weight;
+  const licensePlate = req.body.lincensePlate;
+  const model = req.body.model;
+  const sql = 'INSERT INTO CAR VALUES(null,?,?,"ready",?,?)'
+
+  
+
+  db.query(sql,[area,weight,licensePlate,model], (err, data) => {
+    if (err) {
+      return res.json({
+        success: false,
+        message: 'Add 1 car is error!!'
+      })
+    } else {
+      return res.json({
+        success: true,
+        message: 'Add 1 car is successful!'
+      })
+    }
+  })
+}
