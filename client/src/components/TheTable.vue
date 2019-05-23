@@ -10,7 +10,12 @@
   <tbody>
     <tr v-for="(b, bi) in body" :key="bi">
       <th scope="row">{{bi}}</th>
-      <td v-for="(a, i) in b" :key="i">{{a}}</td>
+      <template v-for="(a, i) in b" >
+        <td :key="i" v-if="isImage(a)">
+          <img :src="a" width="80px" >
+        </td>
+        <td :key="i" v-else>{{a}}</td>
+      </template>
       <td>
         <button type="button" class="btn btn-danger" @click="$emit('onDelete', b[id])">Delete</button> |
         <button type="button" class="btn btn-warning" @click="$emit('onEdit', b[id])">Edit</button>
@@ -26,7 +31,13 @@ export default {
     header: Array,
     body: Array,
     id: String
-  }
+  },
+  methods: {
+    isImage (text) {
+      let myRegex = /(https?:\/\/.*\.(?:png|jpg))/i
+      return myRegex.test(text)
+    }
+  },
 }
 </script>
 

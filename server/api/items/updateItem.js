@@ -7,7 +7,7 @@ module.exports = (req, res) => {
   const weight = req.body.weight;
   const area = req.body.area;
   const supplier = req.body.supplierID;
-  const sql = 'UPDATE car SET carArea = ?,weight = ?,carStatus = ?,licensePlate = ?,model = ? WHERE carID = ?'
+  const sql = 'UPDATE itemNa'
 
 
   db.query(sql,[area,weight,status,licensePlate,model,car], (err, data) => {
