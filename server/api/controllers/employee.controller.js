@@ -39,14 +39,14 @@ exports.updateOneEmployee = (req, res) => {
   .then(data => {
     return res.status(200).json({
       success: true,
-      message: 'update success!'
+      message: 'update is success!'
     })
   })
   .catch(err => {
     console.log(err)
     return res.json({
       success: false,
-      message: 'update error!!'
+      message: 'update is error!!'
     })
   })
 }
