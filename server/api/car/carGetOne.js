@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const id = req.params.employee_id;
+  const id = req.params.carID;
   const sql = 'SELECT * FROM car WHERE carID = ?'
 
   db.query(sql, [id], (err, data) => {
@@ -12,17 +12,17 @@ module.exports = (req, res) => {
       })
     } else {
       if (data && data[0]) {
-        // if found employeeID
+        // if found carID
         return res.json({
           success: true,
-          message: 'Successfully found the user',
+          message: 'Successfully found the car',
           result: data[0]
         })
       } else {
         // if not found
         return res.json({
           success: false,
-          message: 'User not found!'
+          message: 'Car not found!'
         })
       }
     }
