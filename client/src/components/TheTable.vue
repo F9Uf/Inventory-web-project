@@ -12,8 +12,8 @@
       <th scope="row">{{bi}}</th>
       <td v-for="(a, i) in b" :key="i">{{a}}</td>
       <td>
-        <button type="button" class="btn btn-danger" @click="$emit('onDelete', b.id)">Delete</button> |
-        <button type="button" class="btn btn-warning" @click="$emit('onEdit', b.id)">Edit</button>
+        <button type="button" class="btn btn-danger" @click="$emit('onDelete', b[id])">Delete</button> |
+        <button type="button" class="btn btn-warning" @click="$emit('onEdit', b[id])">Edit</button>
       </td>
     </tr>
   </tbody>
@@ -24,7 +24,8 @@
 export default {
   props: {
     header: Array,
-    body: Array
+    body: Array,
+    id: String
   }
 }
 </script>
