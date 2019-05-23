@@ -2,14 +2,46 @@
     <layout>
     <h3>employees Information</h3>
 
-    <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="EmployeesID"></the-table>
+    <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="employeeID"></the-table>
+    <h5 v-if="!body">No Employee</h5>
 
-    <the-modal v-if="showModal" @close="showModal = false">
+    <the-modal v-if="showModal" @close="showModal = false" @updateData="updateData">
       <template v-slot:header>
         <h5>Edit Information</h5>
       </template>
       <template v-slot:body>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem nisi voluptates iste labore recusandae? Ad eum in adipisci impedit veritatis exercitationem esse, debitis, incidunt dolor laborum, quia eveniet quo quasi!
+        <div class="form-row">
+          <div class="col">
+             <label >First Name</label>
+            <input type="text" class="form-control" v-model="editEmployee.employeeFirstName">
+          </div>
+          <div class="col">
+             <label >Last Name</label>
+            <input type="text" class="form-control" v-model="editEmployee.employeeLastName">
+          </div><br>
+        </div>
+        <div class="form-row">
+            <div class="col">
+             <label >Photo URL</label>
+            <input type="text" class="form-control" v-model="editEmployee.employeePhotoUrl">
+          </div><br>
+        </div>
+        <div class="form-row">
+            <div class="col">
+            <label >Position</label>
+              <select v-model="editEmployee.position" class="form-control">
+              <option value="manager">manager</option>
+              <option value="staff">staff</option>
+              <option value="shopkeeper">shopkeeper</option>
+              <option value="deliverer">deliverer</option>
+            </select>
+          </div>
+          <div class="col">
+             <label >shopID</label>
+            <input type="number" class="form-control" v-model="editEmployee.shopID">
+          </div>
+        </div>
+          
       </template>
     </the-modal>
 
@@ -27,8 +59,9 @@ export default {
     },
     data() {
         return{
-            header: ['ID','Firstname', 'Lastname','Profile Picture','Posision','shopID'],
-            body: [],
+            header: ['ID','Firstname', 'Lastname','Profile Picture','Position','shopID'],
+            body: null,
+            editEmployee: {},
             showModal: false
         }
        
@@ -38,10 +71,15 @@ export default {
     },
     methods: {
         deleteData (value) {
-            console.log(value)
+            $api({path: `/employees/${value}`,method: 'delte'})
+            .then(data => {
+                this.fetchEmployees()
+            })
+            
         },
         editData (value) {
             this.showModal = true
+            this.editEmployee = JSON.parse(JSON.stringify(this.body.filter(e => e.employeeID === value)[0]))
         },
         fetchEmployees() {
             $api({path: '/employees', method:'get'})
@@ -50,6 +88,9 @@ export default {
                 console.log(data.result);
                 
             })
+        },
+        updateData () {
+            $api({ path: `/employees/${this.editEmployee.employeeID}`, method: 'put', data: this.editEmployee})
         }
     }
 
