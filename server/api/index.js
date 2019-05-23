@@ -13,6 +13,7 @@ const employeeUpdateOne = require('./employees/employeeUpdateOne')
 //const car
 const allCar = require('./cars/allCar')
 const addOneCar = require('./cars/addOneCar')
+const deleteOneCar = require('./cars/deleteOneCar')
 
 //supplier
 const allSup = require('./suppliers/allSup')
@@ -33,7 +34,9 @@ router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 
 //car
-router.get('/cars',permit(), allCar);
+router.get('/cars', permit(), allCar);
+router.post('/cars', permit(), addOneCar);
+router.delete('/cars', permit(), deleteOneCar);
 
 //supplier
 router.get('/suppliers',permit(),allSup);
