@@ -12,14 +12,12 @@
           </div>
 
           <div class="modal-footer">
-            <slot name="footer">
-              <button class="btn btn-danger modal-default-button" @click="$emit('close')">
-                Close
-              </button>
-              <button class="btn btn-info" @click="$emit('update')">
-                Update
-              </button>
-            </slot>
+            <button class="btn btn-info" @click="$emit('update')">
+              Update
+            </button>
+            <button class="btn btn-danger modal-default-button" @click="$emit('close')">
+              Close
+            </button>
           </div>
         </div>
       </div>

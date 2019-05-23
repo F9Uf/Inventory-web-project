@@ -1,15 +1,43 @@
 <template>
   <layout>
-    <h3>Cars Information</h3>
+    <h3>Cars Information</h3><br>
 
-    <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="carID"></the-table>
+    <the-table v-if="body" :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="carID"></the-table>
+    <h5 v-if="!body">No Cars</h5>
 
-    <the-modal v-if="showModal" @close="showModal = false">
+    <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
       <template v-slot:header>
-        <h5>Edit Car</h5>
+        <h5>Edit Car #{{editCar.carID}}</h5>
       </template>
       <template v-slot:body>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem nisi voluptates iste labore recusandae? Ad eum in adipisci impedit veritatis exercitationem esse, debitis, incidunt dolor laborum, quia eveniet quo quasi!
+        <div class="form-row">
+          <div class="col">
+             <label for="inputEmail4">Area</label>
+            <input type="number" class="form-control" v-model="editCar.carArea">
+          </div>
+          <div class="col">
+             <label for="inputEmail4">Weight</label>
+            <input type="number" class="form-control" v-model="editCar.weight">
+          </div>
+          <div class="col">
+            <label for="inputState">Status</label>
+
+            <select v-model="editCar.carStatus" class="form-control">
+              <option value="unready">unready</option>
+              <option value="ready">ready</option>
+            </select>
+          </div>
+        </div><br>
+        <div class="form-row">
+          <div class="col">
+             <label for="inputEmail4">License Plate</label>
+            <input type="text" class="form-control" v-model="editCar.licensePlate">
+          </div>
+          <div class="col">
+             <label for="inputEmail4">Model</label>
+            <input type="text" class="form-control" v-model="editCar.model">
+          </div>
+        </div>
       </template>
     </the-modal>
 
@@ -28,8 +56,9 @@ export default {
   },
   data() {
     return {
-      header: ['Car ID', 'Area', 'Status', 'License Plate', 'Model', 'Weight'],
-      body: [],
+      header: ['Car ID', 'Area', 'Weight', 'Status', 'License Plate', 'Model', ],
+      body: null,
+      editCar: {},
       showModal: false
     }
   },
@@ -38,15 +67,26 @@ export default {
   },
   methods: {
     deleteData (value) {
-      console.log(value)
+      $api({ path: `/cars/${value}`, method: 'delete'})
+      .then(data => {
+        this.fetchCars()
+      })
     },
     editData (value) {
       this.showModal = true
+      this.editCar = JSON.parse(JSON.stringify(this.body.filter(e => e.carID === value)[0]))
     },
     fetchCars () {
       $api({ path: '/cars', method: 'get'})
       .then( data => {
         this.body = data.result
+      })
+    },
+    updateData () {
+      $api({ path: `/cars/${this.editCar.carID}`, method: 'put', data: this.editCar})
+      .then( data => {
+        this.showModal = false
+        this.fetchCars()
       })
     }
   },
