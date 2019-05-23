@@ -1,31 +1,28 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const id = req.params.carID;
-  const sql = 'SELECT * FROM car WHERE carID = ?'
+  const sql = 'SELECT * FROM car'
 
-  db.query(sql, [id], (err, data) => {
+  db.query(sql, (err, data) => {
     if (err) {
       return res.json({
         success: false,
         message: err
       })
     } else {
-      if (data && data[0]) {
-        // if found carID
+      if (data) {
         return res.json({
           success: true,
-          message: 'Successfully found the car',
-          result: data[0]
+          message: 'Successfully found the user',
+          result: data
         })
       } else {
         // if not found
         return res.json({
           success: false,
-          message: 'Car not found!'
+          message: 'User not found!'
         })
       }
     }
   })
 }
-
