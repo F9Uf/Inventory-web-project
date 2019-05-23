@@ -1,13 +1,14 @@
 <template>
     <layout>
         <h3>Shipping</h3>
-        <the-table :header="header" :body="body"  @onDelete="deleteData"></the-table>
+        <the-table :header="header" :body="body"  @onDelete="deleteData" id="ShippingID"></the-table>
     </layout>
 </template>
 
 <script>
 import layout from './LAYOUT'
 import TheTable from '../components/TheTable'
+import { $api} from '../service/api'
 
 export default {
     components: {
@@ -15,17 +16,24 @@ export default {
   },
   data() {
     return {
-      header: ['ID', 'Name'],
-      body: [
-        {id: '01', name: 'zero'},
-        {id: '02', name: 'two'}
-      ]
+      header: ['Shipping ID', 'Car ID','Driver'],
+      body: []
     }
+  },
+  create() {
+    
   },
   methods: {
     deleteData (value) {
       console.log(value)
-    }
+    },
+    // waiting for api
+    // fatchShipping () {
+    //   $api({path: '/shipping', method: 'get'})
+    //   .then( dara => {
+    //     this.body = data.result
+    //   })
+    // }
   }
 
 }
