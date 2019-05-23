@@ -22,6 +22,9 @@ const allSup = require('./suppliers/allSup')
 const addOneSup = require('./suppliers/addOneSup')
 const deleteOneSup = require('./suppliers/deleteOneSup')
 
+//item
+const allItem = require('./items/allItem')
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -36,18 +39,20 @@ router.post('/login', authLogin);
 //employee user
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
-router.delete('/employees/:employeeID', permit(), deleteOneEmployee);
+router.delete('/employees/:employee_id', permit(), deleteOneEmployee);
 
 //car
 router.get('/cars', permit(), allCar);
 router.post('/cars', permit(), addOneCar);
-router.delete('/cars/:carID', permit(), deleteOneCar);
+router.delete('/cars/:car_id', permit(), deleteOneCar);
 
 
 //supplier
 router.get('/suppliers', permit(), allSup);
 router.post('/suppliers', permit(), addOneSup);
-router.delete('/suppliers/:supplierID', permit(), deleteOneSup);
+router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
+//item
+router.get('/items', permit(), allItem);
 
 module.exports = router;
