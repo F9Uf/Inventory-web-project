@@ -18,6 +18,8 @@ const deleteOneCar = require('./cars/deleteOneCar')
 //supplier
 const allSup = require('./suppliers/allSup')
 const addOneSup = require('./suppliers/addOneSup')
+const deleteOneSup = require('./suppliers/deleteOneSup')
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -39,9 +41,9 @@ router.post('/cars', permit(), addOneCar);
 router.delete('/cars/:carID', permit(), deleteOneCar);
 
 //supplier
-router.get('/suppliers',permit(),allSup);
-router.post('/suppliers',permit(),addOneSup);
-
+router.get('/suppliers', permit(), allSup);
+router.post('/suppliers', permit(), addOneSup);
+router.delete('/suppliers/:supplierID', permit(), deleteOneSup);
 
 
 module.exports = router;
