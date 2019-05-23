@@ -9,6 +9,7 @@ const authLogin = require('./auth/authLogin');
 
 const employeeGetOne = require('./employees/employeeGetOne')
 const employeeUpdateOne = require('./employees/employeeUpdateOne')
+const deleteOneEmployee = require('./employees/deleteOneEmployee')
 
 //const car
 const allCar = require('./cars/allCar')
@@ -35,12 +36,9 @@ router.post('/login', authLogin);
 //employee user
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
+router.delete('/employees/:employeeID', permit(), deleteOneEmployee);
 
 //car
-
-router.get('/cars',permit(), allCar);
-router.put('/cars/:car_id',permit(),updateCar);
-
 router.get('/cars', permit(), allCar);
 router.post('/cars', permit(), addOneCar);
 router.delete('/cars/:carID', permit(), deleteOneCar);
