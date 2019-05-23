@@ -3,7 +3,7 @@ const db = require('../../db');
 module.exports = (req, res) => {
   const area = req.body.carArea;
   const weight = req.body.weight;
-  const licensePlate = req.body.lincensePlate;
+  const licensePlate = req.body.licensePlate;
   const model = req.body.model;
   const sql = 'INSERT INTO CAR VALUES(null,?,?,"ready",?,?)'
 
