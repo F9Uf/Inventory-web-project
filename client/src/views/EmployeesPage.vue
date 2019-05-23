@@ -85,7 +85,7 @@ export default {
             $api({path: '/employees', method:'get'})
             .then( data => {
                 this.body = data.result
-                console.log(data.result);
+                
                 
             })
         },
@@ -94,7 +94,7 @@ export default {
             .then(data => {
                 this.showModal = false
                 this.fetchEmployees()
-                console.log(data);
+                
                 
             })
         }
