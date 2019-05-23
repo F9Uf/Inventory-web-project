@@ -27,6 +27,9 @@ const deleteOneSup = require('./suppliers/deleteOneSup')
 
 //item
 const allItem = require('./items/allItem')
+const deleteOneItem = require('./items/deleteOneItem')
+
+
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -64,5 +67,6 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
 //item
 router.get('/items', permit(), allItem);
+router.delete('/items', permit(), deleteOneItem);
 
 module.exports = router;
