@@ -2,7 +2,7 @@
   <layout>
     <h3>Cars Information</h3>
 
-    <the-table :header="header" :body="body"  @onDelete="deleteData"></the-table>
+    <the-table :header="header" :body="body"  @onDelete="deleteData" id="carID"></the-table>
 
   </layout>
 </template>
@@ -30,7 +30,7 @@ export default {
       console.log(value)
     },
     fetchCars () {
-      $api({ path: '/car', method: 'get'})
+      $api({ path: '/cars', method: 'get'})
       .then( data => {
         this.body = data.result
       })
