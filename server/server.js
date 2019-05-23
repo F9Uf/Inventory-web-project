@@ -5,7 +5,11 @@ const cors = require('cors');
 const config_env = require('./config/config_env');
 const app = express();
 
-app.use(cors());
+var corsOptions = {
+  origin: 'https://inventory-web.netlify.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 if (config_env.NODE_ENV === 'development') {
   app.use(require('morgan')('dev'));
