@@ -15,8 +15,8 @@ const allCar = require('./cars/allCar')
 const addOneCar = require('./cars/addOneCar')
 
 //supplier
-const allSup = require('./supplier/allSup')
-
+const allSup = require('./suppliers/allSup')
+const addOneSup = require('./suppliers/addOneSup')
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -36,8 +36,8 @@ router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 router.get('/cars',permit(), allCar);
 
 //supplier
-router.get('/supplier',permit(),allSup);
-
+router.get('/suppliers',permit(),allSup);
+router.post('/suppliers',permit(),addOneSup);
 
 
 
