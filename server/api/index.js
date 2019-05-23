@@ -9,27 +9,38 @@ const authLogin = require('./auth/authLogin');
 // const employeeController = require('./controllers/employee.controller');
 const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
-const employeeGetOne = require('./employees/employeeGetOne')
-const deleteOneEmployee = require('./employees/deleteOneEmployee')
+const employeeGetOne = require('./employees/employeeGetOne');
+const deleteOneEmployee = require('./employees/deleteOneEmployee');
 
 
 //const car
-const allCar = require('./cars/allCar')
-const addOneCar = require('./cars/addOneCar')
-const updateCar = require('./cars/updateCar')
-const deleteOneCar = require('./cars/deleteOneCar')
+const allCar = require('./cars/allCar');
+const addOneCar = require('./cars/addOneCar');
+const updateCar = require('./cars/updateCar');
+const deleteOneCar = require('./cars/deleteOneCar');
 
 //supplier
-const allSup = require('./suppliers/allSup')
-const addOneSup = require('./suppliers/addOneSup')
-const updateSup = require('./suppliers/updateSup')
-const deleteOneSup = require('./suppliers/deleteOneSup')
+const allSup = require('./suppliers/allSup');
+const addOneSup = require('./suppliers/addOneSup');
+const updateSup = require('./suppliers/updateSup');
+const deleteOneSup = require('./suppliers/deleteOneSup');
 
 //item
+<<<<<<< HEAD
+const allItem = require('./items/allItem');
+const deleteOneItem = require('./items/deleteOneItem');
+const itembyid = require('./items/itembyid');
+=======
 const allItem = require('./items/allItem')
 const deleteOneItem = require('./items/deleteOneItem')
 const updateItem = require('./items/updateItem')
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 16fa2094b922eac52ec3d60937fda4037908868e
+
+>>>>>>> cc91982aa181e7f3879e879d87c971e00b8fda62
 //stock
 const allStock = require('./stocks/allStock')
 const deleteOneStock = require('./stocks/deleteOneStock')
@@ -69,7 +80,19 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 //item
 router.get('/items', permit(), allItem);
 router.delete('/items', permit(), deleteOneItem);
+router.get('/items/:item_id',permit(),itembyid);
+=======
+<<<<<<< HEAD
+router.delete('/items', permit(), deleteOneItem);
 router.put('/items/:item_id', permit(), updateItem);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 16fa2094b922eac52ec3d60937fda4037908868e
+router.delete('/items/:item_id', permit(), deleteOneItem);
+
+>>>>>>> 2e8c5668cf619e1deb291196e07caea7e3c5caa0
+>>>>>>> cc91982aa181e7f3879e879d87c971e00b8fda62
 
 //stock
 router.get('/stocks', permit(),allStock);
