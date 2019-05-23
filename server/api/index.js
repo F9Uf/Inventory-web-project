@@ -9,25 +9,26 @@ const authLogin = require('./auth/authLogin');
 // const employeeController = require('./controllers/employee.controller');
 const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
-const employeeGetOne = require('./employees/employeeGetOne')
-const deleteOneEmployee = require('./employees/deleteOneEmployee')
+const employeeGetOne = require('./employees/employeeGetOne');
+const deleteOneEmployee = require('./employees/deleteOneEmployee');
 
 
 //const car
-const allCar = require('./cars/allCar')
-const addOneCar = require('./cars/addOneCar')
-const updateCar = require('./cars/updateCar')
-const deleteOneCar = require('./cars/deleteOneCar')
+const allCar = require('./cars/allCar');
+const addOneCar = require('./cars/addOneCar');
+const updateCar = require('./cars/updateCar');
+const deleteOneCar = require('./cars/deleteOneCar');
 
 //supplier
-const allSup = require('./suppliers/allSup')
-const addOneSup = require('./suppliers/addOneSup')
-const updateSup = require('./suppliers/updateSup')
-const deleteOneSup = require('./suppliers/deleteOneSup')
+const allSup = require('./suppliers/allSup');
+const addOneSup = require('./suppliers/addOneSup');
+const updateSup = require('./suppliers/updateSup');
+const deleteOneSup = require('./suppliers/deleteOneSup');
 
 //item
-const allItem = require('./items/allItem')
-const deleteOneItem = require('./items/deleteOneItem')
+const allItem = require('./items/allItem');
+const deleteOneItem = require('./items/deleteOneItem');
+const itembyid = require('./items/itembyid');
 
 
 
@@ -64,5 +65,6 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 //item
 router.get('/items', permit(), allItem);
 router.delete('/items', permit(), deleteOneItem);
+router.get('/items/:item_id',permit(),itembyid);
 
 module.exports = router;
