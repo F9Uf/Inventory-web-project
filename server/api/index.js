@@ -4,7 +4,7 @@ const router = express.Router();
 const permit = require('./middleware/permission');
 
 // controllers
-const authController = require('./controllers/auth.controller');
+const authLogin = require('./auth/authLogin');
 const employeeController = require('./controllers/employee.controller');
 
 
@@ -17,8 +17,7 @@ router.get('/', (req, res) => {
 
 
 // auth
-router.post('/login', authController.login);
-router.post('/signup', authController.signup);
+router.post('/login', authLogin.login);
 
 //employee user
 router.get('/employees/:employee_id', permit(), employeeController.getOneEmployee);
