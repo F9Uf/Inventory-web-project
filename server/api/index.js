@@ -12,7 +12,7 @@ const employeeUpdateOne = require('./employees/employeeUpdateOne')
 
 //const car
 const allCar = require('./car/allCar')
-const addOneCar = require('./car/addOneCar')
+const addOneCar = require('./car/adOneCar')
 
 router.get('/', (req, res) => {
   res.status(200).json({
