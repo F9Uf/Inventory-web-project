@@ -51,6 +51,7 @@ router.delete('/employees/:employee_id', permit(), deleteOneEmployee);
 //car
 router.get('/cars', permit(), allCar);
 router.post('/cars', permit(), addOneCar);
+router.put('/cars/:car_id', permit(), updateCar);
 router.delete('/cars/:car_id', permit(), deleteOneCar);
 
 
