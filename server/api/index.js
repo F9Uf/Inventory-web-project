@@ -25,11 +25,8 @@ const addOneSup = require('./suppliers/addOneSup')
 const updateSup = require('./suppliers/updateSup')
 const deleteOneSup = require('./suppliers/deleteOneSup')
 
-<<<<<<< HEAD
 //item
 const allItem = require('./items/allItem')
-=======
->>>>>>> 43a6864bfe33d5c78d5096f0ed7c887a7bc6d8c1
 
 router.get('/', (req, res) => {
   res.status(200).json({
