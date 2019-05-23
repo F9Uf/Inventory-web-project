@@ -24,7 +24,10 @@ const router = new Router({
     {
       path: '/cars',
       name: 'cars',
-      component: () => import('./views/CarPage.vue')
+      component: () => import('./views/CarPage.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/setting',
@@ -66,12 +69,26 @@ const router = new Router({
     {
       path: '/shipping',
       name: 'shipping',
-      component: () => import('./views/ShippingPage.vue')
+      component: () => import('./views/ShippingPage.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/employees',
       name: 'employees',
-      component: () => import('./views/EmployeesPage.vue')
+      component: () => import('./views/EmployeesPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/suppliers',
+      name: 'suppliers',
+      component: () => import('./views/SupplierPage.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '*',
