@@ -5,13 +5,13 @@ module.exports = (req, res) => {
   const supAddress = req.body.supplierAddress;
   const supPhone = req.body.supplierPhone;
   const supEmail = req.body.supplierEmail;
-  const sql = 'INSERT INTO CAR VALUES(null,?,?,?,?)'
+  const sql = 'INSERT INTO supplier VALUES(null,?,?,?,?)'
 
   
 
   db.query(sql,[supName,supAddress,supPhone,supEmail], (err, data) => {
     if (err) {
-      return res.json({
+        return res.json({
         success: false,
         message: 'Add 1 supplier is error!'
       })
