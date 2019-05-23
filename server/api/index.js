@@ -6,9 +6,9 @@ const permit = require('./middleware/permission');
 // controllers
 const authLogin = require('./auth/authLogin');
 // const employeeController = require('./controllers/employee.controller');
-
-const employeeGetOne = require('./employees/employeeGetOne')
-const employeeUpdateOne = require('./employees/employeeUpdateOne')
+const allEmployee = require('./employees/allEmployee');
+const employeeGetOne = require('./employees/employeeGetOne');
+const employeeUpdateOne = require('./employees/employeeUpdateOne');
 
 //const car
 const allCar = require('./cars/allCar')
@@ -33,6 +33,7 @@ router.get('/', (req, res) => {
 router.post('/login', authLogin);
 
 //employee user
+router.get('/employees', permit(), allEmployee);
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 
