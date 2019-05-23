@@ -27,14 +27,14 @@ export default {
     },
     data() {
         return{
-            header: ['ID','name'],
+            header: ['ID','Firstname', 'Lastname','Profile Picture','Posision','shopID'],
             body: [],
             showModal: false
         }
        
     },
     created(){
-        // this.fetchEmployees()
+        this.fetchEmployees()
     },
     methods: {
         deleteData (value) {
@@ -47,6 +47,8 @@ export default {
             $api({path: '/employees', method:'get'})
             .then( data => {
                 this.body = data.result
+                console.log(data.result);
+                
             })
         }
     }
