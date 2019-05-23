@@ -12,6 +12,7 @@ const employeeUpdateOne = require('./employees/employeeUpdateOne')
 
 //const car
 const allCar = require('./car/allCar')
+const addOneCar = require('./car/addOneCar')
 
 //supplier
 const allSup = require('./supplier/allSup')
@@ -33,8 +34,11 @@ router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 
 //car
 router.get('/car',permit(), allCar);
+
 //supplier
 router.get('/supplier',permit(),allSup);
+
+
 
 
 module.exports = router;
