@@ -6,9 +6,12 @@ const permit = require('./middleware/permission');
 // controllers
 const authLogin = require('./auth/authLogin');
 // const employeeController = require('./controllers/employee.controller');
+
 const allEmployee = require('./employees/allEmployee');
-const employeeGetOne = require('./employees/employeeGetOne');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
+const employeeGetOne = require('./employees/employeeGetOne')
+const deleteOneEmployee = require('./employees/deleteOneEmployee')
+
 
 //const car
 const allCar = require('./cars/allCar')
@@ -36,12 +39,9 @@ router.post('/login', authLogin);
 router.get('/employees', permit(), allEmployee);
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
+router.delete('/employees/:employeeID', permit(), deleteOneEmployee);
 
 //car
-
-router.get('/cars',permit(), allCar);
-router.put('/cars/:car_id',permit(),updateCar);
-
 router.get('/cars', permit(), allCar);
 router.post('/cars', permit(), addOneCar);
 router.delete('/cars/:carID', permit(), deleteOneCar);

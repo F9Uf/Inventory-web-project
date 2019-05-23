@@ -1,8 +1,8 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const id = req.params.supplierID;
-    const sql = 'DELETE FROM supplier WHERE supplierID = ?'
+    const id = req.params.employeeID;
+    const sql = 'DELETE FROM employee WHERE employeeID = ?'
     
     db.query(sql, [id], (err, data) => {
         if(err) {
