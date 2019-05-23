@@ -19,6 +19,8 @@ const deleteOneCar = require('./cars/deleteOneCar')
 //supplier
 const allSup = require('./suppliers/allSup')
 const addOneSup = require('./suppliers/addOneSup')
+const updateSup = require('./suppliers/updateSup')
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -47,6 +49,7 @@ router.delete('/cars/:carID', permit(), deleteOneCar);
 //supplier
 router.get('/suppliers',permit(),allSup);
 router.post('/suppliers',permit(),addOneSup);
+router.put('/suppliers/:sup_id',permit(),updateSup);
 
 
 
