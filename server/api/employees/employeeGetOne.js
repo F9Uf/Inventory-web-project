@@ -15,7 +15,7 @@ module.exports = (req, res) => {
         // if found employeeID
         return res.json({
           success: true,
-          message: 'Successfuly found the user',
+          message: 'Successfully found the user',
           result: data[0]
         })
       } else {
