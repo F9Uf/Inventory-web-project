@@ -18,7 +18,7 @@
       <div class="line3" ></div>
     </div>
 
-    <router-link class="navbar-brand mr-auto d-none d-sm-block" to="/">INVENTORY</router-link>
+    <router-link class="navbar-brand mr-auto" to="/">INVENTORY</router-link>
 
     <div
       class="collapse navbar-collapse order-xl-0 order-lg-0 order-md-0 order-sm-2 order-2"
@@ -36,7 +36,7 @@
     <ul class="nav ml-auto">
       <li class="nav-item dropdown">
         <a
-          class="nav-link text-white dropdown-toggle"
+          class="nav-link dropdown-toggle"
           href="#"
           id="navbarDropdown"
           role="button"
@@ -123,7 +123,7 @@ export default {
 .line1,
 .line2,
 .line3 {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(77, 77, 77);
   width: 25px;
   height: 3px;
   display: block;
@@ -132,7 +132,7 @@ export default {
 }
 
 .navbar-toggler {
-  opacity: 0.7;
+  opacity: 0.5;
   transition: all 0.3s;
   outline: none;
   cursor: pointer;
@@ -144,18 +144,11 @@ export default {
 a .img-avatar {
   width: 30px;
   height: 30px;
-  opacity: 0.85;
+  opacity: 0.8;
   border-radius: 50%;
   transition: all 0.3s;
 }
 a:hover .img-avatar {
   opacity: 1;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.8);
-}
-.navbar-dark .navbar-nav .nav-link:hover {
-  color: white;
 }
 </style>

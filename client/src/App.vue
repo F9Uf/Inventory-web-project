@@ -9,7 +9,7 @@
     </div>
     <div class="isNotLoading" v-if="!loading">
       <the-header ></the-header>
-      <div class="container-fluid bg-white">
+      <div class="container-fluid bg-light">
         <router-view/>
       </div>
     </div>
