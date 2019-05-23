@@ -8,7 +8,7 @@ module.exports = (req, res) => {
         if(err) {
             return res.json({
                 success: false,
-                message: 'Delete is error!!'
+                message: err
             })
 
         } else {

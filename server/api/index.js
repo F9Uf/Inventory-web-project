@@ -36,7 +36,7 @@ router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 //car
 router.get('/cars', permit(), allCar);
 router.post('/cars', permit(), addOneCar);
-router.delete('/cars', permit(), deleteOneCar);
+router.delete('/cars/:carID', permit(), deleteOneCar);
 
 //supplier
 router.get('/suppliers',permit(),allSup);
