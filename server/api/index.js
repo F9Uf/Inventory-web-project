@@ -67,6 +67,6 @@ router.delete('/suppliers/:supplier_id', permit(), deleteOneSup);
 
 //item
 router.get('/items', permit(), allItem);
-router.delete('/items', permit(), deleteOneItem);
+router.delete('/items/:item_id', permit(), deleteOneItem);
 
 module.exports = router;
