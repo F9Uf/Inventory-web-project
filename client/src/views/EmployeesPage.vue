@@ -5,7 +5,7 @@
     <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="employeeID"></the-table>
     <h5 v-if="!body">No Employee</h5>
 
-    <the-modal v-if="showModal" @close="showModal = false" @updateData="updateData">
+    <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
       <template v-slot:header>
         <h5>Edit Information</h5>
       </template>
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         deleteData (value) {
-            $api({path: `/employees/${value}`,method: 'delte'})
+            $api({path: `/employees/${value}`,method: 'delete'})
             .then(data => {
                 this.fetchEmployees()
             })
@@ -91,6 +91,12 @@ export default {
         },
         updateData () {
             $api({ path: `/employees/${this.editEmployee.employeeID}`, method: 'put', data: this.editEmployee})
+            .then(data => {
+                this.showModal = false
+                this.fetchEmployees()
+                console.log(data);
+                
+            })
         }
     }
 
