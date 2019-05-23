@@ -13,14 +13,14 @@ module.exports = (req, res) => {
       if (data) {
         return res.json({
           success: true,
-          message: 'Successfully found the user',
+          message: 'Successfully found the car',
           result: data
         })
       } else {
         // if not found
         return res.json({
           success: false,
-          message: 'User not found!'
+          message: 'There are no car!'
         })
       }
     }
