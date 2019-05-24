@@ -22,14 +22,17 @@
         <div class="form-row">
           <div class="col">
              <label >Area</label>
-            <input type="number" class="form-control is-invalid" v-model="editCar.carArea">
-            <div class="invalid-feedback">
-              Please enter car area
-            </div>
+            <input type="number" class="form-control"
+              :class="{'is-invalid': $v.editCar.carArea.$error}"
+              v-model="$v.editCar.carArea.$model">
+            <div class="invalid-feedback">Please enter car area</div>
           </div>
           <div class="col">
              <label >Weight</label>
-            <input type="number" class="form-control" v-model="editCar.weight">
+            <input type="number" class="form-control"
+             :class="{'is-invalid': $v.editCar.weight.$error}"
+              v-model="$v.editCar.weight.$model">
+            <div class="invalid-feedback">Please enter car weight</div>
           </div>
           <div class="col">
             <label for="inputState">Status</label>
@@ -43,11 +46,18 @@
         <div class="form-row">
           <div class="col">
              <label >License Plate</label>
-            <input type="text" class="form-control" v-model="editCar.licensePlate">
+            <input type="text" class="form-control"
+              :class="{'is-invalid': $v.editCar.licensePlate.$error}"
+              v-model="$v.editCar.licensePlate.$model"
+            >
+            <div class="invalid-feedback">Please enter License Plate</div>
           </div>
           <div class="col">
-             <label >Model</label>
-            <input type="text" class="form-control" v-model="editCar.model">
+            <label >Model</label>
+            <input type="text" class="form-control"
+              :class="{'is-invalid': $v.editCar.model.$error}"
+              v-model="$v.editCar.model.$model">
+            <div class="invalid-feedback">Please enter Model</div>
           </div>
         </div>
       </template>
@@ -98,6 +108,7 @@ import layout from './LAYOUT'
 import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   components: {
@@ -107,12 +118,21 @@ export default {
     return {
       header: ['Car ID', 'Area', 'Weight', 'Status', 'License Plate', 'Model', ],
       body: null,
-      editCar: {},
+      editCar: null,
       newCar: {
         carStatus: 'unready'
       },
       showModalEdit: false,
       showModalNew: false
+    }
+  },
+  validations: {
+    editCar: {
+      carArea: {required},
+      weight: {required},
+      carStatus: {required},
+      licensePlate: {required},
+      model: {required}
     }
   },
   created() {
@@ -136,15 +156,16 @@ export default {
       })
     },
     updateData () {
-      $api({ path: `/cars/${this.editCar.carID}`, method: 'put', data: this.editCar})
-      .then( data => {
-        this.showModal = false
-        this.fetchCars()
-      })
+      if (!this.$v.$invalid) {
+        $api({ path: `/cars/${this.editCar.carID}`, method: 'put', data: this.editCar})
+        .then( data => {
+          this.showModalEdit = false
+          this.fetchCars()
+        })
+      }
     },
     newData () {
       console.log('new data');
-
     }
   },
 }
