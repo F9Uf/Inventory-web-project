@@ -83,6 +83,8 @@ export default {
         this.showModal = false
         this.fetchItems()
       })
+      console.log(this.editItem.itemID);
+      
     }
   },
 }
