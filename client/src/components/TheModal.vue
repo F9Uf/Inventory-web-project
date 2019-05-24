@@ -1,5 +1,6 @@
 <template>
-  <div class="modal-mask">
+  <transition name="modal">
+    <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
 
@@ -22,6 +23,7 @@
         </div>
       </div>
     </div>
+  </transition>
 </template>
 
 <script>
@@ -47,10 +49,11 @@ export default {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+  padding: .5rem;
 }
 
 .modal-container {
-  width: 500px;
+  max-width: 500px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -72,16 +75,6 @@ export default {
 .modal-default-button {
   float: right;
 }
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
 .modal-enter {
   opacity: 0;
 }

@@ -1,6 +1,6 @@
 <template>
     <layout>
-    <h3>employees Information</h3>
+    <h3>Employees Information</h3><br>
 
     <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="employeeID"></the-table>
     <h5 v-if="!body">No Employee</h5>
@@ -41,7 +41,7 @@
             <input type="number" class="form-control" v-model="editEmployee.shopID">
           </div>
         </div>
-          
+
       </template>
     </the-modal>
 
@@ -64,7 +64,7 @@ export default {
             editEmployee: {},
             showModal: false
         }
-       
+
     },
     created(){
         this.fetchEmployees()
@@ -75,7 +75,7 @@ export default {
             .then(data => {
                 this.fetchEmployees()
             })
-            
+
         },
         editData (value) {
             this.showModal = true
@@ -85,8 +85,8 @@ export default {
             $api({path: '/employees', method:'get'})
             .then( data => {
                 this.body = data.result
-                
-                
+
+
             })
         },
         updateData () {
@@ -94,8 +94,8 @@ export default {
             .then(data => {
                 this.showModal = false
                 this.fetchEmployees()
-                
-                
+
+
             })
         }
     }
