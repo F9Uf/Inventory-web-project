@@ -6,7 +6,7 @@ const config_env = require('./config/config_env');
 const app = express();
 
 var corsOptions = {
-  origin: 'https://inventory-web.netlify.com',
+  origin: ['https://inventory-web.netlify.com', 'http://localhost:8080', 'http://localhost:8081'],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
