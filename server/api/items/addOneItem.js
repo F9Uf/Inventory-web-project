@@ -17,7 +17,7 @@ module.exports = (req, res) => {
         } else {
             return res.json({
                 success: true,
-                message: 'Add 1 item successful!',
+                message: 'Add 1 item is ssuccessful!',
             })
         }
     })
