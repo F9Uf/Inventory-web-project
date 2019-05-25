@@ -14,7 +14,7 @@ module.exports = (req, res) => {
         } else {
             return res.json({
                 success: true,
-                message: 'Delete one stock is complete!'
+                message: 'Delete 1 stock is complete!'
             })
         }
     }) 
