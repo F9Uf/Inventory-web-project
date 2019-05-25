@@ -1,9 +1,10 @@
 <template>
   <layout>
-    <base-table :header="header" :body="data" :hasAction="true" idName="employeeID" :hasIndex="true">
+    <base-table :header="header" :body="data" :hasAction="true" idName="employeeID" :hasIndex="true" @onSelect="selectData">
       <!-- haseAction คือบอกว่าจะมี column action (colum สุดท้าย) ไหม เป็น true/false -->
       <!-- hasIndex คือบอกว่าจะให้แสดง column index หน้าสุดหรือไม่ เป็น true/false -->
       <!-- idName คือกำหนดว่า จะให้ attribute ไหนของ body เป็น id หลัก-->
+      <!-- onSelect เมื่อมีการกดเลือก row จะคืนค่า id ของ row นั้นๆ ออกมา -->
       <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
@@ -56,6 +57,10 @@ export default {
     },
     deleteData  (id) {
       console.log(`deleteData: ${id}`);
+    },
+    selectData (id) {
+      console.log(`select id: ${id}`);
+
     }
   },
 }

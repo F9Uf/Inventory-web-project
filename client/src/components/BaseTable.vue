@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, body_index) in body" :key="body_index">
+        <tr v-for="(item, body_index) in body" :key="body_index" @click="$emit('onSelect', item[idName])">
           <th scope="row" v-if="hasIndex">{{body_index + 1}}</th>
 
           <template v-for="(attribute, a_index) in header">
