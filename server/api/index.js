@@ -47,12 +47,6 @@ const updateCategory = require('./category/updateCategory');
 
 
 //position
-<<<<<<< HEAD
-const allPosition = require('./positions/allPosition')
-const addOnePosition = require('./positions/addOnePosition')
-const deletePosition = require('./positions/deletePosition')
-const updatePosition = require('./positions/updatePosition')
-=======
 const allPosition = require('./positions/allPostion');
 const addOnePosition = require('./positions/addOnePosition');
 const deletePosition = require('./positions/deletePosition');
@@ -60,7 +54,6 @@ const updatePosition = require('./positions/updatePosition');
 
 //order
 const allOrder = require('./orders/allOrder');
->>>>>>> 42d69c38527245b8f189c1bf2c493eeac751d828
 
 
 
