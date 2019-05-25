@@ -3,20 +3,14 @@
     <h3>Employees Information</h3><br>
 
     <base-table :header="header" :body="body" :hasAction="true" idName="employeeID" :hasIndex="true">
-      <!-- haseAction คือบอกว่าจะมี column action (colum สุดท้าย) ไหม เป็น true/false -->
-      <!-- hasIndex คือบอกว่าจะให้แสดง column index หน้าสุดหรือไม่ เป็น true/false -->
-      <!-- idName คือกำหนดว่า จะให้ attribute ไหนของ body เป็น id หลัก-->
       <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
           <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
         </div>
       </template>
-      <!-- ใส่ได้มากกว่า 1 ปุ่ม -->
-      <!-- ถ้ากำหนด hasAction เป็น false ไม่ต้องใส่ปุ่มในช่องนี้ -->
     </base-table>
-
-    <!-- <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="employeeID"></the-table> -->
+    
     <h5 v-if="!body">No Employee</h5>
 
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
@@ -116,6 +110,7 @@ export default {
             .then(data => {
                 this.fetchEmployees()
             })
+                    
 
         },
         editData (value) {
@@ -126,9 +121,9 @@ export default {
             $api({path: '/employees', method:'get'})
             .then( data => {
                 this.body = data.result
-
-
+                console.log(this.body);
             })
+                        
         },
         updateData () {
             $api({ path: `/employees/${this.editEmployee.employeeID}`, method: 'put', data: this.editEmployee})
