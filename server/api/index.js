@@ -41,7 +41,7 @@ const updateStock = require('./stocks/updateStock')
 
 //category
 const allCategory = require('./category/allCategory')
-const deleteOneCategory = require('./category/deleteCategory')
+const deleteCategory = require('./category/deleteCategory')
 const addOneCategory = require('./category/addOneCategory')
 const updateCategory = require('./category/updateCategory')
 
