@@ -53,6 +53,7 @@
     </div>
 
     <!-- <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert> -->
+    {{alert}}
   </layout>
 </template>
 
