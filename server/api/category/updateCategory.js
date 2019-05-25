@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const catId= req.params.catId;
+    const catId= req.params.category_id;
     const catName = req.body.catName;
     const sql = 'UPDATE car SET categoryName = ? WHERE carID = ?'
 

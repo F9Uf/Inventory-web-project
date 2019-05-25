@@ -38,6 +38,15 @@ const deleteOneStock = require('./stocks/deleteOneStock')
 const addOneStock = require('./stocks/addOneStock')
 const updateStock = require('./stocks/updateStock')
 
+
+//category
+const allCategory = require('./category/allCategory')
+const deleteOneCategory = require('./category/deleteCategory')
+const addOneCategory = require('./category/addOneCategory')
+const updateCategory = require('./category/updateCategory')
+
+
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -79,4 +88,17 @@ router.get('/stocks', permit(),allStock);
 router.delete('/stocks/:stock_id', permit(), deleteOneStock);
 router.post('/stocks', permit(),addOneStock);
 router.put('/stocks/:stock_id',permit(),updateStock);
+
+
+//category
+router.get('/category', permit(),allCategory);
+router.delete('/category/:category_id', permit(), deleteOneCategory);
+router.post('/stocks', permit(),addOneCategory);
+router.put('/stocks/:category_id',permit(),updateCategory);
+
+
+
+
+
+
 module.exports = router;
