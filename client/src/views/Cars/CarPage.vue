@@ -5,7 +5,7 @@
         <h3>Cars Information</h3>
         </div>
       <div class="col-auto">
-        <button class="btn btn-success" @click="showModalNew = true">+ New Car</button>
+        <button class="btn btn-success" @click="$router.push('/cars/new')">+ New Car</button>
       </div>
     </div>
     <br>
@@ -113,12 +113,12 @@
 </template>
 
 <script>
-import layout from './LAYOUT'
-import BaseTable from '../components/BaseTable'
-import TheModal from '../components/TheModal'
-import { $api } from '../service/api'
+import layout from '../LAYOUT'
+import BaseTable from '@/components/BaseTable'
+import TheModal from '@/components/TheModal'
+import { $api } from '@/service/api'
 import { required, decimal, minValue } from 'vuelidate/lib/validators'
-import BaseAlert from '../components/BaseAlert'
+import BaseAlert from '@/components/BaseAlert'
 
 export default {
   components: {
@@ -134,11 +134,8 @@ export default {
         { name: 'carArea', label: 'Area'},
         { name: 'carStatus', label: 'Status'}
       ],
-      body: null,
-      editCar: null,
-      newCar: {
-        carStatus: 'unready'
-      },
+      body: [],
+      editCar: {},
       showModalEdit: false,
       showModalNew: false,
       alert: false

@@ -24,7 +24,15 @@ const router = new Router({
     {
       path: '/cars',
       name: 'cars',
-      component: () => import('./views/CarPage.vue'),
+      component: () => import('./views/Cars/CarPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/cars/new',
+      name: 'newCar',
+      component: () => import('./views/Cars/NewCarPage.vue'),
       meta: {
         requireAuth: true
       }
