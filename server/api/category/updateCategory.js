@@ -3,7 +3,7 @@ const db = require('../../db');
 module.exports = (req, res) => {
     const catId= req.params.category_id;
     const catName = req.body.catName;
-    const sql = 'UPDATE car SET categoryName = ? WHERE carID = ?'
+    const sql = 'UPDATE category SET categoryName = ? WHERE categoryID = ?'
 
 
   db.query(sql,[catName,catId], (err, data) => {
@@ -11,12 +11,12 @@ module.exports = (req, res) => {
         console.log(err)
       return res.json({
         success: false,
-        message: 'Update car is error!'
+        message: 'Update category is error!'
       })
     } else {
       return res.json({
         success: true,
-        message: 'Update car is successful!'
+        message: 'Update category is successful!'
       })
     }
   })

@@ -8,13 +8,13 @@ module.exports = (req, res) => {
         if(err) {
             return res.json({
                 success: false,
-                message: err
+                message: 'Delete 1 category is error!'
             })
 
         } else {
             return res.json({
                 success: true,
-                message: 'Delete 1 car complete!'
+                message: 'Delete 1 category complete!'
             })
         }
     }) 
