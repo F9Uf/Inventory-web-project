@@ -29,28 +29,31 @@ const deleteOneSup = require('./suppliers/deleteOneSup');
 const allItem = require('./items/allItem');
 const deleteOneItem = require('./items/deleteOneItem');
 const itembyid = require('./items/itembyid');
-const updateItem = require('./items/updateItem')
-const addOneItem = require('./items/addOneItem')
+const updateItem = require('./items/updateItem');
+const addOneItem = require('./items/addOneItem');
 
 //stock
-const allStock = require('./stocks/allStock')
-const deleteOneStock = require('./stocks/deleteOneStock')
-const addOneStock = require('./stocks/addOneStock')
-const updateStock = require('./stocks/updateStock')
+const allStock = require('./stocks/allStock');
+const deleteOneStock = require('./stocks/deleteOneStock');
+const addOneStock = require('./stocks/addOneStock');
+const updateStock = require('./stocks/updateStock');
 
 
 //category
-const allCategory = require('./category/allCategory')
-const deleteCategory = require('./category/deleteCategory')
-const addOneCategory = require('./category/addOneCategory')
-const updateCategory = require('./category/updateCategory')
+const allCategory = require('./category/allCategory');
+const deleteCategory = require('./category/deleteCategory');
+const addOneCategory = require('./category/addOneCategory');
+const updateCategory = require('./category/updateCategory');
 
 
 //position
-const allPosition = require('./positions/allPostion')
-const addOnePosition = require('./positions/addOnePosition')
-const deletePosition = require('./positions/deletePosition')
-const updatePosition = require('./positions/updatePosition')
+const allPosition = require('./positions/allPostion');
+const addOnePosition = require('./positions/addOnePosition');
+const deletePosition = require('./positions/deletePosition');
+const updatePosition = require('./positions/updatePosition');
+
+//order
+const allOrder = require('./orders/allOrder');
 
 
 
@@ -110,6 +113,8 @@ router.delete('/positions/:position_id', permit(),deletePosition);
 router.post('/positions', permit(),addOnePosition);
 router.put('/positions/:position_id', permit(),updatePosition);
 
+//orders
+router.get('/orders',permit(),allOrder);
 
 
 
