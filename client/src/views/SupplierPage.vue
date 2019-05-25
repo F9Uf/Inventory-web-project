@@ -2,8 +2,16 @@
   <layout>
     <h3>Supplier Information</h3><br>
 
-    <the-table v-if="body.length !== 0" :header="header" :body="body" @onDelete="deleteData" @onEdit="editData" id="supplierID"></the-table>
+    <base-table v-if="body.length" :header="header" :body="body" idName="supplierID" :hasAction="true">
+      <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">Edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">Delete</button>
+        </div>
+      </template>
+    </base-table>
 
+    <!-- modal for edit supplier -->
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
       <template v-slot:header>
         <h5>Edit Car #{{editSup.supplierID}}</h5>
@@ -12,7 +20,10 @@
         <div class="form-row">
           <div class="col">
             <label>Supplier Name</label>
-            <input type="text" class="form-control" v-model="editSup.supplierName">
+            <input type="text" class="form-control"
+              :class="{'is-invalid': $v.editSup.supplierName.$error}"
+              v-model="$v.editSup.supplierName.$model">
+            <div class="invalid-feedback">Please enter Supplier Name</div>
           </div>
         </div>
         <div class="form-row">
@@ -24,11 +35,17 @@
         <div class="form-row">
           <div class="col">
             <label>Supplier Phone</label>
-            <input type="text" class="form-control" v-model="editSup.supplierPhone">
+            <input type="text" class="form-control"
+              v-model="$v.editSup.supplierPhone.$model"
+              :class="{'is-invalid': $v.editSup.supplierPhone.$error}">
+            <div class="invalid-feedback">Please enter Supplier Phone</div>
           </div>
           <div class="col">
             <label>Supplier Email</label>
-            <input type="email" class="form-control" v-model="editSup.supplierEmail">
+            <input type="email" class="form-control"
+              v-model="$v.editSup.supplierEmail.$model"
+              :class="{'is-invalid': $v.editSup.supplierEmail.$error}">
+              <div class="invalid-feedback">Please enter Supplier Email</div>
           </div>
         </div>
       </template>
@@ -39,21 +56,37 @@
 
 <script>
 import layout from './LAYOUT'
-import theTable from '../components/TheTable'
+import BaseTable from '../components/BaseTable'
 import TheModal from '../components/TheModal'
 
 import { $api } from '../service/api'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   components: {
-    layout, theTable, TheModal
+    layout, BaseTable, TheModal
   },
   data () {
     return {
-      header: [],
+      header: [
+        { name: 'supplierID', label: 'Supplier ID'},
+        { name: 'supplierName', label: 'Name'},
+        { name: 'supplierAddress', label: 'Address'},
+        { name: 'supplierPhone', label: 'Phone'},
+        { name: 'supplierEmail', label: 'Email'},
+
+      ],
       body: [],
       editSup: {},
       showModal: false
+    }
+  },
+  validations: {
+    editSup: {
+      supplierName: {required},
+      supplierAddress: {},
+      supplierPhone: {required},
+      supplierEmail: {required, email}
     }
   },
   methods: {
@@ -63,7 +96,6 @@ export default {
         if (data.success) {
           // if not error
           let suppliers = data.result
-          this.header = Object.keys(suppliers[0])
           this.body = suppliers
         }
       }).catch(err => {
@@ -71,34 +103,32 @@ export default {
       })
     },
     deleteData (value) {
-      $api({ path: `/suppliers/${value}`, method: 'delete'})
-      .then(data => {
-        if (data.success) {
-          this.fetchSupplier()
-        } else {
-          console.log(data.message);
-        }
-      })
+      let con = confirm(`Are you sure to delete supplier #${value}`)
+      if (con) {
+        $api({ path: `/suppliers/${value}`, method: 'delete'})
+        .then(data => {
+          if (data.success) {
+            this.fetchSupplier()
+          } else {
+            console.log(data.message);
+          }
+        })
+      }
     },
     editData (value) {
       this.showModal = true
       this.editSup = JSON.parse(JSON.stringify(this.body.filter(e => e.supplierID === value)[0]))
     },
     updateData () {
-      if (this.validateEmail(this.editSup.supplierEmail)) {
+      if (!this.$v.$invalid) {
         $api({ path: `/suppliers/${this.editSup.supplierID}`, method: 'put', data: this.editSup})
         .then( data => {
-          this.showModal = false
-          this.fetchSupplier()
+          if (data.success) {
+            this.showModal = false
+            this.fetchSupplier()
+          } else console.log(data)
         })
-      } else {
-        console.log('not email');
-
       }
-    },
-    validateEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
     }
   },
   created() {

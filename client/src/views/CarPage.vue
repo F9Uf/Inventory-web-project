@@ -10,7 +10,14 @@
     </div>
     <br>
 
-    <the-table v-if="body" :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="carID"></the-table>
+    <base-table v-if="body.length" :header="header" :body="body" idName="carID" :hasAction="true">
+      <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+        </div>
+      </template>
+    </base-table>
     <h5 v-if="!body">No Cars</h5>
 
     <!-- modal for edit data -->
@@ -22,14 +29,14 @@
         <div class="form-row">
           <div class="col">
              <label >Area</label>
-            <input type="number" class="form-control"
+            <input type="number" class="form-control" min="0"
               :class="{'is-invalid': $v.editCar.carArea.$error}"
               v-model="$v.editCar.carArea.$model">
             <div class="invalid-feedback">Please enter car area</div>
           </div>
           <div class="col">
              <label >Weight</label>
-            <input type="number" class="form-control"
+            <input type="number" class="form-control" min="0"
              :class="{'is-invalid': $v.editCar.weight.$error}"
               v-model="$v.editCar.weight.$model">
             <div class="invalid-feedback">Please enter car weight</div>
@@ -64,7 +71,7 @@
     </the-modal>
 
     <!-- modal for create data -->
-    <the-modal id="newModal" v-if="showModalNew" @close="showModalNew = false" @update="newData">
+    <!-- <the-modal id="newModal" v-if="showModalNew" @close="showModalNew = false" @update="newData">
       <template v-slot:header>
         <h5>New a Car</h5>
       </template>
@@ -98,26 +105,35 @@
           </div>
         </div>
       </template>
-    </the-modal>
+    </the-modal> -->
+
+    <!-- modal for confirm deletedat -->
     <base-alert v-if="alert" msg="cannot delete" color="info" @close="alert = false"></base-alert>
   </layout>
 </template>
 
 <script>
 import layout from './LAYOUT'
-import TheTable from '../components/TheTable'
+import BaseTable from '../components/BaseTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, decimal, minValue } from 'vuelidate/lib/validators'
 import BaseAlert from '../components/BaseAlert'
 
 export default {
   components: {
-    layout, TheTable, TheModal, BaseAlert
+    layout, BaseTable, TheModal, BaseAlert
   },
   data() {
     return {
-      header: ['Car ID', 'Area', 'Weight', 'Status', 'License Plate', 'Model', ],
+      header: [
+        { name: 'carID', label: 'Car ID'},
+        { name: 'model', label: 'Model'},
+        { name: 'licensePlate', label: 'License Plate'},
+        { name: 'weight', label: 'Max Weight'},
+        { name: 'carArea', label: 'Area'},
+        { name: 'carStatus', label: 'Status'}
+      ],
       body: null,
       editCar: null,
       newCar: {
@@ -130,8 +146,8 @@ export default {
   },
   validations: {
     editCar: {
-      carArea: {required},
-      weight: {required},
+      carArea: {required, decimal, minValue: minValue(0)	},
+      weight: {required, decimal, minValue: minValue(0) },
       carStatus: {required},
       licensePlate: {required},
       model: {required}
@@ -142,10 +158,14 @@ export default {
   },
   methods: {
     deleteData (value) {
-      $api({ path: `/cars/${value}`, method: 'delete'})
-      .then(data => {
-        this.fetchCars()
-      })
+      let isConfirm = confirm(`Are you sure to delete this car #${value}`)
+      if (isConfirm) {
+        $api({ path: `/cars/${value}`, method: 'delete'})
+        .then(data => {
+          if (data.success)
+            this.fetchCars()
+        })
+      }
     },
     editData (value) {
       this.showModalEdit = true
@@ -161,8 +181,11 @@ export default {
       if (!this.$v.$invalid) {
         $api({ path: `/cars/${this.editCar.carID}`, method: 'put', data: this.editCar})
         .then( data => {
-          this.showModalEdit = false
-          this.fetchCars()
+          if (data.success) {
+            this.showModalEdit = false
+            this.fetchCars()
+          } else console.log(data)
+
         })
       }
     },
