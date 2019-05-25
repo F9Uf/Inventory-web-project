@@ -10,7 +10,7 @@ module.exports = (req, res) => {
     if (err) {
       return res.json({
         success: false,
-        message: 'Add 1 category is eror!'
+        message: 'Add 1 category is error!'
       })
     } else {
       return res.json({
