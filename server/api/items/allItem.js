@@ -18,13 +18,13 @@ module.exports = (req, res) => {
         }
         return res.json({
           success: true,
-          message: 'Successfully found the items',
+          message: 'Successfully found the items!',
           result: data
         })
       } else {
         return res.json({
           success: false,
-          message: 'There are no items'
+          message: 'There is no the item.'
         })
       }
     }

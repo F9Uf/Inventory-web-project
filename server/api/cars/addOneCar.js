@@ -13,7 +13,7 @@ module.exports = (req, res) => {
     if (err) {
       return res.json({
         success: false,
-        message: 'Add 1 car is error!!'
+        message: 'Add 1 car is error!'
       })
     } else {
       return res.json({

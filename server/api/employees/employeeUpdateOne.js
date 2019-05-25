@@ -21,12 +21,12 @@ module.exports = (req, res) => {
     if (err) {
       return res.json({
         success: false,
-        message: 'update is error!!'
+        message: 'Update employee is error!'
       })
     } else {
       return res.json({
         success: true,
-        message: 'update is success!'
+        message: 'Update employee is successful!'
       })
     }
   })

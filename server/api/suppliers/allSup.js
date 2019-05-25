@@ -19,7 +19,7 @@ module.exports = (req,res) =>{
             // if not found
             return res.json({
               success: false,
-              message: 'There are no suppliers!'
+              message: 'There is no supplier!'
             })
           }
         }

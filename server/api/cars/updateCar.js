@@ -15,12 +15,12 @@ module.exports = (req, res) => {
         console.log(err)
       return res.json({
         success: false,
-        message: 'Update error!!'
+        message: 'Update car error!'
       })
     } else {
       return res.json({
         success: true,
-        message: 'Update successful!'
+        message: 'Update car successful!'
       })
     }
   })
