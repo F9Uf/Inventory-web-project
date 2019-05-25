@@ -14,7 +14,7 @@ module.exports = (req, res) => {
         } else {
             return res.json({
                 success: true,
-                message: 'Delete complete!'
+                message: 'Delete the car complete!'
             })
         }
     }) 
