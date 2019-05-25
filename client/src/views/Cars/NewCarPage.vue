@@ -51,16 +51,22 @@
         <button class="btn btn-primary" @click="addNewCar()">+ New</button>
       </div>
     </div>
+
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color"></base-alert>
   </layout>
 </template>
 
 <script>
 import layout from '../LAYOUT'
+import BaseAlert from '@/components/BaseAlert'
+
 import { required, decimal, minValue } from 'vuelidate/lib/validators'
+
+import { $api } from '@/service/api'
 
 export default {
   components: {
-    layout
+    layout, BaseAlert
   },
   data() {
     return {
@@ -69,7 +75,13 @@ export default {
         weight: '',
         carStatus: 'unready',
         licensePlate: '',
-        model: ''
+        model: '',
+        alert: {
+          show: false,
+          msg: '',
+          color: ''
+        }
+
       }
     }
   },
@@ -85,7 +97,28 @@ export default {
   methods: {
     addNewCar () {
       if (!this.$v.$invalid) {
-        console.log('created!')
+        $api({ path: '/cars', method: 'post'})
+        .then(data => {
+          if (data.success) {
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'primary'
+            }
+          } else {
+            this.alert = {
+              show: true,
+              msg: data.mesage,
+              color: 'danger'
+            }
+          }
+        }).catch(err => {
+          this.alert = {
+              show: true,
+              msg: err,
+              color: 'danger'
+            }
+        })
       }
     }
   },
