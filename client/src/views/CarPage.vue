@@ -99,7 +99,7 @@
         </div>
       </template>
     </the-modal>
-
+    <base-alert v-if="alert" msg="cannot delete" color="info" @close="alert = false"></base-alert>
   </layout>
 </template>
 
@@ -109,10 +109,11 @@ import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
 import { required, email } from 'vuelidate/lib/validators'
+import BaseAlert from '../components/BaseAlert'
 
 export default {
   components: {
-    layout, TheTable, TheModal
+    layout, TheTable, TheModal, BaseAlert
   },
   data() {
     return {
@@ -123,7 +124,8 @@ export default {
         carStatus: 'unready'
       },
       showModalEdit: false,
-      showModalNew: false
+      showModalNew: false,
+      alert: false
     }
   },
   validations: {
