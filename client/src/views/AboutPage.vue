@@ -4,8 +4,14 @@
       <!-- haseAction คือบอกว่าจะมี column action (colum สุดท้าย) ไหม เป็น true/false -->
       <!-- hasIndex คือบอกว่าจะให้แสดง column index หน้าสุดหรือไม่ เป็น true/false -->
       <!-- idName คือกำหนดว่า จะให้ attribute ไหนของ body เป็น id หลัก-->
-      <button class="btn btn-outline-warning" slot-scope="row" @click="editData(row.rowId)">edit</button>
+      <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+        </div>
+      </template>
       <!-- ใส่ได้มากกว่า 1 ปุ่ม -->
+      <!-- ถ้ากำหนด hasAction เป็น false ไม่ต้องใส่ปุ่มในช่องนี้ -->
     </base-table>
   </layout>
 </template>
@@ -46,7 +52,10 @@ export default {
   },
   methods: {
     editData (id) {
-      console.log(id)
+      console.log(`editData: ${id}`)
+    },
+    deleteData  (id) {
+      console.log(`deleteData: ${id}`);
     }
   },
 }
