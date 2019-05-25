@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .alert {
   word-wrap: break-word;
+  z-index: 9999;
 }
 
 .list-enter-active, .list-leave-active {
