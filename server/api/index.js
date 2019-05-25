@@ -46,6 +46,13 @@ const addOneCategory = require('./category/addOneCategory')
 const updateCategory = require('./category/updateCategory')
 
 
+//position
+const allPosition = require('./positions/allPostion')
+const addOnePosition = require('./positions/addOnePosition')
+const deletePosition = require('./positions/deletePosition')
+const updatePosition = require('./positions/updatePosition')
+
+
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -96,6 +103,12 @@ router.delete('/category/:category_id', permit(), deleteCategory);
 router.post('/category', permit(),addOneCategory);
 router.put('/category/:category_id',permit(),updateCategory);
 
+
+//position
+router.get('/positions', permit(),allPosition);
+router.delete('/positions/:position_id', permit(),deletePosition);
+router.post('/positions', permit(),addOnePosition);
+router.put('/positions/:position_id', permit(),updatePosition);
 
 
 
