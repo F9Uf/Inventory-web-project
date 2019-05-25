@@ -47,7 +47,7 @@ const updateCategory = require('./category/updateCategory');
 
 
 //position
-const allPosition = require('./positions/allPostion');
+const allPosition = require('./positions/allPosition');
 const addOnePosition = require('./positions/addOnePosition');
 const deletePosition = require('./positions/deletePosition');
 const updatePosition = require('./positions/updatePosition');
