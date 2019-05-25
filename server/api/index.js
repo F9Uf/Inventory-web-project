@@ -92,7 +92,7 @@ router.put('/stocks/:stock_id',permit(),updateStock);
 
 //category
 router.get('/category', permit(),allCategory);
-router.delete('/category/:category_id', permit(), deleteOneCategory);
+router.delete('/category/:category_id', permit(), deleteCategory);
 router.post('/category', permit(),addOneCategory);
 router.put('/category/:category_id',permit(),updateCategory);
 
