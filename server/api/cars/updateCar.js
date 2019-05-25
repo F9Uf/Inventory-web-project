@@ -25,7 +25,7 @@ module.exports = (req, res) => {
     } else {
       return res.json({
         success: true,
-        message: 'Update employee is successful!'
+        message: 'Update car is successful!'
       })
     }
   })

@@ -2,24 +2,30 @@ const db = require('../../db');
 
 module.exports = (req, res) => {
   const id = req.params.item_id;
-  const itemName = req.body.itemName;
-  const category = req.body.category;
-  const weight = req.body.weight;
-  const area = req.body.area;
-  const supplierName = req.body.supplierName;
-  const sql = 'UPDATE item SET itemName = ?, category = ?, weight = ?, area = ?, supplierID = (SELECT supplierID FROM supplier WHERE supplierName LIKE ?) WHERE itemID = ?;'
+  const newUpdate = req.body
 
-  db.query(sql,[itemName,category,weight,area,supplierName,id], (err, data) => {
+  const sql_Update = 'UPDATE item SET'
+  let sql_value = ' '
+  let arr_value = []
+  const sql_WHERE = 'WHERE itemID = ?'
+
+  for (key in newUpdate) {
+    sql_value += `${key} = ?, `
+    arr_value.push(newUpdate[key])
+  }
+  sql_value = sql_value.slice(0, -2)
+  arr_value.push(id)
+
+  db.query(sql_Update + sql_value + sql_WHERE, arr_value, (err, data) => {
     if (err) {
-        console.log(err)
       return res.json({
         success: false,
-        message: err
+        message: 'Update item is error!'
       })
     } else {
       return res.json({
         success: true,
-        message: 'Update item successful!'
+        message: 'Update item is successful!'
       })
     }
   })
