@@ -1,8 +1,20 @@
 <template>
   <layout>
     <h3>item Information</h3><br>
-
-    <the-table v-if="body" :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="itemID"></the-table>
+    <base-table :header="header" :body="body" :hasAction="true" id="itemID" :hasIndex="true">
+      <!-- haseAction คือบอกว่าจะมี column action (colum สุดท้าย) ไหม เป็น true/false -->
+      <!-- hasIndex คือบอกว่าจะให้แสดง column index หน้าสุดหรือไม่ เป็น true/false -->
+      <!-- idName คือกำหนดว่า จะให้ attribute ไหนของ body เป็น id หลัก-->
+      <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+        </div>
+      </template>
+      <!-- ใส่ได้มากกว่า 1 ปุ่ม -->
+      <!-- ถ้ากำหนด hasAction เป็น false ไม่ต้องใส่ปุ่มในช่องนี้ -->
+    </base-table>
+    <!-- <the-table v-if="body" :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="itemID"></the-table> -->
     <h5 v-if="!body">No Item</h5>
 
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
@@ -40,17 +52,37 @@
 
 <script>
 import layout from './LAYOUT'
-import TheTable from '../components/TheTable'
+// import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
+import BaseTable from '../components/BaseTable'
 
 export default {
   components: {
-    layout, TheTable, TheModal
+    layout, 
+    // TheTable,
+     TheModal,BaseTable
   },
   data() {
     return {
-      header: ['Item ID', 'Name', 'Count', 'Category'],
+      header: [
+        {
+          name: 'itemID',
+          label: 'item id'
+        },
+        {
+          name: 'itemName',
+          label: 'Name'
+        },
+        {
+          name: 'totalCount',
+          label: 'Total count'
+        },
+        {
+          name: 'category',
+          label: 'Category'
+        }
+      ],
       body: null,
       editItem: {},
       showModal: false
@@ -69,6 +101,8 @@ export default {
     editData (value) {
       this.showModal = true
       this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))
+      console.log(value);
+      
     },
     fetchItems () {
       $api({ path: '/items', method: 'get'})
