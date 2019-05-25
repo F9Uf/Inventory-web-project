@@ -1,7 +1,7 @@
 const db = require('../../db')
 
 module.exports = (req,res) =>{
-    const sql = 'SELECT employeeID,employeeFirstName,employeeLastName, employeePhotoUrl,position,shopID FROM employee'
+    const sql = 'SELECT employeeID,employeeFirstName,employeeLastName,employeePhotoUrl,position FROM employee'
     db.query(sql, (err, data) => {
         if (err) {
           return res.json({
