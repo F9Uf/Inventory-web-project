@@ -93,7 +93,7 @@ const router = new Router({
     {
       path: '*',
       name: '404',
-      component: () => import('./views/AboutPage.vue')
+      component: () => import('./views/404.vue')
     }
   ]
 })
