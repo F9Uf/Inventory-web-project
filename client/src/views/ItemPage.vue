@@ -1,7 +1,7 @@
 <template>
   <layout>
     <h3>item Information</h3><br>
-    <base-table v-if="body.length" :header="header" :body="body" :hasAction="true" id="itemID" :hasIndex="true">
+    <base-table v-if="body.length" :header="header" :body="body" :hasAction="true" idName="itemID" :hasIndex="true">
         <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
@@ -16,34 +16,33 @@
       <template v-slot:header>
         <h5>Edit item #{{editItem.itemID}}</h5>
       </template>
-      <template v-slot:body>        
+      <template v-slot:body>
         <div class="form-row">
           <div class="col">
              <label >Name</label>
-              <input type="text" class="form-control" 
+              <input type="text" class="form-control"
               :class="{'is-invalid':$v.editItem.itemName.$error}"
-              v-model="$v.editItem.itemName.$modal">
+              v-model="$v.editItem.itemName.$model">
               <div class="invalid-feedback">Please enter item name</div>
           </div>
         </div>
         <div class="form-row">
           <div class="col">
              <label >Count</label>
-              <input type="number" class="form-control" min="0" 
+              <input type="number" class="form-control" min="0"
               :class="{'is-invalid': $v.editItem.totalCount.$error}"
-              v-model="editItem.totalCount.$modal">
+              v-model="$v.editItem.totalCount.$model">
               <div class="invalid-feedback">Please total count</div>
           </div>
           <div class="col">
              <label >Category</label>
             <input type="text" class="form-control"
-            :class="{'is-invalid':$v.editItem.category.$error}" 
-            v-model="editItem.category">
+            :class="{'is-invalid':$v.editItem.category.$error}"
+            v-model="$v.editItem.category.$model">
           </div>
         </div>
         </template>
     </the-modal>
-
   </layout>
 </template>
 
@@ -79,8 +78,8 @@ export default {
           label: 'Category'
         }
       ],
-      body: null,
-      editItem: null,
+      body: [],
+      editItem: {},
       showModalEdit: false,
       showModalNew: false,
       alert: false
@@ -89,8 +88,8 @@ export default {
   validations: {
     editItem: {
       itemName: {required},
-      totalCount: {required, decimal, minValue: minValue(0) },
-      catagory: {required}
+      totalCount: {required},
+      category: {required}
     }
   },
   created() {
@@ -104,17 +103,19 @@ export default {
         .then(data => {
         this.fetchItems()
         })
-      }      
+      }
     },
     editData (value) {
       this.showModalEdit = true
-      this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))          
+      this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))
+      console.log(this.editItem);
+
+      // var jso = JSON.parse
     },
     fetchItems () {
       $api({ path: '/items', method: 'get'})
       .then( data => {
         this.body = data.result
-              
       })
     },
     updateData () {
@@ -125,8 +126,8 @@ export default {
         this.fetchItems()
         }else console.log(data)
 
-      })   
-      
+      })
+
     },
     // new item
   },
