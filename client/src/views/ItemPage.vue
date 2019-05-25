@@ -1,7 +1,7 @@
 <template>
   <layout>
     <h3>item Information</h3><br>
-    <base-table :header="header" :body="body" :hasAction="true" id="itemID" :hasIndex="true">
+    <base-table v-if="body.length" :header="header" :body="body" :hasAction="true" id="itemID" :hasIndex="true">
         <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
@@ -11,31 +11,34 @@
     </base-table>
     <h5 v-if="!body">No Item</h5>
 
-    <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
+    <!-- modal for edit item -->
+    <the-modal id="editModal" v-if="showModalEdit" @close="showModalEdit = false" @update="updateData">
       <template v-slot:header>
         <h5>Edit item #{{editItem.itemID}}</h5>
       </template>
-      <template v-slot:body>
+      <template v-slot:body>        
         <div class="form-row">
           <div class="col">
-             <label for="inputEmail4">Item ID</label>
-            <input type="number" class="form-control" v-model="editItem.itemID">
+             <label >Name</label>
+              <input type="text" class="form-control" 
+              :class="{'is-invalid':$v.editItem.itemName.$error}"
+              v-model="$v.editItem.itemName.$modal">
+              <div class="invalid-feedback">Please enter item name</div>
           </div>
         </div>
         <div class="form-row">
           <div class="col">
-             <label for="inputEmail4">Name</label>
-            <input type="text" class="form-control" v-model="editItem.itemName">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col">
-             <label for="inputEmail4">Count</label>
-              <input type="number" class="form-control" v-model="editItem.totalCount">
+             <label >Count</label>
+              <input type="number" class="form-control" min="0" 
+              :class="{'is-invalid': $v.editItem.totalCount.$error}"
+              v-model="editItem.totalCount.$modal">
+              <div class="invalid-feedback">Please total count</div>
           </div>
           <div class="col">
-             <label for="inputEmail4">Category</label>
-            <input type="text" class="form-control" v-model="editItem.category">
+             <label >Category</label>
+            <input type="text" class="form-control"
+            :class="{'is-invalid':$v.editItem.category.$error}" 
+            v-model="editItem.category">
           </div>
         </div>
         </template>
@@ -46,16 +49,15 @@
 
 <script>
 import layout from './LAYOUT'
-// import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
 import BaseTable from '../components/BaseTable'
+import { required, decimal, minValue } from 'vuelidate/lib/validators'
+import BaseAlert from '../components/BaseAlert'
 
 export default {
   components: {
-    layout, 
-    // TheTable,
-     TheModal,BaseTable
+    layout, TheModal, BaseTable, BaseAlert
   },
   data() {
     return {
@@ -78,8 +80,17 @@ export default {
         }
       ],
       body: null,
-      editItem: {},
-      showModal: false
+      editItem: null,
+      showModalEdit: false,
+      showModalNew: false,
+      alert: false
+    }
+  },
+  validations: {
+    editItem: {
+      itemName: {required},
+      totalCount: {required, decimal, minValue: minValue(0) },
+      catagory: {required}
     }
   },
   created() {
@@ -87,16 +98,17 @@ export default {
   },
   methods: {
     deleteData (value) {
-      $api({ path: `/items/${value}`, method: 'delete'})
-      .then(data => {
+      let isConfirm = confirm(`Are you sure to delete this item #${value} ?`)
+      if (isConfirm) {
+        $api({ path: `/items/${value}`, method: 'delete'})
+        .then(data => {
         this.fetchItems()
-      })
+        })
+      }      
     },
     editData (value) {
-      this.showModal = true
-      this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))
-      console.log(value);
-      
+      this.showModalEdit = true
+      this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))          
     },
     fetchItems () {
       $api({ path: '/items', method: 'get'})
@@ -108,12 +120,15 @@ export default {
     updateData () {
       $api({ path: `/items/${this.editItem.itemID}`, method: 'put', data: this.editItem})
       .then( data => {
-        this.showModal = false
+        if (data.success) {
+          this.showModal = false
         this.fetchItems()
-      })
-      console.log(this.editItem.itemID);
+        }else console.log(data)
+
+      })   
       
-    }
+    },
+    // new item
   },
 }
 </script>
