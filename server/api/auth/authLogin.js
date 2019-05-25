@@ -6,7 +6,7 @@ module.exports = (req, res) => {
   const { username, password } = req.body;
 
   if (username && password) {
-    const sql = 'SELECT employeeID, username, password, position, employeeFirstName, employeeLastName, employeePhotoUrl FROM employee WHERE username = ?';
+    const sql = 'SELECT a.employeeID, a.username, a.password, b.positionName, a.employeeFirstName, a.employeeLastName, a.employeePhotoUrl FROM employee a JOIN position b ON a.positionID = b.positionID WHERE username = ?';
 
     db.query(sql,
       [username],
@@ -24,7 +24,7 @@ module.exports = (req, res) => {
             const token = jwt.sign({
               _id: data[0].employeeID,
               username: data[0].username,
-              role: data[0].position
+              role: data[0].positionName
             },
               config_key.jwtSecret,
               {
