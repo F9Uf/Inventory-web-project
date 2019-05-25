@@ -9,7 +9,6 @@ module.exports = (req, res) => {
   let arr_value = []
   const sql_WHERE = 'WHERE employeeID = ?'
 
-
   for (key in newUpdate) {
     sql_value += `${key} = ?, `
     arr_value.push(newUpdate[key])

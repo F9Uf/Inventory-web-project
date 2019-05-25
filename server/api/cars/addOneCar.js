@@ -7,8 +7,6 @@ module.exports = (req, res) => {
   const model = req.body.model;
   const sql = 'INSERT INTO CAR VALUES(null,?,?,"ready",?,?)'
 
-  
-
   db.query(sql,[area,weight,licensePlate,model], (err, data) => {
     if (err) {
       return res.json({

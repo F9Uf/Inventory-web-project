@@ -2,7 +2,7 @@ const db = require('../../db');
 
 module.exports = (req, res) => {
   const id = req.params.employee_id;
-  const sql = 'SELECT * FROM employee WHERE employeeID = ?'
+  const sql = 'SELECT * FROM employee a LEFT JOIN position b ON a.positionID = b.positionID LEFT JOIN stock c ON a.stockID = c.stockID WHERE employeeID = ?'
 
   db.query(sql, [id], (err, data) => {
     if (err) {
