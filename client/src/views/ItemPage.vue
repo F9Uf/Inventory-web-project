@@ -1,8 +1,14 @@
 <template>
   <layout>
     <h3>item Information</h3><br>
-
-    <the-table v-if="body" :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="itemID"></the-table>
+    <base-table :header="header" :body="body" :hasAction="true" id="itemID" :hasIndex="true">
+        <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+        </div>
+      </template>
+    </base-table>
     <h5 v-if="!body">No Item</h5>
 
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
@@ -40,17 +46,37 @@
 
 <script>
 import layout from './LAYOUT'
-import TheTable from '../components/TheTable'
+// import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
+import BaseTable from '../components/BaseTable'
 
 export default {
   components: {
-    layout, TheTable, TheModal
+    layout, 
+    // TheTable,
+     TheModal,BaseTable
   },
   data() {
     return {
-      header: ['Item ID', 'Name', 'Count', 'Category'],
+      header: [
+        {
+          name: 'itemID',
+          label: 'item id'
+        },
+        {
+          name: 'itemName',
+          label: 'Name'
+        },
+        {
+          name: 'totalCount',
+          label: 'Total count'
+        },
+        {
+          name: 'category',
+          label: 'Category'
+        }
+      ],
       body: null,
       editItem: {},
       showModal: false
@@ -69,6 +95,8 @@ export default {
     editData (value) {
       this.showModal = true
       this.editItem = JSON.parse(JSON.stringify(this.body.filter(e => e.itemID === value)[0]))
+      console.log(value);
+      
     },
     fetchItems () {
       $api({ path: '/items', method: 'get'})

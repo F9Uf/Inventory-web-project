@@ -2,7 +2,15 @@
     <layout>
     <h3>Employees Information</h3><br>
 
-    <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="employeeID"></the-table>
+    <base-table :header="header" :body="body" :hasAction="true" idName="employeeID" :hasIndex="true">
+      <template v-slot="row">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+        </div>
+      </template>
+    </base-table>
+    
     <h5 v-if="!body">No Employee</h5>
 
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
@@ -53,13 +61,40 @@ import layout from './LAYOUT'
 import TheTable from '../components/TheTable'
 import TheModal from '../components/TheModal'
 import { $api } from '../service/api'
+import BaseTable from '../components/BaseTable'
+
 export default {
     components: {
-        layout, TheTable, TheModal
+        layout, BaseTable, TheModal
     },
     data() {
         return{
-            header: ['ID','Firstname', 'Lastname','Profile Picture','Position','shopID'],
+            header: [
+              {
+                name: 'employeeID',
+                label: 'Employee ID'
+              },
+              {
+                name: 'employeeFirstName',
+                label: 'First Name'
+              },
+              {
+                name: 'employeeLastName',
+                label: 'Last Name'
+              },
+              {
+                name: 'employeePhotoUrl',
+                label: 'Photo'
+              },
+              {
+                name: 'position',
+                label: 'Position'
+              },
+              {
+                name: 'shopID',
+                label: 'Shop'
+              },
+              ],
             body: null,
             editEmployee: {},
             showModal: false
@@ -75,6 +110,7 @@ export default {
             .then(data => {
                 this.fetchEmployees()
             })
+                    
 
         },
         editData (value) {
@@ -85,9 +121,9 @@ export default {
             $api({path: '/employees', method:'get'})
             .then( data => {
                 this.body = data.result
-
-
+                console.log(this.body);
             })
+                        
         },
         updateData () {
             $api({ path: `/employees/${this.editEmployee.employeeID}`, method: 'put', data: this.editEmployee})
