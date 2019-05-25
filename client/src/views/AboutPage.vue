@@ -8,6 +8,7 @@
       <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-success" @click="selectData(row.rowId)">view</button>
           <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
         </div>
       </template>

@@ -53,7 +53,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/LoginPage.vue'),
+      component: () => import('./views/Auth/LoginPage.vue'),
       meta: {
         requireNoAuth: true
       }
