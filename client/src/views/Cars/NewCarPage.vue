@@ -52,8 +52,7 @@
       </div>
     </div>
 
-    <!-- <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert> -->
-    {{alert}}
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
@@ -76,14 +75,13 @@ export default {
         weight: '',
         carStatus: 'unready',
         licensePlate: '',
-        model: '',
-        alert: {
-          show: false,
-          msg: '',
-          color: ''
+        model: ''
+      },
+      alert: {
+        show: false,
+        msg: '',
+        color: ''
         }
-
-      }
     }
   },
   validations: {
@@ -115,9 +113,9 @@ export default {
           }
         }).catch(err => {
           this.alert = {
-              show: true,
-              msg: err,
-              color: 'danger'
+            show: true,
+            msg: err,
+            color: 'danger'
             }
         })
       }
