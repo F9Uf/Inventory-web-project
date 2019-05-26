@@ -59,6 +59,10 @@ const updateOrder = require('./orders/updateOrder');
 
 //location
 const allLocation = require('./locations/allLocation');
+const addOneLocation = require('./locations/addOneLocation');
+const deleteLocation = require('./locations/deleteLocation');
+const updateLocation = require('./locations/updateLocation');
+
 
 
 
@@ -126,6 +130,9 @@ router.put('/orders/:order_id',permit(),updateOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
+router.delete('/locations/:location_id',permit(),deleteLocation);
+router.post('/locations',permit(),addOneLocation);
+router.get('/locations/:location_id',permit(),updateLocation);
 
 
 module.exports = router;
