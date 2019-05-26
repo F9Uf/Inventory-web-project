@@ -7,10 +7,10 @@ module.exports = (req, res) => {
     const shopID = req.body.shopID;
     const status = req.body.status;
     const shopName = req.body.shopName;
-    const sql = 'UPDATE ordermain SET o.orderType = ?,o.createAt = ?,o.shopID = ?,s.shopID = ? ,od.status = ?,s.shopName = ? FROM ordermain o,orderdetail od,shop s WHERE o.orderID = od.orderID AND o.shopID = s.shopID;'
+    const sql = 'UPDATE ordermain SET o.orderType = ?,o.createAt = ?,o.shopID = ?,s.shopID = ? ,od.status = ?,s.shopName = ? FROM ordermain o,orderdetail od,shop s WHERE o.orderID = od.orderID AND o.shopID = s.shopID AND o.orderID = ?;'
 
 
-  db.query(sql,[catName,Id], (err, data) => {
+  db.query(sql,[type,createAt,shopID,shopID,status,shopName,Id], (err, data) => {
     if (err) {
         console.log(err)
       return res.json({

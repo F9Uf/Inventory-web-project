@@ -54,6 +54,7 @@ const updatePosition = require('./positions/updatePosition');
 
 //order
 const allOrder = require('./orders/allOrder');
+const updateOrder = require('./orders/updateOrder');
 
 
 //location
@@ -119,6 +120,7 @@ router.put('/positions/:position_id', permit(),updatePosition);
 
 //orders
 router.get('/orders',permit(),allOrder);
+router.put('/orders/:order_id',permit(),updateOrder);
 
 
 
