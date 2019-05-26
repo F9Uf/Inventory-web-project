@@ -1,19 +1,21 @@
 <template>
   <layout>
-    <h3>Add new Car</h3><br>
+    <h3>Add New Car</h3><br>
     <div class="form-row">
       <div class="col">
         <label >Area</label>
         <input type="number" class="form-control" min="0"
           :class="{'is-invalid': $v.newCar.carArea.$error}"
-          v-model="$v.newCar.carArea.$model">
+          v-model="$v.newCar.carArea.$model"
+          placeholder="Enter area of this car (number)">
         <div class="invalid-feedback">Please enter car area</div>
       </div>
       <div class="col">
         <label >Weight</label>
         <input type="number" class="form-control" min="0"
         :class="{'is-invalid': $v.newCar.carWeight.$error}"
-          v-model="$v.newCar.carWeight.$model">
+          v-model="$v.newCar.carWeight.$model"
+          placeholder="Enter max weight for this car">
         <div class="invalid-feedback">Please enter car weight</div>
       </div>
     </div><br>
@@ -23,6 +25,7 @@
         <input type="text" class="form-control"
           :class="{'is-invalid': $v.newCar.licensePlate.$error}"
           v-model="$v.newCar.licensePlate.$model"
+          placeholder="Ex. AB 2512"
         >
         <div class="invalid-feedback">Please enter License Plate</div>
       </div>
@@ -30,7 +33,9 @@
         <label >Model</label>
         <input type="text" class="form-control"
           :class="{'is-invalid': $v.newCar.model.$error}"
-          v-model="$v.newCar.model.$model">
+          v-model="$v.newCar.model.$model"
+          placeholder="Enter Car Model"
+          >
         <div class="invalid-feedback">Please enter Model</div>
       </div>
     </div>
@@ -64,8 +69,8 @@ export default {
   data() {
     return {
       newCar: {
-        carArea: '',
-        carWeight: '',
+        carArea: 0,
+        carWeight: 0,
         licensePlate: '',
         model: ''
       },
@@ -73,7 +78,7 @@ export default {
         show: false,
         msg: '',
         color: ''
-        }
+      }
     }
   },
   validations: {
@@ -87,19 +92,30 @@ export default {
   methods: {
     addNewCar () {
       if (!this.$v.$invalid) {
-        $api({ path: '/cars', method: 'post', data: this.newCar})
+        $api({ path: '/cars', method: 'post', data: {
+          carArea: this.newCar.carArea,
+          weight: this.newCar.carWeight,
+          licensePlate: this.newCar.licensePlate,
+          model: this.newCar.model
+        }})
         .then(data => {
+
           if (data.success) {
             this.alert = {
               show: true,
               msg: data.message,
               color: 'primary'
             }
-            this.newCar = {}
+            this.newCar = {
+              carArea: 0,
+              carWeight: 0,
+              licensePlate: ' ',
+              model: ' '
+            }
           } else {
             this.alert = {
               show: true,
-              msg: data.mesage,
+              msg: data.message,
               color: 'danger'
             }
           }

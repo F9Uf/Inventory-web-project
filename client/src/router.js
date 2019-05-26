@@ -93,7 +93,15 @@ const router = new Router({
     {
       path: '/suppliers',
       name: 'suppliers',
-      component: () => import('./views/SupplierPage.vue'),
+      component: () => import('./views/Suppliers/SupplierPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/suppliers/new',
+      name: 'newSupplier',
+      component: () => import('./views/Suppliers/NewSupplierPage.vue'),
       meta: {
         requireAuth: true
       }

@@ -5,7 +5,7 @@
         <h3>Supplier Information</h3>
         </div>
       <div class="col-auto">
-        <button class="btn btn-success" @click="$router.push('/cars/new')">+ New Car</button>
+        <button class="btn btn-success" @click="$router.push('/suppliers/new')">+ New Supplier</button>
       </div>
     </div>
     <br>
@@ -59,20 +59,22 @@
       </template>
     </the-modal>
 
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
 <script>
-import layout from './LAYOUT'
-import BaseTable from '../components/BaseTable'
-import TheModal from '../components/TheModal'
+import layout from '../LAYOUT'
+import BaseTable from '@/components/BaseTable'
+import TheModal from '@/components/TheModal'
+import BaseAlert from '@/components/BaseAlert'
 
-import { $api } from '../service/api'
+import { $api } from '@/service/api'
 import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   components: {
-    layout, BaseTable, TheModal
+    layout, BaseTable, TheModal, BaseAlert
   },
   data () {
     return {
@@ -86,7 +88,12 @@ export default {
       ],
       body: [],
       editSup: {},
-      showModal: false
+      showModal: false,
+      alert: {
+        show: false,
+        msg: '',
+        color: 'warning'
+      }
     }
   },
   validations: {
@@ -103,11 +110,14 @@ export default {
       .then(data => {
         if (data.success) {
           // if not error
-          let suppliers = data.result
-          this.body = suppliers
+          this.body = data.result
+        } else {
+          this.alert = {
+            show: true,
+            msg: data.message,
+            color: 'danger'
+          }
         }
-      }).catch(err => {
-        console.log(err);
       })
     },
     deleteData (value) {
@@ -116,9 +126,18 @@ export default {
         $api({ path: `/suppliers/${value}`, method: 'delete'})
         .then(data => {
           if (data.success) {
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'success'
+            }
             this.fetchSupplier()
           } else {
-            console.log(data.message);
+            this.alert = {
+              show: true,
+              msg: data.message || 'error',
+              color: 'danger'
+            }
           }
         })
       }
@@ -133,8 +152,20 @@ export default {
         .then( data => {
           if (data.success) {
             this.showModal = false
+            this.editSup = {}
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'success'
+            }
             this.fetchSupplier()
-          } else console.log(data)
+          } else {
+            this.alert = {
+              show: true,
+              msg: data.message || 'update error',
+              color: 'danger'
+            }
+          }
         })
       }
     }

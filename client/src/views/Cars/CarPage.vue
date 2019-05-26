@@ -117,8 +117,20 @@ export default {
       if (isConfirm) {
         $api({ path: `/cars/${value}`, method: 'delete'})
         .then(data => {
-          if (data.success)
+          if (data.success) {
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'success'
+            }
             this.fetchCars()
+          } else {
+            this.alert = {
+              show: false,
+              msg: data.message || 'error',
+              color: 'danger'
+            }
+          }
         })
       }
     },
@@ -148,6 +160,11 @@ export default {
           if (data.success) {
             this.showModalEdit = false
             this.editCar = {}
+            this.alert = {
+              show: true,
+              msg: data.message || 'success',
+              color: 'success'
+            }
             this.fetchCars()
           } else {
             this.alert = {
