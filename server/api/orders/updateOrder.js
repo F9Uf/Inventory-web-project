@@ -1,12 +1,16 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const catId= req.params.category_id;
-    const catName = req.body.catName;
-    const sql = 'UPDATE category SET categoryName = ? WHERE categoryID = ?'
+    const Id= req.params.order_id;
+    const type = req.body.orderType;
+    const createAt = req.body.createAt;
+    const shopID = req.body.shopID;
+    const status = req.body.status;
+    const shopName = req.body.shopName;
+    const sql = 'UPDATE ordermain SET o.orderType = ?,o.createAt = ?,o.shopID = ?,s.shopID = ? ,od.status = ?,s.shopName = ? FROM ordermain o,orderdetail od,shop s WHERE o.orderID = od.orderID AND o.shopID = s.shopID;'
 
 
-  db.query(sql,[catName,catId], (err, data) => {
+  db.query(sql,[catName,Id], (err, data) => {
     if (err) {
         console.log(err)
       return res.json({
