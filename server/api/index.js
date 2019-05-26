@@ -56,6 +56,10 @@ const updatePosition = require('./positions/updatePosition');
 const allOrder = require('./orders/allOrder');
 
 
+//location
+const allLocation = require('./locations/allLocation');
+
+
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -117,6 +121,9 @@ router.put('/positions/:position_id', permit(),updatePosition);
 router.get('/orders',permit(),allOrder);
 
 
+
+//location
+router.get('/locations',permit(),allLocation);
 
 
 module.exports = router;
