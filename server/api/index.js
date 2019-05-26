@@ -139,7 +139,7 @@ router.put('/orders/:order_id',permit(),updateOrder);
 router.get('/locations',permit(),allLocation);
 router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
-router.get('/locations/:location_id',permit(),updateLocation);
+router.put('/locations/:location_id',permit(),updateLocation);
 
 
 
