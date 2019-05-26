@@ -37,17 +37,9 @@
           <div class="col">
              <label >Weight</label>
             <input type="number" class="form-control" min="0"
-             :class="{'is-invalid': $v.editCar.weight.$error}"
-              v-model="$v.editCar.weight.$model">
+             :class="{'is-invalid': $v.editCar.carWeight.$error}"
+              v-model="$v.editCar.carWeight.$model">
             <div class="invalid-feedback">Please enter car weight</div>
-          </div>
-          <div class="col">
-            <label for="inputState">Status</label>
-
-            <select v-model="editCar.carStatus" class="form-control">
-              <option value="unready" >unready</option>
-              <option value="ready">ready</option>
-            </select>
           </div>
         </div><br>
         <div class="form-row">
@@ -70,45 +62,7 @@
       </template>
     </the-modal>
 
-    <!-- modal for create data -->
-    <!-- <the-modal id="newModal" v-if="showModalNew" @close="showModalNew = false" @update="newData">
-      <template v-slot:header>
-        <h5>New a Car</h5>
-      </template>
-      <template v-slot:body>
-        <div class="form-row">
-          <div class="col">
-             <label >Area</label>
-            <input type="number" class="form-control" v-model="newCar.carArea">
-          </div>
-          <div class="col">
-             <label >Weight</label>
-            <input type="number" class="form-control" v-model="newCar.weight">
-          </div>
-          <div class="col">
-            <label for="inputState">Status</label>
-
-            <select v-model="newCar.carStatus" class="form-control">
-              <option value="unready">unready</option>
-              <option value="ready">ready</option>
-            </select>
-          </div>
-        </div><br>
-        <div class="form-row">
-          <div class="col">
-             <label >License Plate</label>
-            <input type="text" class="form-control" v-model="newCar.licensePlate">
-          </div>
-          <div class="col">
-             <label >Model</label>
-            <input type="text" class="form-control" v-model="newCar.model">
-          </div>
-        </div>
-      </template>
-    </the-modal> -->
-
-    <!-- modal for confirm deletedat -->
-    <base-alert v-if="alert" msg="cannot delete" color="info" @close="alert = false"></base-alert>
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
@@ -130,21 +84,25 @@ export default {
         { name: 'carID', label: 'Car ID'},
         { name: 'model', label: 'Model'},
         { name: 'licensePlate', label: 'License Plate'},
-        { name: 'weight', label: 'Max Weight'},
-        { name: 'carArea', label: 'Area'},
+        { name: 'carWeight', label: 'Weight (KG)'},
+        { name: 'carArea', label: 'Area (m3)'},
         { name: 'carStatus', label: 'Status'}
       ],
       body: [],
       editCar: {},
       showModalEdit: false,
       showModalNew: false,
-      alert: false
+      alert: {
+        show: false,
+        msg: '',
+        color: 'warning'
+      }
     }
   },
   validations: {
     editCar: {
       carArea: {required, decimal, minValue: minValue(0)	},
-      weight: {required, decimal, minValue: minValue(0) },
+      carWeight: {required, decimal, minValue: minValue(0) },
       carStatus: {required},
       licensePlate: {required},
       model: {required}
@@ -171,7 +129,16 @@ export default {
     fetchCars () {
       $api({ path: '/cars', method: 'get'})
       .then( data => {
-        this.body = data.result
+        if (data.success) {
+          this.body = data.result
+        }
+        else {
+          this.alert = {
+            show: true,
+            msg: data.message || 'error',
+            color: 'danger'
+          }
+        }
       })
     },
     updateData () {
@@ -180,14 +147,18 @@ export default {
         .then( data => {
           if (data.success) {
             this.showModalEdit = false
+            this.editCar = {}
             this.fetchCars()
-          } else console.log(data)
+          } else {
+            this.alert = {
+              show: true,
+              msg: data.message || 'error update',
+              color: 'danger'
+            }
+          }
 
         })
       }
-    },
-    newData () {
-      console.log('new data');
     }
   },
 }

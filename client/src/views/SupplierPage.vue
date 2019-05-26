@@ -1,6 +1,14 @@
 <template>
   <layout>
-    <h3>Supplier Information</h3><br>
+    <div class="row justify-content-between">
+      <div class="col-auto">
+        <h3>Supplier Information</h3>
+        </div>
+      <div class="col-auto">
+        <button class="btn btn-success" @click="$router.push('/cars/new')">+ New Car</button>
+      </div>
+    </div>
+    <br>
 
     <base-table v-if="body.length" :header="header" :body="body" idName="supplierID" :hasAction="true">
       <template v-slot="row">
