@@ -4,10 +4,10 @@ module.exports = (req, res) => {
   const sql = 'SELECT * FROM location'
   db.query(sql, (err, data) => {
     if (err) {
-        console.log(err)
+      
       return res.json({
         success: false,
-        message: 'Can\'t query'
+        message: err
       })
     } else {
       if (data) {
