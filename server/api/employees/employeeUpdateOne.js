@@ -7,7 +7,7 @@ module.exports = (req, res) => {
   const sql_Update = 'UPDATE employee SET'
   let sql_value = ' '
   let arr_value = []
-  const sql_WHERE = 'WHERE employeeID = ?'
+  const sql_WHERE = ' WHERE employeeID = ?'
 
   for (key in newUpdate) {
     sql_value += `${key} = ?, `
@@ -18,6 +18,8 @@ module.exports = (req, res) => {
 
   db.query(sql_Update + sql_value + sql_WHERE, arr_value, (err, data) => {
     if (err) {
+      console.log(err);
+
       return res.json({
         success: false,
         message: 'Update employee is error!'

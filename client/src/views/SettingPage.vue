@@ -136,11 +136,14 @@ export default {
       let fileTarget = event.target.files[0]
     },
     updateUser () {
-      /** @todo #6 modify update
-       * sent some field which edited
-       */
+      let newObj = {}
+      for (let i in this.userSetting) {
+        if (this.userSetting[i] !== this.user[i]) {
+          newObj[i] = this.userSetting[i]
+        }
+      }
       this.loading = true
-      $api({path: `/employees/${this.userSetting.employeeID}`, method: 'put', data: this.userSetting})
+      $api({path: `/employees/${this.userSetting.employeeID}`, method: 'put', data: newObj})
       .then(resp => {
         if (!resp.success) {
           this.alert = true
