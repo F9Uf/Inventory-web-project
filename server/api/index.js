@@ -66,6 +66,13 @@ const updateLocation = require('./locations/updateLocation');
 
 
 
+
+//shipping
+const allShipping = require('./shippings/allShipping');
+
+
+
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -133,6 +140,12 @@ router.get('/locations',permit(),allLocation);
 router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
 router.get('/locations/:location_id',permit(),updateLocation);
+
+
+
+
+//shipping
+router.get('/shippings', permit(), allShipping);
 
 
 module.exports = router;

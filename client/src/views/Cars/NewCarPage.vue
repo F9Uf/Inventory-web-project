@@ -12,16 +12,9 @@
       <div class="col">
         <label >Weight</label>
         <input type="number" class="form-control" min="0"
-        :class="{'is-invalid': $v.newCar.weight.$error}"
-          v-model="$v.newCar.weight.$model">
+        :class="{'is-invalid': $v.newCar.carWeight.$error}"
+          v-model="$v.newCar.carWeight.$model">
         <div class="invalid-feedback">Please enter car weight</div>
-      </div>
-      <div class="col">
-        <label for="inputState">Status</label>
-        <select v-model="newCar.carStatus" class="form-control">
-          <option value="unready" >unready</option>
-          <option value="ready">ready</option>
-        </select>
       </div>
     </div><br>
     <div class="form-row">
@@ -72,8 +65,7 @@ export default {
     return {
       newCar: {
         carArea: '',
-        weight: '',
-        carStatus: 'unready',
+        carWeight: '',
         licensePlate: '',
         model: ''
       },
@@ -87,8 +79,7 @@ export default {
   validations: {
     newCar: {
       carArea: {required, decimal, minValue: minValue(0)	},
-      weight: {required, decimal, minValue: minValue(0) },
-      carStatus: {required},
+      carWeight: {required, decimal, minValue: minValue(0) },
       licensePlate: {required},
       model: {required}
     }
@@ -104,6 +95,7 @@ export default {
               msg: data.message,
               color: 'primary'
             }
+            this.newCar = {}
           } else {
             this.alert = {
               show: true,
