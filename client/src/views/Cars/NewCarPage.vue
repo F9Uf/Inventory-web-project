@@ -96,7 +96,7 @@ export default {
   methods: {
     addNewCar () {
       if (!this.$v.$invalid) {
-        $api({ path: '/cars', method: 'post'})
+        $api({ path: '/cars', method: 'post', data: this.newCar})
         .then(data => {
           if (data.success) {
             this.alert = {

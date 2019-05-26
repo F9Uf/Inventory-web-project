@@ -29,14 +29,38 @@ const deleteOneSup = require('./suppliers/deleteOneSup');
 const allItem = require('./items/allItem');
 const deleteOneItem = require('./items/deleteOneItem');
 const itembyid = require('./items/itembyid');
-const updateItem = require('./items/updateItem')
-const addOneItem = require('./items/addOneItem')
+const updateItem = require('./items/updateItem');
+const addOneItem = require('./items/addOneItem');
 
 //stock
-const allStock = require('./stocks/allStock')
-const deleteOneStock = require('./stocks/deleteOneStock')
-const addOneStock = require('./stocks/addOneStock')
-const updateStock = require('./stocks/updateStock')
+const allStock = require('./stocks/allStock');
+const deleteOneStock = require('./stocks/deleteOneStock');
+const addOneStock = require('./stocks/addOneStock');
+const updateStock = require('./stocks/updateStock');
+
+
+//category
+const allCategory = require('./category/allCategory');
+const deleteCategory = require('./category/deleteCategory');
+const addOneCategory = require('./category/addOneCategory');
+const updateCategory = require('./category/updateCategory');
+
+
+//position
+const allPosition = require('./positions/allPosition');
+const addOnePosition = require('./positions/addOnePosition');
+const deletePosition = require('./positions/deletePosition');
+const updatePosition = require('./positions/updatePosition');
+
+//order
+const allOrder = require('./orders/allOrder');
+const updateOrder = require('./orders/updateOrder');
+
+
+//location
+const allLocation = require('./locations/allLocation');
+
+
 
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -79,4 +103,29 @@ router.get('/stocks', permit(),allStock);
 router.delete('/stocks/:stock_id', permit(), deleteOneStock);
 router.post('/stocks', permit(),addOneStock);
 router.put('/stocks/:stock_id',permit(),updateStock);
+
+
+//category
+router.get('/category', permit(),allCategory);
+router.delete('/category/:category_id', permit(), deleteCategory);
+router.post('/category', permit(),addOneCategory);
+router.put('/category/:category_id',permit(),updateCategory);
+
+
+//position
+router.get('/positions', permit(),allPosition);
+router.delete('/positions/:position_id', permit(),deletePosition);
+router.post('/positions', permit(),addOnePosition);
+router.put('/positions/:position_id', permit(),updatePosition);
+
+//orders
+router.get('/orders',permit(),allOrder);
+router.put('/orders/:order_id',permit(),updateOrder);
+
+
+
+//location
+router.get('/locations',permit(),allLocation);
+
+
 module.exports = router;
