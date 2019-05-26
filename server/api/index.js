@@ -62,6 +62,13 @@ const allLocation = require('./locations/allLocation');
 
 
 
+
+//shipping
+const allShipping = require('./shippings/allShipping');
+
+
+
+
 router.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -126,6 +133,12 @@ router.put('/orders/:order_id',permit(),updateOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
+
+
+
+
+//shipping
+router.get('/shippings', permit(), allShipping);
 
 
 module.exports = router;
