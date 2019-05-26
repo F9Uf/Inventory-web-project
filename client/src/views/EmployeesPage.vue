@@ -37,7 +37,7 @@
         <div class="form-row">
             <div class="col">
             <label >Position</label>
-              <select v-model="editEmployee.position" class="form-control">
+              <select v-model="editEmployee.positionName" class="form-control">
               <option value="manager">manager</option>
               <option value="staff">staff</option>
               <option value="shopkeeper">shopkeeper</option>
@@ -45,8 +45,8 @@
             </select>
           </div>
           <div class="col">
-             <label >shopID</label>
-            <input type="number" class="form-control" v-model="editEmployee.shopID">
+             <label >Phone</label>
+            <input type="number" class="form-control" v-model="editEmployee.employeePhone">
           </div>
         </div>
 
@@ -83,17 +83,14 @@ export default {
                 label: 'Last Name'
               },
               {
-                name: 'employeePhotoUrl',
-                label: 'Photo'
+                name: 'employeePhone',
+                label: 'Phone'
               },
               {
-                name: 'position',
+                name: 'positionName',
                 label: 'Position'
               },
-              {
-                name: 'shopID',
-                label: 'Shop'
-              },
+              
               ],
             body: null,
             editEmployee: {},

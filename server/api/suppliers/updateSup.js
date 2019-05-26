@@ -1,18 +1,23 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const sup = req.params.sup_id;
-  const name = req.body.supplierName;
-  const address = req.body.supplierAddress;
-  const phone = req.body.supplierPhone;
-  const email = req.body.supplierEmail;
+  const id = req.params.sup_id;
+  const newUpdate = req.body
 
-  const sql = 'UPDATE supplier SET supplierName = ?,supplierAddress = ?,supplierPhone = ?,supplierEmail = ? WHERE supplierID = ?'
+  const sql_Update = 'UPDATE supplier SET'
+  let sql_value = ' '
+  let arr_value = []
+  const sql_WHERE = 'WHERE supplierID = ?'
 
+  for (key in newUpdate) {
+    sql_value += `${key} = ?, `
+    arr_value.push(newUpdate[key])
+  }
+  sql_value = sql_value.slice(0, -2)
+  arr_value.push(id)
 
-  db.query(sql,[name,address,phone,email,sup], (err, data) => {
+  db.query(sql_Update + sql_value + sql_WHERE, arr_value, (err, data) => {
     if (err) {
-        console.log(err)
       return res.json({
         success: false,
         message: 'Update supplier is error!'
