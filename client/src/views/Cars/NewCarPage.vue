@@ -114,9 +114,9 @@ export default {
         }).catch(err => {
           this.alert = {
             show: true,
-            msg: err,
+            msg: 'err',
             color: 'danger'
-            }
+          }
         })
       }
     }
