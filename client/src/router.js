@@ -85,9 +85,17 @@ const router = new Router({
     {
       path: '/employees',
       name: 'employees',
-      component: () => import('./views/EmployeesPage.vue'),
+      component: () => import('./views/Employees/EmployeesPage.vue'),
       meta: {
         requireAuth: true
+      }
+    },
+    {
+      path: '/employees/:id',
+      name: 'viewEmployee',
+      component: () => import('./views/Employees/ViewEmployee.vue'),
+      meta: {
+      requireAuth: true
       }
     },
     {
