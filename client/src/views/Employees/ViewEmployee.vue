@@ -13,42 +13,38 @@
     <br>
     <div class="row">
       <div class="col">
-        <label>First Name:</label>
-        {{body.employeeFirstName}}
+        <label>First Name:</label> {{body.employeeFirstName}}
       </div>
 
       <div class="col">
-        <label>Last Name:</label>
-        {{body.employeeLastName}}
+        <label>Last Name:</label> {{body.employeeLastName}}
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col">
-        <label>Sex:</label>
-        {{body.sex}}
+        <label>Sex:</label> {{body.sex}}
+      </div>
+      <div class="col">
+        <label>Address: </label> {{body.employeeAddress}}
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col">
-        <label>Position:</label>
-        {{body.positionName}}
+        <label>Position:</label> {{body.positionName}}
       </div>
       <div class="col">
-        <label>Salary:</label>
-        {{body.salary}}
+        <label>Salary:</label> {{body.salary}}
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col">
-        <label>Phone:</label>
-        {{body.employeePhone}}
+        <label>Phone:</label> {{body.employeePhone}}
       </div>
       <div class="col">
-        <label>Email:</label>
-        {{body.employeeEmail}}
+        <label>Email:</label> {{body.employeeEmail}}
       </div>
     </div>
     <br>
@@ -69,18 +65,26 @@
         <div class="row">
           <div class="col">
             <label>First Name</label>
-            <input type="text" class="form-control" v-model="editEmployee.employeeFirstName">
+            <input type="text" class="form-control" 
+            :class="{'is-nvalid' :$v.editEmployee.employeeFirstName.$error}"
+            v-model="$v.editEmployee.employeeFirstName.$model">
           </div>
           <div class="col">
             <label>Last Name</label>
-            <input type="text" class="form-control" v-model="editEmployee.employeeLastName">
+            <input type="text" class="form-control" 
+            :class="{'is=invalid' :$v.editEmployee.employeeLastName.$error}"
+            v-model="$v.editEmployee.employeeLastName.$model">
+            <div class="invalid-feedback">Please enter Lastname</div>
           </div>
           <br>
         </div>
         <div class="row">
           <div class="col">
             <label>Photo URL</label>
-            <input type="text" class="form-control" v-model="editEmployee.employeePhotoUrl">
+            <input type="text" class="form-control" 
+            :class="{'is-invalid' :$v.editEmployee.employeePhotoUrl.$error}"
+            v-model="$v.editEmployee.employeePhotoUrl.$model">
+            <div class="invalid-feedback">Please enter Url</div>
           </div>
           <br>
         </div>
@@ -91,6 +95,11 @@
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
+          </div>
+          <div class="col">
+            <label>Address</label>
+            <input type="text" class="form-control" v-model="editEmployee.employeeAddress">
+            <div class="invalid-feedback">Please enter information</div>
           </div>
           <div class="col">
             <label>Position</label>
@@ -104,15 +113,23 @@
         <div class="row">
           <div class="col">
             <label>Phone</label>
-            <input type="number" class="form-control" v-model="editEmployee.employeePhone">
+            <input type="text" class="form-control" 
+            :class="{'is-invalid': $v.editEmployee.employeePhone.$error}"
+            v-model="$v.editEmployee.employeePhone.$model"
+            placeholder="Enter phone number ex.09xxxxxxxx">
+            <div class="invalid-feedback">Please enter phone number</div>
           </div>
           <div class="col">
             <label>Email</label>
-            <input type="text" class="form-control" v-model="editEmployee.employeeEmail">
+            <input type="text" class="form-control" 
+            :class="{'is-invalid': $v.editEmployee.employeeEmail.$error}"
+            v-model="$v.editEmployee.employeeEmail.$model">
+            <div class="invalid-feedback">Please enter Email</div>
           </div>
         </div>
       </template>
     </the-modal>
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
@@ -120,21 +137,36 @@
 import layout from "../LAYOUT";
 import TheModal from "@/components/TheModal";
 import { $api } from "@/service/api";
-import { required, decimal, minValue } from "vuelidate/lib/validators";
+import { required, decimal, minValue ,email} from "vuelidate/lib/validators";
 import BaseAlert from "@/components/BaseAlert";
 
 export default {
   components: {
-    layout,
-    BaseAlert,
-    TheModal
+    layout,BaseAlert,TheModal
   },
   data() {
     return {
       body: {},
       editEmployee: {},
-      showModal: false
-    };
+      showModal: false,
+      alert: {
+        show: false,
+        msg: '',
+        color: 'warning'
+      }
+    }
+  },
+  validations :{
+    editEmployee: {
+      employeeFirstName: {required},
+      employeeLastName: {required},
+      
+      employeeEmail: {required,email},
+      employeePhone: {required,decimal,minValue},
+      salary: {required,minValue,decimal}
+
+    }
+
   },
   created() {
     this.fetchEmployee();
@@ -152,26 +184,43 @@ export default {
           if (data.success) {
             this.body = data.result;
           } else {
-            // fail
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'danger'
+            }
           }
+          console.log(data);
+          
         }
       );
     },
     updateData() {
-      $api({
-        path: `/employees/${this.editEmployee.employeeID}`,
-        method: "put",
-        data: this.editEmployee
-      }).then(data => {
-        if (data.success) {
-          this.fetchEmployee();
-        } else {
-
-        }
-        this.showModal = false;
-
-        console.log(data);
-      });
+      if (!this.$v.invalid) {
+        $api({
+          path: `/employees/${this.editEmployee.employeeID}`,
+          method: "put",data: this.editEmployee})
+          .then(data => {
+          if (data.success) {
+            this.editEmployee = {}
+            this.alert ={
+              show: true,
+              msg: data.message,
+              color: 'success'
+            }            
+            this.fetchEmployee();
+          } else {
+            this.alert = {
+              show: true,
+              msg: data.message || 'update error',
+              color: 'danger'
+            }
+          }
+          this.showModal = false;
+          console.log(data);
+        });
+      }
+        
     }
   }
 };
