@@ -2,7 +2,7 @@ const db = require('../../db');
 
 module.exports = (req, res) => {
     const stockID = req.params.stockID;
-    const sql = 'SELECT locationID FROM Location Where stockID = ?'
+    const sql = 'SELECT * FROM Location Where stockID = ?'
     db.query(sql, [stockID], (err, data) => {
         if(err) {
             return res.json({
