@@ -37,6 +37,7 @@ const allStock = require('./stocks/allStock');
 const deleteOneStock = require('./stocks/deleteOneStock');
 const addOneStock = require('./stocks/addOneStock');
 const updateStock = require('./stocks/updateStock');
+const allLocationInOneStock = require('./stocks/allLocationInOneStock');
 
 
 //category
@@ -116,6 +117,7 @@ router.get('/stocks', permit(),allStock);
 router.delete('/stocks/:stock_id', permit(), deleteOneStock);
 router.post('/stocks', permit(),addOneStock);
 router.put('/stocks/:stock_id',permit(),updateStock);
+router.get('/stocks/:stockID', permit(),allLocationInOneStock);
 
 
 //category
