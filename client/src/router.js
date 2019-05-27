@@ -115,6 +115,22 @@ const router = new Router({
       }
     },
     {
+      path: '/stocks',
+      name: 'stock',
+      component: () => import('./views/Stock/StockPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/stocks/:id',
+      name: 'viewOneStock',
+      component: () => import('./views/Stock/ViewStockPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '*',
       name: '404',
       component: () => import('./views/404.vue')

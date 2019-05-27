@@ -37,6 +37,8 @@ const allStock = require('./stocks/allStock');
 const deleteOneStock = require('./stocks/deleteOneStock');
 const addOneStock = require('./stocks/addOneStock');
 const updateStock = require('./stocks/updateStock');
+const allLocationInOneStock = require('./stocks/allLocationInOneStock');
+const addLocationInOneStock = require('./stocks/addLocationInOneStock');
 
 
 //category
@@ -69,6 +71,8 @@ const updateLocation = require('./locations/updateLocation');
 
 //shipping
 const allShipping = require('./shippings/allShipping');
+const addOneShipping = require('./shippings/addOneShipping');
+const updateShipping = require('./shippings/updateShipping');
 
 
 
@@ -114,6 +118,8 @@ router.get('/stocks', permit(),allStock);
 router.delete('/stocks/:stock_id', permit(), deleteOneStock);
 router.post('/stocks', permit(),addOneStock);
 router.put('/stocks/:stock_id',permit(),updateStock);
+router.get('/stocks/:stockID', permit(),allLocationInOneStock);
+router.post('/stocks/:stockID',permit(),addLocationInOneStock);
 
 
 //category
@@ -146,6 +152,8 @@ router.put('/locations/:location_id',permit(),updateLocation);
 
 //shipping
 router.get('/shippings', permit(), allShipping);
+router.post('/shippings',permit(),addOneShipping);
+router.put('/shippings/:shippingID',permit(),updateShipping);
 
 
 module.exports = router;
