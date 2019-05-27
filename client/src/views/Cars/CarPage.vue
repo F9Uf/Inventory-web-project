@@ -85,7 +85,7 @@ export default {
         { name: 'model', label: 'Model'},
         { name: 'licensePlate', label: 'License Plate'},
         { name: 'carWeight', label: 'Weight (KG)'},
-        { name: 'carArea', label: 'Area (m3)'},
+        { name: 'carArea', label: 'Volume (m3)'},
         { name: 'carStatus', label: 'Status'}
       ],
       body: [],
