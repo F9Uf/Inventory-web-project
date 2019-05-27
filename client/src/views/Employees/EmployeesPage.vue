@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import layout from './LAYOUT'
-import TheTable from '../components/TheTable'
-import TheModal from '../components/TheModal'
-import { $api } from '../service/api'
-import BaseTable from '../components/BaseTable'
+import layout from '../LAYOUT'
+import TheTable from '@/components/TheTable'
+import TheModal from '@/components/TheModal'
+import { $api } from '@/service/api'
+import BaseTable from '@/components/BaseTable'
 
 export default {
     components: {
