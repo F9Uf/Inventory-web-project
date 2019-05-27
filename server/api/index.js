@@ -70,6 +70,7 @@ const updateLocation = require('./locations/updateLocation');
 //shipping
 const allShipping = require('./shippings/allShipping');
 const addOneShipping = require('./shippings/addOneShipping');
+const updateShipping = require('./shippings/updateShipping');
 
 
 
@@ -148,6 +149,7 @@ router.put('/locations/:location_id',permit(),updateLocation);
 //shipping
 router.get('/shippings', permit(), allShipping);
 router.post('/shippings',permit(),addOneShipping);
+router.put('/shippings/:shippingID',permit(),updateShipping);
 
 
 module.exports = router;
