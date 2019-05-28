@@ -67,33 +67,33 @@
       <div class="form-row">
         <div class="col-md-11">
           <label for="">Address Detail</label>
-          <input type="text" class="form-control" placeholder="Address " disabled>          
+          <input type="text" class="form-control" placeholder="Address " disabled v-model="selectAddress.address.addressDetail">          
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-6">
           <label for="">District</label>
-          <input type="text" class="form-control" placeholder="District" disabled>
+          <input type="text" class="form-control" placeholder="District" disabled v-model="selectAddress.address.district">
         </div>
         <div class="col-md-5">
           <label for="">Sub District</label>
-          <input type="text" class="form-control" placeholder="Sub-District" disabled>
+          <input type="text" class="form-control" placeholder="Sub-District" disabled v-model="selectAddress.address.subDistrict">
         </div>        
       </div>
       <div class="form-row">
         <div class="col-md-6">
           <label for="">Province</label>
-          <input type="text" class="form-control" placeholder="province" disabled>
+          <input type="text" class="form-control" placeholder="province" disabled v-model="selectAddress.address.province ">
         </div>
         <div class="col-md-5">
-          <label for="">Sub District</label>
-          <input type="number" class="form-control" placeholder="Zip" disabled>
+          <label for="">Zip code</label>
+          <input type="number" class="form-control" placeholder="Zip" disabled v-model="selectAddress.address.postalCode">
         </div>        
       </div>
       <div class="form-row">
         <div class="col-md mr-auto">
           <br>
-          <button class="btn btn-success " @click="selectAddress.showModalSelect = true">Select Address</button>
+          <button class="btn btn-success " @click="selectAddress.showModalSelect = true; fetchAddress()">Select Address</button>
           <button class="btn btn-success " @click="selectAddress.showModalCreate = true">Add Address</button>
         </div>
       </div>
@@ -190,27 +190,27 @@
         <div class="form-row">
         <div class="col-md">
           <label for="">Address Detail</label>
-          <input type="text" class="form-control" placeholder="Address " >          
+          <input type="text" class="form-control" placeholder="Address " v-model="selectAddress.newAddress.addressDetail">          
         </div>
       </div>
       <div class="form-row">
         <div class="col-md">
           <label for="">District</label>
-          <input type="text" class="form-control" placeholder="District" >
+          <input type="text" class="form-control" placeholder="District" v-model="selectAddress.newAddress.district">
         </div>
         <div class="col-md">
           <label for="">Sub District</label>
-          <input type="text" class="form-control" placeholder="Sub-District" >
+          <input type="text" class="form-control" placeholder="Sub-District" v-model="selectAddress.newAddress.subDistrict">
         </div>        
       </div>
       <div class="form-row">
         <div class="col-md">
           <label for="">Province</label>
-          <input type="text" class="form-control" placeholder="province" >
+          <input type="text" class="form-control" placeholder="province" v-model="selectAddress.newAddress.province">
         </div>
         <div class="col-md">
-          <label for="">Sub District</label>
-          <input type="number" class="form-control" placeholder="Zip" >
+          <label for="">Zip code</label>
+          <input type="number" class="form-control" placeholder="Zip" v-model="selectAddress.newAddress.postalCode">
         </div>        
       </div>          
       </template>
@@ -266,11 +266,7 @@ export default {
       selectAddress: {
         showModalSelect: false,
         showModalCreate: false,
-        header: [
-          {
-            name: 'addressID',
-            label: 'ID'
-          },
+        header: [          
           {
             name: 'addressDetail',
             label: 'Detail'
@@ -321,7 +317,12 @@ export default {
     },
     // Address components
     fetchAddress() {
-
+      $api({path: '/addresses', methods: 'get'})
+      .then(data => {
+        this.selectAddress.body = data.result
+        console.log(data)
+        
+      })
     },
     chooseAddress(id){
       console.log(id)
@@ -333,7 +334,8 @@ export default {
       this.selectAddress.address = {...this.selectAddress.newAddress}
       this.selectAddress.newAddress = {}
       this.selectAddress.showModalCreate = false
-    }
+    },
+    // create employee
   }
 
 }
