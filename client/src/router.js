@@ -77,34 +77,17 @@ const router = new Router({
     {
       path: '/shipping',
       name: 'shipping',
-      component: () => import('./views/Shipping/ShippingPage.vue'),
+      component: () => import('./views/ShippingPage.vue'),
       meta: {
         requireAuth: true
       }
     },
-    {
-      path: '/shipping/new',
-      name: 'newShipping',
-      component: () => import('./views/Shipping/NewShippingPage.vue'),
-      meta: {
-        requireAuth: true
-      }
-    }
-    ,
     {
       path: '/employees',
       name: 'employees',
       component: () => import('./views/Employees/EmployeesPage.vue'),
       meta: {
         requireAuth: true
-      }
-    },
-    {
-      path: '/employees/create',
-      name: 'newEmployee',
-      component: () => import('./views/Employees/CreateEmployeePage.vue'),
-      meta: {
-      requireAuth: true
       }
     },
     {
@@ -115,7 +98,6 @@ const router = new Router({
       requireAuth: true
       }
     },
-    
     {
       path: '/suppliers',
       name: 'suppliers',
@@ -128,22 +110,6 @@ const router = new Router({
       path: '/suppliers/new',
       name: 'newSupplier',
       component: () => import('./views/Suppliers/NewSupplierPage.vue'),
-      meta: {
-        requireAuth: true
-      }
-    },
-    {
-      path: '/stocks',
-      name: 'stock',
-      component: () => import('./views/Stock/StockPage.vue'),
-      meta: {
-        requireAuth: true
-      }
-    },
-    {
-      path: '/stocks/:id',
-      name: 'viewOneStock',
-      component: () => import('./views/Stock/ViewStockPage.vue'),
       meta: {
         requireAuth: true
       }

@@ -1,70 +1,87 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const orderType = req.body.orderType;
-  const shopID = req.body.shopID;
-  const orderdetail = req.body.orderDetail;
-  const sql_ordermain = `INSERT INTO ordermain(orderID,orderType,shopID,createAt) VALUES (null,?,?,CURRENT_TIMESTAMP) ;`
-  const sql_orderdetail = `INSERT INTO orderdetail(orderdetailID,itemCount,locationID,itemID,orderID) VALUES (null,?,?,?,?);`
-  const id = req.params.order_id;
-  const newUpdate = req.body
-  
-  db.query(sql_ordermain,[orderType,shopID]);
-  let sql_Update = 'INSERT INTO orderdetail(orderdetailID,itemCount,locationID,itemID,orderID) VALUES'
-  
-  sql_value = sql_value.slice(0, -2)
-  arr_value.push(id) 
-  db.query(sql_Update + sql_value, arr_value, (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.json({
-        success: false,
-        message: 'Update order is error!'
-      })
-    } else {
-      return res.json({
-        success: true,
-        message: 'Update order is successful!'
-      })
-    }
-  }) 
-  
-  
+    const orderType = req.body.orderType;
+    const oldShop = req.body.oldShop;
+    const newShop = req.body.newShop;
+    const oldItem = req.body.oldItem;
+    const newItem = req.body.newItem;
+    var orderID;
+    const sql_order = 'INSERT INTO ordermain VALUE (null, CURRENT_TIMESTAMP, ?, ?)';
+    let sql_orderDetail = 'INSERT INTO orderDetail (locationID, itemID, itemCount, orderID) VALUES ';
+    let sql_value_orderDetail = [];
 
-
-
-
-/*  db.query(sql_ordermain,[orderType,shopID], (err, data) => {
-    if (err) {
-      return res.json({
-        success: false,
-        message: err
-      })
-    } else {
-      const newId = data.insertId;
-      createOrderdetail(newId)
-    }
-  })
-
-const createOrderdetail = (orderdetail) => {
-  for(var k=0;k < orderdetail.length ; k++)
-  {
-      db.query(sql_orderdetail,[orderdetail[k].itemCount,orderdetail[k].locationID,orderdetail[k].itemID,newId], (err, data) => {
-      if (err) {
-        console.log(newId);
-        return res.json({
-          success: false,
-          message: err
+    if (oldShop) {
+        db.query(sql_order, [orderType, oldShop], (err, data) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'Add order is error : ' + err 
+                })
+            } else {
+                orderID = data.insertId;
+                console.log(orderID);
+                if (oldItem) {
+                    sql_value_orderDetail = valueOrderDetailCreate(oldItem);
+                    console.log(sql_value_orderDetail[0]);
+                    console.log(sql_value_orderDetail[1]);
+                    sql_orderDetail += sql_value_orderDetail[0];
+                        db.query(sql_orderDetail + sql_value_orderDetail[0], sql_value_orderDetail[1], (err ,data) => {
+                            if (err) {
+                                return res.json({
+                                    message: err
+                                })
+                            } else {
+                                return res.json({
+                                    success: true,
+                                    message: 'Add order is successful'
+                                })
+                            }
+                        })
+                    }
+                }
         })
-      } else {
+    } else {
         return res.json({
-          success: true,
-          message: 'Add 1 car is successful!'
+            success: false,
+            message: 'There are no shop'
         })
-      }
-    })
-  }
-}*/
+    }
+    
+    
+    function deleteOrder(orderID) {
+        db.query('DELETE FROM ordermain WHERE orderID = ?', [orderID], (err, data) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'Delete order is error !! : ' + err
+                })
+            } else {
+                return res.json({
+                    success: true,
+                    message: 'Delete order is successful'
+                })
+            }
+        })
+    }
 
- 
+   function valueOrderDetailCreate(data) {
+    let sql_value = ' ';
+    let arr_value = [];
+    for (let i = 0 ; i < data.length ; i++) {
+            sql_value += '(';
+            for (key in data[i]) {
+                sql_value += '?, ';
+                arr_value.push('oldItem['+i+'].'+`${key}`);
+            }
+            sql_value += 'orderID), ';
+            arr_value.push(orderID);
+        }
+    for (let i = 0 ; i < arr_value.length ; i++) {
+        console.log(arr_value[i]);
+    }
+        sql_value = sql_value.slice(0, -2);
+        return [sql_value, arr_value];
+    }
 }
+

@@ -5,10 +5,10 @@ module.exports = (req, res) => {
     const oldCar = req.body.oldCar;
     const driver = req.body.employeeID;
     const statusorderdetail = req.body.orderDetail;
-
+    
     if (newCar && !oldCar) {
         console.log('top');
-
+        
         const sql_newCar = `INSERT INTO car (carID,carArea,carWeight,carStatus,licensePlate,model) VALUES (NULL,?,?,"ready",?,?);`
         db.query(sql_newCar, [newCar.carArea, newCar.carWeight, newCar.licensePlate, newCar.model], (err, data) => {
             if (err) {
@@ -27,6 +27,7 @@ module.exports = (req, res) => {
                             message: 'Update status driver error!'
                         })
                     } else {
+
                         let sql_statusorderdetail = `UPDATE orderdetail SET status = "shipping" WHERE `
                         let sql_value = []
                         for (let i = 0; i < statusorderdetail.length; i++) {
@@ -41,28 +42,13 @@ module.exports = (req, res) => {
                                     message: 'Add status orderdetail error!'
                                 })
                             }
-                            else {
+                             else {
                                 let sql_shipping = `INSERT INTO shipping(shippingID,carID,shippingDate,employeeID) VALUES (NULL,?,CURRENT_TIMESTAMP,?)`
                                 db.query(sql_shipping, [car, driver], (err, data) => {
                                     if (err) {
                                         return res.json({ success: false, message: 'Insert shipping error!' })
                                     } else {
-                                        let orderDetail_shipID = data.insertId;
-                                        let sql_shipIDorderdetail = `UPDATE orderdetail SET shippingID = ? WHERE `
-                                        let sql_value2 = []
-                                        console.log(orderDetail_shipID);
-                                        sql_value2.push(orderDetail_shipID);
-                                        for (let k = 0; k < statusorderdetail.length; k++) {
-                                            sql_shipIDorderdetail += 'orderDetailID = ? or '
-                                            sql_value2.push(statusorderdetail[k])
-                                        }
-                                        sql_shipIDorderdetail = sql_shipIDorderdetail.slice(0, -3)
-                                        db.query(sql_shipIDorderdetail, sql_value2, (err, data) => {
-                                            if (err) {
-                                                return res.json({ success: false, message: 'Add shippingID orderdetail error!' })
-                                            }
-                                            return res.json({ success: true, message: 'Add success!' })
-                                        })
+                                        return res.json({ success: true, message: 'Add success!' })
                                     }
                                 })
                             }

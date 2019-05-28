@@ -5,7 +5,7 @@
     <base-table :header="header" :body="body" :hasAction="true" idName="employeeID" :hasIndex="true">
       <template v-slot="row">
         <div class="btn-group" role="group">
-          <button class="btn btn-success" @click="$router.push(`/employees/${row.rowId}`)">view</button>
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
           <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
         </div>
       </template>
@@ -94,7 +94,6 @@ export default {
               ],
             body: null,
             editEmployee: {},
-            selectEmployee: {},
             showModal: false
         }
 
@@ -107,9 +106,13 @@ export default {
             $api({path: `/employees/${value}`,method: 'delete'})
             .then(data => {
                 this.fetchEmployees()
-                console.log(data);
-                
-            }) 
+            })
+                    
+
+        },
+        editData (value) {
+            this.showModal = true
+            this.editEmployee = JSON.parse(JSON.stringify(this.body.filter(e => e.employeeID === value)[0]))
         },
         fetchEmployees() {
             $api({path: '/employees', method:'get'})
@@ -118,6 +121,15 @@ export default {
                 console.log(this.body);
             })
                         
+        },
+        updateData () {
+            $api({ path: `/employees/${this.editEmployee.employeeID}`, method: 'put', data: this.editEmployee})
+            .then(data => {
+                this.showModal = false
+                this.fetchEmployees()
+
+
+            })
         }
     }
 

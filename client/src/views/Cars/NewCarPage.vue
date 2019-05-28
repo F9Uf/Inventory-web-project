@@ -92,7 +92,12 @@ export default {
   methods: {
     addNewCar () {
       if (!this.$v.$invalid) {
-        $api({ path: '/cars', method: 'post', data: this.newCar})
+        $api({ path: '/cars', method: 'post', data: {
+          carArea: this.newCar.carArea,
+          weight: this.newCar.carWeight,
+          licensePlate: this.newCar.licensePlate,
+          model: this.newCar.model
+        }})
         .then(data => {
 
           if (data.success) {
