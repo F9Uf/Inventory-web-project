@@ -13,12 +13,7 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-info" @click="$emit('update')">
-              Update
-            </button>
-            <button class="btn btn-danger modal-default-button" @click="$emit('close')">
-              Close
-            </button>
+            <slot name="footer"></slot>
           </div>
         </div>
       </div>
