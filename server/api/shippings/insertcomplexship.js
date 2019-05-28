@@ -112,6 +112,5 @@ module.exports = (req, res) => {
         else {
             return res.json({ success: false, message: 'No data!' })
         }
-
     }
 }

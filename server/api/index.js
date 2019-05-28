@@ -58,7 +58,7 @@ const updatePosition = require('./positions/updatePosition');
 //order
 const allOrder = require('./orders/allOrder');
 const updateOrder = require('./orders/updateOrder');
-const addOrder = require('./orders/addOrder');
+//const addOrder = require('./orders/addOrder');
 
 
 //location
@@ -67,8 +67,9 @@ const addOneLocation = require('./locations/addOneLocation');
 const deleteLocation = require('./locations/deleteLocation');
 const updateLocation = require('./locations/updateLocation');
 
-
-
+//address
+const allAddress = require('./addresses/allAddress');
+const addAddress = require('./addresses/addAddress');
 
 
 //shipping
@@ -142,7 +143,7 @@ router.put('/positions/:position_id', permit(),updatePosition);
 //orders
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
-router.post('/orders',permit(),addOrder);
+//router.post('/orders',permit(),addOrder);
 
 
 //location
@@ -151,7 +152,9 @@ router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
 router.put('/locations/:location_id',permit(),updateLocation);
 
-
+//address
+router.get('/addresses',permit(),allAddress);
+router.post('/addresses',permit(),addAddress);
 
 
 //shipping
