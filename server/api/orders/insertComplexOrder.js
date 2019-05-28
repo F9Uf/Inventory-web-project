@@ -1,6 +1,6 @@
 const db = require('../../db');
 
-module.exports = (req, res) => {
+/*module.exports = (req, res) => {
     const orderType = req.body.orderType;
     const newItem = req.body.newItem;
     const oldItem = req.body.oldItem;
@@ -23,7 +23,7 @@ module.exports = (req, res) => {
         })
     } else {
         shopID = oldShop
-    }*/
+    }
 
     //Insert order and remember orderID
     db.query(sql_order, [orderType], (err, data) => {
@@ -35,17 +35,29 @@ module.exports = (req, res) => {
         } else {
             orderID = data.insertId;
         } 
+    })
 
     if (newItem) {
-        db.query(sql_item, [newItem.itemName, newItem.categoryID, newItem.weight, newItem.area, newItem.supplierID], (err, data) => {
+        const except_item = ['itemCount','locationID'];
+        sql_value_item = valueCreate(newItem, 'newItem', null, except_item);
+        console.log(sql_value_item);
+        db.query(sql_item + sql_value_item, sql_value_item, (err, data) => {
             if (err){
-                let resulFromDelete = deleteOrder(orderID);    
+                let resultFromDeleteOrder = deleteOrder(orderID); 
+                let resultFromDeleteItem = deleteItem(itemID);  
                 return res.json({
                     success: false,
-                    message: 'Add item is error : ' + err + 'Delete order : ' + resulFromDelete
+                    message: 'Add item is error : ' + err + 'Delete order : ' + resultFromDeleteOrder + 'Delete item : ' + resultFromDeleteItem
                 })
             } else {
-                sql_value_item = valueCreate(newItem);
+                console.log(data)
+                return res.json({
+                    success: true,
+                    message: 'or'
+                });
+            }
+        })    
+    }
                 db.query(sql_orderDetail + sql_value_item[0], sql_value_item[1], (err, data) => {
                     if(err) {
                         const resulFromDelete = deleteOrder(orderID);
@@ -53,7 +65,7 @@ module.exports = (req, res) => {
                             success: false,
                             message: 'Add '
                         })
-                    }
+                    } 
                 })
             } else {
                 orderID = data.insertId;
@@ -100,14 +112,36 @@ module.exports = (req, res) => {
         })
     }
 
-   function valueCreate (data, dataName, id) {
+    function deleteItem (itemID) {
+        let sql_value = ' (';
+        let arr_value = [];
+        let sql_value_deleteItem = valueCreate(itemID, 'itemID', null);
+        db.query('DELETE FROM item WHERE ' + sql_value_deleteItem[0], sql_value_deleteItem[1], (err, data) => {
+            if(err) {
+                return('Delete item is err !! : ') + err;
+            } else {
+                return('Delete item is successful');
+            }
+        })
+    }
+
+   function valueCreate (data, dataName, id, except) {
     let sql_value = ' ';
     let arr_value = [];
+    let check = true;
     for (let i = 0 ; i < data.length ; i++) {
             sql_value += '(';
             for (key in data[i]) {
-                sql_value += '?, ';
-                arr_value.push(eval(dataName+'['+i+'].'+`${key}`));
+                check = true;
+                for (let j = 0 ; j < except.length ; j++) {
+                    if(`${key}` === except[j] ) {
+                        check = false
+                    } 
+                }
+                if (check === true) {
+                    sql_value += '?, ';
+                    arr_value.push(eval(dataName+'['+i+'].'+`${key}`));
+                }
             }
             for (let j = 0 ; j < id.length ; j++) {
                 sql_value += '?, ';
@@ -118,5 +152,5 @@ module.exports = (req, res) => {
         sql_value = sql_value.slice(0, -2);
         return [sql_value, arr_value];
     }
-}
+}*/
 
