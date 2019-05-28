@@ -1,6 +1,6 @@
 const db = require('../../db');
 
-module.exports = (req, res) => {
+/*module.exports = (req, res) => {
     const orderType = req.body.orderType;
     const newItem = req.body.newItem;
     const oldItem = req.body.oldItem;
@@ -23,7 +23,7 @@ module.exports = (req, res) => {
         })
     } else {
         shopID = oldShop
-    }*/
+    }
 
     //Insert order and remember orderID
     db.query(sql_order, [orderType], (err, data) => {
@@ -35,6 +35,7 @@ module.exports = (req, res) => {
         } else {
             orderID = data.insertId;
         } 
+    })
 
     if (newItem) {
         const except_item = ['itemCount','locationID'];
@@ -50,8 +51,13 @@ module.exports = (req, res) => {
                 })
             } else {
                 console.log(data)
-                return null;
+                return res.json({
+                    success: true,
+                    message: 'or'
+                });
             }
+        })    
+    }
                 db.query(sql_orderDetail + sql_value_item[0], sql_value_item[1], (err, data) => {
                     if(err) {
                         const resulFromDelete = deleteOrder(orderID);
@@ -146,5 +152,5 @@ module.exports = (req, res) => {
         sql_value = sql_value.slice(0, -2);
         return [sql_value, arr_value];
     }
-}
+}*/
 
