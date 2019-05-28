@@ -46,12 +46,14 @@
         </div>
       </div>
     </layout>
+
+    
     <layout>
       <h5>Position</h5>
       <div class="form-row">
         <div class="col-md-5">
           <input type="text" class="form-control" placeholder="position ex.manager, staff, .." disabled><br>
-          <button class="btn btn-success" @click="selectPosition.showModalSelect = true">Select position</button>
+          <button class="btn btn-success" @click="selectPosition.showModalSelect = true; fetchPos()">Select position</button>
           <button class="btn btn-success">Add position</button>
         </div>
       </div>
@@ -72,14 +74,27 @@
       </div>
     </div> 
       <!-- Modal for select position-->
-      <the-modal v-if="selectPosition.showModalSelect" @close="selectPosition.showModalSelect = false">
+      <base-modal v-if="selectPosition.showModalSelect" @close="selectPosition.showModalSelect = false">
         <template v-slot:header>
           <h5>Select position</h5>
         </template>
         <template v-slot:body>
-          <base-table></base-table>
+          <base-table :header="selectPosition.header" :body="selectPosition.body" 
+          :hasAction="true" :hasIndex="true"
+          idName="positionID">
+            <template v-slot="row">
+              <button class="btn btn-success" @click="selectPosition.showModalSelect= false">Select</button>
+            </template>
+          </base-table>
+        </template>
+        <template v-slot:footer>
+          <div class="row">
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="selectPosition.showModalSelect= false">Close</button>  
+            </div>
+          </div>
         </template>        
-      </the-modal>             
+      </base-modal>             
   </layout>
 
  
@@ -93,20 +108,51 @@
 import layout from '../LAYOUT'
 import TheModal from '@/components/TheModal'
 import BaseTable from '@/components/BaseTable'
+import BaseModal from '@/components/BaseModal'
+import { $api } from '@/service/api'
 
 export default {
   components: {
-    layout,TheModal,BaseTable
+    layout,TheModal,BaseTable,BaseModal
   },  
   data() {
     return {
       selectPosition: {
         showModalSelect: false,
         showModalCreate: false,
-        selectPosiotion: {}
+        selectPosiotion: {},
+        header: [
+          {
+                name: 'positionID',
+                label: 'Position ID'
+              },
+              {
+                name: 'positionName',
+                label: 'position Name'
+              },
+              {
+                name: 'positionSpecific',
+                label: 'Specific role'
+              }
+        ],
+        body:[],
       },
+      
+      
     }
-  }
+  },
+  methods: {
+        fetchPos() {
+          $api({path: '/positions', methods: 'get'})
+          .then(data => {
+            this.selectPosition.body = data.result
+            console.log(data)
+          })
+        },
+        seclectPos() {
+
+        }
+      }
 
 }
 </script>
