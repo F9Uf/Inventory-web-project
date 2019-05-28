@@ -69,7 +69,7 @@ const router = new Router({
     {
       path: '/orders',
       name: 'orders',
-      component: () => import('./views/OrderPage.vue'),
+      component: () => import('./views/Order/OrderPage.vue'),
       meta: {
         requireAuth: true
       }
