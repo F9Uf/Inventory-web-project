@@ -1,10 +1,18 @@
 const db = require('../../db');
+const queryToStringCondition = require('../../services/queryToStringCondition');
 
 module.exports = (req, res) => {
-  const sql = `SELECT DISTINCT  o.orderID,o.createAt,o.orderType,o.shopID,s.shopName,(SELECT IF((SELECT count(*) FROM orderdetail GROUP BY orderID,status HAVING status LIKE 'wait') > 0, 'wait', IF((SELECT count(*) FROM orderdetail GROUP BY orderID,status HAVING status LIKE 'delivering') > 0, 'delivering', 'done'))) AS status
+  let sql = `SELECT DISTINCT  o.orderID,o.createAt,o.orderType,o.shopID,s.shopName
   FROM ordermain o LEFT JOIN shop s 
-  ON o.shopID = s.shopID;`
-  db.query(sql, (err, data) => {
+  ON o.shopID = s.shopID`;
+  const condition = queryToStringCondition(req.query);
+  console.log(condition);
+  let value_array = [];
+  if (condition) {
+    sql += condition.sql;
+    value_array = condition.value_array;
+  }
+  db.query(sql, value_array, (err, data) => {
     if (err) {
       return res.json({
         success: false,

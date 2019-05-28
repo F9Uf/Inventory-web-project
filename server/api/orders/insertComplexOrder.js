@@ -5,12 +5,11 @@ module.exports = (req, res) => {
     const newItem = req.body.newItem;
     const oldItem = req.body.oldItem;
     var orderID;
-    var shopID;
     const sql_order = 'INSERT INTO ordermain VALUE (null, CURRENT_TIMESTAMP, ?, null)';
     const sql_orderDetail = 'INSERT INTO orderDetail (locationID, itemID, itemCount, orderID) VALUES ';
     const sql_item = 'INSERT INTO item (null, ?, ?, ?, ?, ?) VALUES ';
     let sql_value_orderDetail = [];
-
+    let sql_value_item = [];
     /*if (oldShop  == null) {
         db.query(sql_shop, [newShop.shopName, newShop.shopAddress, newShop.shopSupDistrict, newShop.shopDistrict, newShop.shopProvince, newShop.PostalCode, newShop.Phone], (err, data) => {
             if (err) {
@@ -38,15 +37,23 @@ module.exports = (req, res) => {
         } 
 
     if (newItem) {
-        
-        db.query(sql_item, [newItem.itemName, newItem.categoryID])
-    }
-
-        db.query(sql_order, [orderType, oldShop], (err, data) => {
-            if (err) {
+        db.query(sql_item, [newItem.itemName, newItem.categoryID, newItem.weight, newItem.area, newItem.supplierID], (err, data) => {
+            if (err){
+                let resulFromDelete = deleteOrder(orderID);    
                 return res.json({
                     success: false,
-                    message: 'Add order is error : ' + err 
+                    message: 'Add item is error : ' + err + 'Delete order : ' + resulFromDelete
+                })
+            } else {
+                sql_value_item = valueCreate(newItem);
+                db.query(sql_orderDetail + sql_value_item[0], sql_value_item[1], (err, data) => {
+                    if(err) {
+                        const resulFromDelete = deleteOrder(orderID);
+                        return res.json({
+                            success: false,
+                            message: 'Add '
+                        })
+                    }
                 })
             } else {
                 orderID = data.insertId;
