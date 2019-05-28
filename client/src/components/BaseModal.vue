@@ -49,6 +49,7 @@ export default {
 
 .modal-container {
   max-width: 800px;
+  max-height: 90vh;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -65,6 +66,9 @@ export default {
 
 .modal-body {
   margin: 20px 0;
+  max-height: 60vh;
+  overflow: auto;
+  position: relative;
 }
 
 .modal-default-button {
