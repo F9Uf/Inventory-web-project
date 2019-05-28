@@ -73,7 +73,7 @@ module.exports = (req, res) => {
                             if (data) {
                                 const sqlEmployee = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-                                db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, posNewId, status, addressNewID], (err, data) => {
+                                db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, posNewId, "ready", addressNewID], (err, data) => {
                                     if (err) {
                                         console.log(err)
                                         return res.json({
@@ -98,7 +98,7 @@ module.exports = (req, res) => {
                     if (oldAddress && !newAddress) {
                         const sqlEmployee = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-                        db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, posNewId, status, oldAddress.addressID], (err, data) => {
+                        db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, posNewId, "ready", oldAddress.addressID], (err, data) => {
                             if (err) {
                                 console.log(err);
                                 return res.json({
@@ -152,7 +152,7 @@ module.exports = (req, res) => {
                         if (data) {
                             const sqlEmployee = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-                            db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, oldPosition.positionID, status, newAddressID], (err, data) => {
+                            db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, oldPosition.positionID, "ready", newAddressID], (err, data) => {
                                 if (err) {
                                     return res.json({
                                         success: false,
@@ -171,11 +171,15 @@ module.exports = (req, res) => {
                     }
                 })
             }else {
+                console.log(585);
+                
                 if (oldAddress && !newAddress) {
                     const sqlEmployee = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-                    db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, oldPosition.positionID, status, oldAddress.addressID], (err, data) => {
+                    db.query(sqlEmployee, [employeeFirstName, employeeLastName, employeePhotoUrl, employeePhone, employeeEmail, salary, username, password, sex, stockID, oldPosition.positionID, "ready", oldAddress.addressID], (err, data) => {
                         if (err) {
+                            console.log(err);
+                            
                             return res.json({
                                 success: false,
                                 message: 'Create employee is error!'

@@ -310,7 +310,8 @@ export default {
 
       },
       dataEmployee:{
-        stockID: '00000001'
+        stockID: '00000001',
+        sex: 'male'
       },
       alert:{
         show: false,
@@ -360,18 +361,18 @@ export default {
       this.selectAddress.showModalCreate = false
     },
     // Employees Methods
-    fetchEmployee() {
-      $api({path: '/employees/0000000001', method: 'get'})
-      .then(data => {
-        this.dataEmployee.body = data.result
-        console.log(data)
+    // fetchEmployee() {
+    //   $api({path: '/employees/0000000001', method: 'get'})
+    //   .then(data => {
+    //     this.dataEmployee.body = data.result
+    //     console.log(data)
         
-      })
-    },
+    //   })
+    // },
     putAllData() {
       let employeeData = this.dataEmployee
       let newData = {
-        employeeData,
+        ...employeeData,
       }      
       if (this.selectPosition.Pos.positionID) {
         // old
@@ -404,7 +405,7 @@ export default {
       .then(data => {
         if(data.success) {
           this.alert.show = true
-          this.alert.msg = 'Created Employee information'
+          this.alert.msg = 'Created Employee information Commpleted'
           this.alert.color = 'success'
         } else {
           this.alert.show = true
