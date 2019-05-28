@@ -29,7 +29,8 @@ module.exports = (req, res) => {
     const postalCode = req.body.postalCode;
 
     const sqlEmp = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    const sqlPos = `INSERT INTO POSITION VALUES(NULL,?,?)`;
+    const sqlPos1 = `INSERT INTO POSITION VALUES(NULL,?,?)`;
+    const sqlPos2 = `INSERT INTO POSITION VALUES(NULL,NULL,?)`
     const sqlAddress = `INSERT INTO ADDRESS VALUES(NULL,?,?,?,?,?)`;
 
     //insert emp
