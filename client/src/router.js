@@ -75,6 +75,22 @@ const router = new Router({
       }
     },
     {
+      path: '/orders/neworderin',
+      name: 'newordersIn',
+      component: () => import('./views/Order/NewOrderIn.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/orders/neworderout',
+      name: 'newordersOut',
+      component: () => import('./views/Order/NewOrderOut.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/shippings',
       name: 'shipping',
       component: () => import('./views/Shipping/ShippingPage.vue'),
