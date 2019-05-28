@@ -64,7 +64,7 @@ export default {
     return {
       menus: [
         { text: 'Orders', to: '/orders', auth: ['staff', 'manager'] },
-        { text: 'Shipping', to: '/shipping', auth: ['staff', 'manager'] },
+        { text: 'Shipping', to: '/shippings', auth: ['staff', 'manager'] },
         { text: 'Items', to: '/items', auth: ['staff', 'manager'] },
         { text: 'Employee', to: '/employees', auth: ['manager'] },
         { text: 'Stock', to: '/stocks', auth: ['manager'] },
