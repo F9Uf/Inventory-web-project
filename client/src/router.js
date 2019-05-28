@@ -77,11 +77,20 @@ const router = new Router({
     {
       path: '/shipping',
       name: 'shipping',
-      component: () => import('./views/ShippingPage.vue'),
+      component: () => import('./views/Shipping/ShippingPage.vue'),
       meta: {
         requireAuth: true
       }
     },
+    {
+      path: '/shipping/new',
+      name: 'newShipping',
+      component: () => import('./views/Shipping/NewShippingPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    }
+    ,
     {
       path: '/employees',
       name: 'employees',
