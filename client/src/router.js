@@ -69,13 +69,29 @@ const router = new Router({
     {
       path: '/orders',
       name: 'orders',
-      component: () => import('./views/OrderPage.vue'),
+      component: () => import('./views/Order/OrderPage.vue'),
       meta: {
         requireAuth: true
       }
     },
     {
-      path: '/shipping',
+      path: '/orders/neworderin',
+      name: 'newordersIn',
+      component: () => import('./views/Order/NewOrderIn.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/orders/neworderout',
+      name: 'newordersOut',
+      component: () => import('./views/Order/NewOrderOut.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/shippings',
       name: 'shipping',
       component: () => import('./views/Shipping/ShippingPage.vue'),
       meta: {
@@ -83,7 +99,7 @@ const router = new Router({
       }
     },
     {
-      path: '/shipping/new',
+      path: '/shippings/new',
       name: 'newShipping',
       component: () => import('./views/Shipping/NewShippingPage.vue'),
       meta: {
@@ -115,7 +131,7 @@ const router = new Router({
       requireAuth: true
       }
     },
-    
+
     {
       path: '/suppliers',
       name: 'suppliers',
