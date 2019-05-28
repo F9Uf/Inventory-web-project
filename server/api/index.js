@@ -11,6 +11,7 @@ const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
 const employeeGetOne = require('./employees/employeeGetOne');
 const deleteOneEmployee = require('./employees/deleteOneEmployee');
+const newComplexEmployee = require('./employees/newComplexEmployee');
 
 
 //const car
@@ -94,6 +95,7 @@ router.get('/employees', permit(), allEmployee);
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 router.delete('/employees/:employee_id', permit(), deleteOneEmployee);
+router.post('/employees',permit(),newComplexEmployee);
 
 //car
 router.get('/cars', permit(), allCar);
