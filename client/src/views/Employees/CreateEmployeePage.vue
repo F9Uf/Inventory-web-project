@@ -8,6 +8,7 @@
         <div class="col-md-4">
           <label>First Name</label>
           <input type="text" class="form-control" placeholder="firsr name" v-model="dataEmployee.employeeFirstName">
+          <div></div>
         </div>
         <div class="col-md-4">
           <label>Last Name</label>
@@ -64,7 +65,6 @@
         <div class="col-md-4">
           <label>Password</label>
           <input type="text" class="form-control" placeholder="password" v-model="dataEmployee.password">
-          <button class="btn btn-success" @click="fetchEmployee()">test fetch</button>
         </div>
       </div>
     </layout>
@@ -153,7 +153,7 @@
       <template v-slot:header>
         <h5>Add position</h5>
       </template>
-      <template v-slot:body>
+      <template v-slot:body >
         <div class="form-row">
           <div class="col-md">
             <label>Role</label>
@@ -164,7 +164,7 @@
             </select>
           </div>
           <div class="col-md">
-            <label for="">Position</label>
+            <label for="">Position (for staff only)</label>            
             <input type="text" class="form-control" placeholder="enter employee position"
             v-model="selectPosition.newPos.positionSpecific">
           </div>
@@ -269,39 +269,40 @@ export default {
         showModalCreate: false,
         header: [
               {
-                name: 'positionID',                label: 'Position ID'
+                name: 'positionID', label: 'Position ID'
               },
               {
-                name: 'positionName',                label: 'position Name'
+                name: 'positionName', label: 'position Name'
               },
               {
-                name: 'positionSpecific',                label: 'Specific role'
+                name: 'positionSpecific', label: 'Specific role'
               }
         ],
         body:[],
         Pos:{},
         newPos:{
           positionName: 'manager'
-        }
+        },
+        isStaff: false
       },
       selectAddress: {
         showModalSelect: false,
         showModalCreate: false,
         header: [
           {
-            name: 'addressDetail',            label: 'Detail'
+            name: 'addressDetail', label: 'Detail'
           },
           {
-            name: 'district',            label: 'District'
+            name: 'district', label: 'District'
           },
           {
-            name: 'subDistrict',            label: 'Sub district'
+            name: 'subDistrict', label: 'Sub district'
           },
           {
-            name: 'province',            label: 'province'
+            name: 'province', label: 'province'
           },
           {
-            name: 'postalCode',            label: 'Zip Code'
+            name: 'postalCode', label: 'Zip Code'
           }
         ],
         body:[],
@@ -336,9 +337,17 @@ export default {
 
     },
     addPos() {
-      this.selectPosition.Pos = {...this.selectPosition.newPos}
-      this.selectPosition.newPos ={}
-      this.selectPosition.showModalCreate = false
+      if(this.selectPosition.newPos.positionName !== "staff" ) {
+        this.selectPosition.newPos.positionSpecific = this.selectPosition.newPos.positionName
+        this.selectPosition.Pos = {...this.selectPosition.newPos}
+        this.selectPosition.newPos ={}
+        this.selectPosition.showModalCreate = false 
+      }else {
+        this.selectPosition.Pos = {...this.selectPosition.newPos}
+        this.selectPosition.newPos ={}
+        this.selectPosition.showModalCreate = false
+      }
+      
     },
     // Address Methods
     fetchAddress() {
@@ -361,6 +370,7 @@ export default {
       this.selectAddress.showModalCreate = false
     },
     // Employees Methods
+
     // fetchEmployee() {
     //   $api({path: '/employees/0000000001', method: 'get'})
     //   .then(data => {
@@ -369,52 +379,72 @@ export default {
         
     //   })
     // },
-    putAllData() {
-      let employeeData = this.dataEmployee
-      let newData = {
-        ...employeeData,
-      }      
-      if (this.selectPosition.Pos.positionID) {
-        // old
-        newData.newPosition = null
-        newData.oldPosition = {positionID: this.selectPosition.Pos.positionID}
-      } else {
-        //new
-        newData.newPosition = {
-          positionName: this.selectPosition.Pos.positionName,
-          positionSpecific: this.selectPosition.Pos.positionSpecific
-        }
-      }
-      if (this.selectAddress.address.addressID) {
-        //old
-        newData.newAddress = null
-        newData.oldAddress = { addressID: this.selectAddress.address.addressID }
-      } else {
-        // new
-        newData.newAddress = {
-          addressDetail: this.selectAddress.address.addressID,
-          subDistrict: this.selectAddress.address.subDistrict,
-          district: this.selectAddress.address.district,
-          province: this.selectAddress.address.province,
-          postalCode: this.selectAddress.address.postalCode
-        }
-      }
-      console.log(newData)
+    putAllData() {      
+      if(
+          this.dataEmployee.employeeFirstName !== "" && this.employeeData.employeeLastName !== "" &&
+          this.dataEmployee.sex !== "" && this.employeeData.employeePhone !== "" &&
+          this.dataEmployee.employeeEmail !== "" && this.dataEmployee.salary !== "" &&
+          this.dataEmployee.username !== "" && this.dataEmployee.password !== "" &&
+          this.selectPosition.Pos.positionName !== "" && this.selectPosition.Pos.positionSpecific !== "" &&
+          this.selectAddress.address.addressDetail !== "" && this.selectAddress.address.district !=="" &&
+          this.selectAddress.address.subDistrict !== "" && this.selectAddress.address.province !== "" &&
+          this.selectAddress.address.postalCode !== ""
+        ) {
+            let employeeData = this.dataEmployee
+            let newData = {
+              ...employeeData,
+            }
 
-      $api({ path : '/employees', method : 'post', data: newData})
-      .then(data => {
-        if(data.success) {
-          this.alert.show = true
-          this.alert.msg = 'Created Employee information Commpleted'
-          this.alert.color = 'success'
+            if (this.selectPosition.Pos.positionID) {
+              // old
+              newData.newPosition = null
+              newData.oldPosition = {positionID: this.selectPosition.Pos.positionID}
+            } else {
+              //new
+              newData.newPosition = {
+                positionName: this.selectPosition.Pos.positionName,
+                positionSpecific: this.selectPosition.Pos.positionSpecific
+              }
+            }
+            if (this.selectAddress.address.addressID) {
+              //old
+              newData.newAddress = null
+              newData.oldAddress = { addressID: this.selectAddress.address.addressID }
+            } else {
+              // new
+              newData.newAddress = {
+                addressDetail: this.selectAddress.address.addressDetail,
+                subDistrict: this.selectAddress.address.subDistrict,
+                district: this.selectAddress.address.district,
+                province: this.selectAddress.address.province,
+                postalCode: this.selectAddress.address.postalCode
+              }
+            }
+            console.log(newData)
+
+            $api({ path : '/employees', method : 'post', data: newData})
+            .then(data => {
+              if(data.success) {
+                this.alert.show = true
+                this.alert.msg = 'Created Employee information Commpleted'
+                this.alert.color = 'success'
+              } else {
+                this.alert.show = true
+                this.alert.msg = 'Create Employee information Error'
+                this.alert.color = 'danger'
+                this.selectPosition.Pos = {}
+                this.selectAddress.address = {}
+              }
+              console.log(data)
+              
+            })
         } else {
           this.alert.show = true
-          this.alert.msg = 'Create Employee information Error'
+          this.alert.msg = 'Please fill all information'
           this.alert.color = 'danger'
-        }
-        console.log(data)
-        
-      })
+        }    
+      
+      
     }
 
     // create employee
