@@ -28,60 +28,81 @@ module.exports = (req, res) => {
     const province = req.body.province;
     const postalCode = req.body.postalCode;
 
+    //new-old
+    const newPos = req.body.newPos;
+    const oldPos = req.body.oldPos;
+    const newAddress = req.body.newAddress;
+    const oldAddress = req.body.oldAddress;
+
+
     const sqlEmp = `INSERT INTO EMPLOYEE VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    const sqlPos1 = `INSERT INTO POSITION VALUES(NULL,?,?)`;
-    const sqlPos2 = `INSERT INTO POSITION VALUES(NULL,NULL,?)`
+    const sqlPos = `INSERT INTO POSITION VALUES(NULL,?,?)`;
     const sqlAddress = `INSERT INTO ADDRESS VALUES(NULL,?,?,?,?,?)`;
 
+    //insert position
+    db.query(sqlPos, [posName, posSpecific], (err, dataPos) => {
+        if (err) {
+            return res.json({
+                success: false,
+                message: 'Create position is error!'
+            })
+        } 
+        else if(!newPos || oldPos){
+            return res.json({
+                success: false,
+                message: 'This position has existed.'
+            })
+
+        } 
+        else {
+            return res.json({
+                success: true,
+                message: 'Create position is successful!'
+            })
+        }
+    })
+    if (dataPos) {
+        //insert address
+        db.query(sqlAddress, [addressDetail, subDistrict, district, province, postalCode], (err, dataAddress) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'Create address is error!'
+                })
+            } 
+            else if(!newAddress || oldAddress){
+                return res.json({
+                    success: false,
+                    message: 'This address has existed.'
+                })
+            }  
+            
+            else {
+                return res.json({
+                    success: true,
+                    message: 'Create address is successful!'
+                })
+            }
+        })
+    }
+
     //insert emp
-    db.query(sqlEmp, [empFirstName, empLastName, empPhotoUrl, empPhone, empEmail, empSalary, empUsername, empPassword, empSex, stockID, positionID, status, addressID], (err, dataEmp) => {
+    else if(dataAddress){
+    db.query(sqlEmp, [empFirstName, empLastName, empPhotoUrl, empPhone, empEmail, empSalary, empUsername, empPassword, empSex, stockID, positionID,status, addressID], (err, dataEmp) => {
         if (err) {
             return res.json({
                 success: false,
                 message: 'Create employee is error!'
             })
-        } else if (dataEmp) {
-
-            //insert position
-            db.query(sqlPos, [posName, posSpecific], (err, dataPos) => {
-                if (err) {
-                    return res.json({
-                        success: false,
-                        message: 'Create position is error!'
-                    })
-                } else {
-                    return res.json({
-                        success: true,
-                        message: 'Create position is successful!'
-                    })
-                }
-            })
-            if (dataPos) {
-                //insert address
-                db.query(sqlAddress, [addressDetail, subDistrict, district, province, postalCode], (err, dataAddress) => {
-                    if (err) {
-                        return res.json({
-                            success: false,
-                            message: 'Create address is error!'
-                        })
-                    } else {
-                        return res.json({
-                            success: true,
-                            message: 'Create address is successful!'
-                        })
-                    }
-                })
-            }
-           
         }
-        else{
+        else if (new{
             return res.json({
                 success: true,
                 message: 'Create employee is successful!'
             })
         }
     })
-
+    }
 
 
 
