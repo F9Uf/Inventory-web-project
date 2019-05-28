@@ -100,6 +100,13 @@ module.exports = (req, res) => {
         })
     }
 
+    function deleteItem (itemID) {
+        let sql_value = ' (';
+        let arr_value = [];
+        let sql_value_deleteItem = valueCreate(itemID, 'itemID', null);
+        db.query('DELETE FROM item WHERE ' + sql_value_deleteItem[0], sql_value_deleteItem[1], (err, data) => )
+    }
+
    function valueCreate (data, dataName, id) {
     let sql_value = ' ';
     let arr_value = [];

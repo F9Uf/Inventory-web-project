@@ -6,7 +6,6 @@ module.exports = (req, res) => {
   FROM ordermain o LEFT JOIN shop s 
   ON o.shopID = s.shopID`;
   const condition = queryToStringCondition(req.query);
-  console.log(condition);
   let value_array = [];
   if (condition) {
     sql += condition.sql;
