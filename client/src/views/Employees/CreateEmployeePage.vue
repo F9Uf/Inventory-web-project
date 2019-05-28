@@ -7,15 +7,15 @@
       <div class="form-row">
         <div class="col-md-4">
           <label>First Name</label>
-          <input type="text" class="form-control" placeholder="firsr name">
+          <input type="text" class="form-control" placeholder="firsr name" v-model="dataEmployee.employeeFirstName">
         </div>
         <div class="col-md-4">
           <label>Last Name</label>
-          <input type="text" class="form-control" placeholder="last name">
+          <input type="text" class="form-control" placeholder="last name" v-model="dataEmployee.employeeLastName">
         </div>
         <div class="col-md-3">
           <label>Sex</label>
-          <select class="form-control" >
+          <select class="form-control" v-model="dataEmployee.sex">
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -24,26 +24,30 @@
       <div class="form-row">
         <div class="col-md-7">
           <label>Photo Url</label>
-          <input type="text" class="form-control" placeholder="http:url">
+          <input type="text" class="form-control" placeholder="http:url" v-model="dataEmployee.employeePhotoUrl">
         </div>
         <div class="col-md-4">
           <label>Phone</label>
-          <input type="text" class="form-control" placeholder="09xxxxxxxx">
+          <input type="text" class="form-control" placeholder="09xxxxxxxx" v-model="dataEmployee.employeePhone">
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-5">
           <label>Email</label>
-          <input type="email" class="form-control" placeholder="eample@exmaple.example">
+          <input type="email" class="form-control" placeholder="eample@exmaple.example" v-model="dataEmployee.employeeEmail">
         </div>
         <div class="col-md-3">
           <label>Username</label>
-          <input type="text" class="form-control" placeholder="username">
+          <input type="text" class="form-control" placeholder="username" v-model="dataEmployee.username"> 
         </div>
         <div class="col-md-3">
           <label>Password</label>
-          <input type="text" class="form-control" placeholder="password">
+          <input type="text" class="form-control" placeholder="password" v-model="dataEmployee.password">
+          <button class="btn btn-success" @click="fetchEmployee()">test fetch</button>
         </div>
+      </div>
+      <div class="form-row">
+        
       </div>
     </layout>
   <!-- Position select / add -->
@@ -245,16 +249,13 @@ export default {
         showModalCreate: false,
         header: [
               {
-                name: 'positionID',
-                label: 'Position ID'
+                name: 'positionID',                label: 'Position ID'
               },
               {
-                name: 'positionName',
-                label: 'position Name'
+                name: 'positionName',                label: 'position Name'
               },
               {
-                name: 'positionSpecific',
-                label: 'Specific role'
+                name: 'positionSpecific',                label: 'Specific role'
               }
         ],
         body:[],
@@ -268,35 +269,31 @@ export default {
         showModalCreate: false,
         header: [
           {
-            name: 'addressDetail',
-            label: 'Detail'
+            name: 'addressDetail',            label: 'Detail'
           },
           {
-            name: 'district',
-            label: 'District'
+            name: 'district',            label: 'District'
           },
           {
-            name: 'subDistrict',
-            label: 'Sub district'
+            name: 'subDistrict',            label: 'Sub district'
           },
           {
-            name: 'province',
-            label: 'province'
+            name: 'province',            label: 'province'
           },
           {
-            name: 'postalCode',
-            label: 'Zip Code'
+            name: 'postalCode',            label: 'Zip Code'
           }
         ],
         body:[],
         address:{},
         newAddress:{}
 
-      }
+      },
+      dataEmployee:{}
     }
   },
   methods: {
-    // position components
+    // position Methods
     fetchPos() {
       $api({path: '/positions', methods: 'get'})
       .then(data => {
@@ -315,7 +312,7 @@ export default {
       this.selectPosition.newPos ={}
       this.selectPosition.showModalCreate = false
     },
-    // Address components
+    // Address Methods
     fetchAddress() {
       $api({path: '/addresses', methods: 'get'})
       .then(data => {
@@ -335,14 +332,26 @@ export default {
       this.selectAddress.newAddress = {}
       this.selectAddress.showModalCreate = false
     },
+    // Employees Methods
+    fetchEmployee() {
+      $api({path: '/employees/0000000001', methods: 'get'})
+      .then(data => {
+        this.dataEmployee.body = data.result
+        console.log(data)
+        
+      })
+    },
+    putAllData() {
+
+    }
+
     // create employee
 
       /**
-       *
+       * let employeeData = this.dataEmploee
        * let newData = {
-       *  firtsName: this.firstName,
-       *  lastName: this.lastlklk;,
-       *  ...,
+       *  emploeeData,
+       * this.seleectpodop
        * }
        *
        * if (this.selectPos.Pos.postionID) {
