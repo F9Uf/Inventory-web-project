@@ -100,6 +100,14 @@ const router = new Router({
       }
     },
     {
+      path: '/employees/create',
+      name: 'newEmployee',
+      component: () => import('./views/Employees/CreateEmployeePage.vue'),
+      meta: {
+      requireAuth: true
+      }
+    },
+    {
       path: '/employees/:id',
       name: 'viewEmployee',
       component: () => import('./views/Employees/ViewEmployee.vue'),
@@ -107,6 +115,7 @@ const router = new Router({
       requireAuth: true
       }
     },
+    
     {
       path: '/suppliers',
       name: 'suppliers',
