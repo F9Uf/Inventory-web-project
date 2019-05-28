@@ -11,6 +11,7 @@ const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
 const employeeGetOne = require('./employees/employeeGetOne');
 const deleteOneEmployee = require('./employees/deleteOneEmployee');
+const newComplexEmployee = require('./employees/newComplexEmployee');
 
 
 //const car
@@ -57,6 +58,7 @@ const updatePosition = require('./positions/updatePosition');
 //order
 const allOrder = require('./orders/allOrder');
 const updateOrder = require('./orders/updateOrder');
+const addOrder = require('./orders/addOrder');
 
 
 //location
@@ -93,6 +95,7 @@ router.get('/employees', permit(), allEmployee);
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 router.delete('/employees/:employee_id', permit(), deleteOneEmployee);
+router.post('/employees',permit(),newComplexEmployee);
 
 //car
 router.get('/cars', permit(), allCar);
@@ -138,7 +141,7 @@ router.put('/positions/:position_id', permit(),updatePosition);
 //orders
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
-
+router.post('/orders',permit(),addOrder);
 
 
 //location
