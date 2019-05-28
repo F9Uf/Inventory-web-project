@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     if (newCar && !oldCar) {
         console.log('top');
 
-        const sql_newCar = `INSERT INTO car (carID,carArea,carWeight,carStatus,licensePlate,model) VALUES (NULL,?,?,"ready",?,?);`
+        const sql_newCar = `INSERT INTO car (carID,carArea,carWeight,carStatus,licensePlate,model) VALUES (NULL,?,?,"unready",?,?);`
         db.query(sql_newCar, [newCar.carArea, newCar.carWeight, newCar.licensePlate, newCar.model], (err, data) => {
             if (err) {
                 console.log(err);
