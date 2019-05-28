@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const orderID = req.params.orderID;
+    const orderID = req.params.order_id;
     const sql = 'SELECT * FROM ordermain o LEFT JOIN orderdetail od ON o.orderID = od.orderID LEFT JOIN shop s ON o.shopID = s.shopID WHERE o.orderID = ?';
     db.query(sql,  [orderID],(err, data) => {
         if (err) {
