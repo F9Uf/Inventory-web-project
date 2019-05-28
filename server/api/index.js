@@ -145,7 +145,7 @@ router.put('/positions/:position_id', permit(),updatePosition);
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
 //router.post('/orders',permit(),insertComplexOrder);
-router.get('./orders/:order_id', permit(), readOneOrder);
+router.get('/orders/:order_id', permit(), readOneOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
