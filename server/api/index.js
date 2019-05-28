@@ -58,7 +58,8 @@ const updatePosition = require('./positions/updatePosition');
 //order
 const allOrder = require('./orders/allOrder');
 const updateOrder = require('./orders/updateOrder');
-//const addOrder = require('./orders/addOrder');
+//const addOrder = require('./orders/insertComplexOrder');
+const readOneOrder = require('./orders/readOneOrder');
 
 
 //location
@@ -143,8 +144,8 @@ router.put('/positions/:position_id', permit(),updatePosition);
 //orders
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
-//router.post('/orders',permit(),addOrder);
-
+//router.post('/orders',permit(),insertComplexOrder);
+router.get('./orders/:order_id', permit(), readOneOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
