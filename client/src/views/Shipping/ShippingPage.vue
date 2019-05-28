@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import layout from './LAYOUT'
-import TheTable from '../components/TheTable'
-import TheModal from '../components/TheModal'
-import { $api} from '../service/api'
+import layout from '../LAYOUT'
+import TheTable from '@/components/TheTable'
+import TheModal from '@/components/TheModal'
+import { $api} from '@/service/api'
 
 export default {
     components: {
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       header: ['Shipping ID', 'Car ID','Driver'],
-       body:null 
+       body:null
       // { shipid:'0001',carid: '00000002', driver: '00001'
       // }
       ,
@@ -78,7 +78,7 @@ export default {
         this.fetchShipping()
       })
     }
-    
+
   }
 
 }
