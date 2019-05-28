@@ -163,6 +163,7 @@ router.get('/shippings', permit(), allShipping);
 // router.post('/shippings',permit(),addOneShipping);
 router.put('/shippings/:shippingID',permit(),updateShipping);
 router.post('/shippings',permit(),insertcomplexship);
+router.put('/shippings/:shippingID',permit(),updatecomplexship);
 
 
 module.exports = router;

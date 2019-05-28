@@ -75,7 +75,7 @@ const router = new Router({
       }
     },
     {
-      path: '/shipping',
+      path: '/shippings',
       name: 'shipping',
       component: () => import('./views/Shipping/ShippingPage.vue'),
       meta: {
@@ -83,7 +83,7 @@ const router = new Router({
       }
     },
     {
-      path: '/shipping/new',
+      path: '/shippings/new',
       name: 'newShipping',
       component: () => import('./views/Shipping/NewShippingPage.vue'),
       meta: {
@@ -115,7 +115,7 @@ const router = new Router({
       requireAuth: true
       }
     },
-    
+
     {
       path: '/suppliers',
       name: 'suppliers',
