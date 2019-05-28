@@ -156,7 +156,7 @@ router.put('/locations/:location_id',permit(),updateLocation);
 
 //shipping
 router.get('/shippings', permit(), allShipping);
-router.post('/shippings',permit(),addOneShipping);
+// router.post('/shippings',permit(),addOneShipping);
 router.put('/shippings/:shippingID',permit(),updateShipping);
 router.post('/shippings',permit(),insertcomplexship);
 
