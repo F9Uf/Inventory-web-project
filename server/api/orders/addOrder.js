@@ -11,31 +11,7 @@ module.exports = (req, res) => {
   
   db.query(sql_ordermain,[orderType,shopID]);
   let sql_Update = 'INSERT INTO orderdetail(orderdetailID,itemCount,locationID,itemID,orderID) VALUES'
-  /**
-   * "insert into order values 
-   * ('?', '?'), 
-   * ('?', '?'), 
-   * ('?', '?'), "
-   * 
-   * data = [
-   *  {firstName: 'sdflkjlk', lastName: 'alkjflkj'},
-   *  {firstName: 'lkjlkjlk', lastName: 'lkjlkjlkk}
-   * ]
-   * let sql_value =[]
-   * 
-   * for (let i = 0; i<data.length; i++) {
-   *  sql_update += '(?, ?),'
-   *  sql_value.push(data[i].firstName )
-   *  sql_value.push(data[i].lastName)
-   * }
-   * sql_update = sql_update.splice(0, -1)
-   * 
-   * db.query(sql_update, sql_value, (err, data) => {
-   * 
-   * })
-   * 
-   */
-
+  
   sql_value = sql_value.slice(0, -2)
   arr_value.push(id) 
   db.query(sql_Update + sql_value, arr_value, (err, data) => {
