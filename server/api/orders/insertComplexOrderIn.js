@@ -1,12 +1,11 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const orderType = req.body.orderType;
     const newItem = req.body.newItem;
     const oldItem = req.body.oldItem;
     var orderID;
     var itemID = [];
-    const sql_order = 'INSERT INTO ordermain VALUE (null, CURRENT_TIMESTAMP, ?, null)';
+    const sql_order = 'INSERT INTO ordermain VALUE (null, CURRENT_TIMESTAMP, "in", null)';
     const sql_orderDetail = 'INSERT INTO orderDetail (locationID, itemCount, itemID, orderID) VALUES ';
     const sql_item = 'INSERT INTO item';
     let resultFromDelete;
@@ -14,7 +13,7 @@ module.exports = (req, res) => {
     let arr_value;
 
     //insert order
-    db.query(sql_order, [orderType], (err, data) => {
+    db.query(sql_order, (err, data) => {
         if (err) {
             return res.json({
                 success: false,
