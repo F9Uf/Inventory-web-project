@@ -11,6 +11,7 @@ const allEmployee = require('./employees/allEmployee');
 const employeeUpdateOne = require('./employees/employeeUpdateOne');
 const employeeGetOne = require('./employees/employeeGetOne');
 const deleteOneEmployee = require('./employees/deleteOneEmployee');
+const newComplexEmployee = require('./employees/newComplexEmployee');
 
 
 //const car
@@ -59,6 +60,7 @@ const allOrder = require('./orders/allOrder');
 const updateOrder = require('./orders/updateOrder');
 const addOrder = require('./orders/addOrder');
 
+
 //location
 const allLocation = require('./locations/allLocation');
 const addOneLocation = require('./locations/addOneLocation');
@@ -73,6 +75,7 @@ const updateLocation = require('./locations/updateLocation');
 const allShipping = require('./shippings/allShipping');
 const addOneShipping = require('./shippings/addOneShipping');
 const updateShipping = require('./shippings/updateShipping');
+const insertcomplexship = require('./shippings/insertcomplexship');
 
 
 
@@ -93,6 +96,7 @@ router.get('/employees', permit(), allEmployee);
 router.get('/employees/:employee_id', permit(), employeeGetOne);
 router.put('/employees/:employee_id', permit(), employeeUpdateOne);
 router.delete('/employees/:employee_id', permit(), deleteOneEmployee);
+router.post('/employees',permit(),newComplexEmployee);
 
 //car
 router.get('/cars', permit(), allCar);
@@ -138,7 +142,7 @@ router.put('/positions/:position_id', permit(),updatePosition);
 //orders
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
-router.post('/orders', permit(), addOrder);
+router.post('/orders',permit(),addOrder);
 
 
 //location
@@ -154,6 +158,7 @@ router.put('/locations/:location_id',permit(),updateLocation);
 router.get('/shippings', permit(), allShipping);
 router.post('/shippings',permit(),addOneShipping);
 router.put('/shippings/:shippingID',permit(),updateShipping);
+router.post('/shippings',permit(),insertcomplexship);
 
 
 module.exports = router;
