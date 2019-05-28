@@ -10,8 +10,9 @@ module.exports = (req, res) => {
         console.log('top');
         
         const sql_newCar = `INSERT INTO car (carID,carArea,carWeight,carStatus,licensePlate,model) VALUES (NULL,?,?,"ready",?,?);`
-        db.query(sql_newCar, [newCar.carArea, newCar.Weight, newCAr.licensePlate, newCar.model], (err, data) => {
+        db.query(sql_newCar, [newCar.carArea, newCar.carWeight, newCar.licensePlate, newCar.model], (err, data) => {
             if (err) {
+                console.log(err);
                 return res.json({
                     success: false,
                     message: 'Add car is error!'
@@ -26,6 +27,7 @@ module.exports = (req, res) => {
                             message: 'Update status driver error!'
                         })
                     } else {
+
                         let sql_statusorderdetail = `UPDATE orderdetail SET status = "shipping" WHERE `
                         let sql_value = []
                         for (let i = 0; i < statusorderdetail.length; i++) {
@@ -33,19 +35,20 @@ module.exports = (req, res) => {
                             sql_value.push(statusorderdetail[i])
                         }
                         sql_statusorderdetail = sql_statusorderdetail.slice(0, -3)
-                        db.query(sql_update, sql_value, (err, data) => {
+                        db.query(sql_statusorderdetail, sql_value, (err, data) => {
                             if (err) {
                                 return res.json({
                                     success: false,
                                     message: 'Add status orderdetail error!'
                                 })
-                            } else {
+                            }
+                             else {
                                 let sql_shipping = `INSERT INTO shipping(shippingID,carID,shippingDate,employeeID) VALUES (NULL,?,CURRENT_TIMESTAMP,?)`
                                 db.query(sql_shipping, [car, driver], (err, data) => {
                                     if (err) {
                                         return res.json({ success: false, message: 'Insert shipping error!' })
                                     } else {
-                                        return res.json({ success: True, message: 'Add success!' })
+                                        return res.json({ success: true, message: 'Add success!' })
                                     }
                                 })
                             }
