@@ -58,7 +58,8 @@ const updatePosition = require('./positions/updatePosition');
 //order
 const allOrder = require('./orders/allOrder');
 const updateOrder = require('./orders/updateOrder');
-//const addOrder = require('./orders/addOrder');
+//const insertComplexOrder = require('./orders/insertComplexOrder');
+const readOneOrder = require('./orders/readOneOrder');
 
 
 //location
@@ -74,9 +75,9 @@ const addAddress = require('./addresses/addAddress');
 
 //shipping
 const allShipping = require('./shippings/allShipping');
+const addOneShipping = require('./shippings/addOneShipping');
 const updateShipping = require('./shippings/updateShipping');
 const insertcomplexship = require('./shippings/insertcomplexship');
-const updatecomplexship = require('./shippings/updatecomplexship');
 
 
 
@@ -143,8 +144,8 @@ router.put('/positions/:position_id', permit(),updatePosition);
 //orders
 router.get('/orders',permit(),allOrder);
 router.put('/orders/:order_id',permit(),updateOrder);
-//router.post('/orders',permit(),addOrder);
-
+//router.post('/orders',permit(),insertComplexOrder);
+router.get('/orders/:order_id', permit(), readOneOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
@@ -160,7 +161,7 @@ router.post('/addresses',permit(),addAddress);
 //shipping
 router.get('/shippings', permit(), allShipping);
 // router.post('/shippings',permit(),addOneShipping);
-//router.put('/shippings/:shippingID',permit(),updateShipping);
+router.put('/shippings/:shippingID',permit(),updateShipping);
 router.post('/shippings',permit(),insertcomplexship);
 router.put('/shippings/:shippingID',permit(),updatecomplexship);
 

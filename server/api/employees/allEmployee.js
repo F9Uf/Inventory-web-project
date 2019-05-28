@@ -1,18 +1,16 @@
 const db = require('../../db')
+const qtsc = require('../../services/queryToStringCondition')
 
 module.exports = (req,res) =>{
 
   let sql = 'SELECT employeeID, employeeFirstName, employeeLastName, employeePhone, b.positionName FROM employee a LEFT JOIN position b ON a.positionID = b.positionID LEFT JOIN stock c ON a.stockID = c.stockID'
   let sql_value = []
 
-  if (Object.keys(req.query).length) {
-    // have query
-    sql += ' WHERE '
-    for (key in req.query) {
-      sql += `${key} = ? AND `
-      sql_value.push(req.query[key])
-    }
-    sql = sql.slice(0, -4)
+  const query = qtsc(req.query)
+
+  if (query) {
+    sql += query.sql
+    sql_value = query.value_array
   }
 
   db.query(sql, sql_value, (err, data) => {
