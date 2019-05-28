@@ -37,17 +37,35 @@
           <input type="email" class="form-control" placeholder="eample@exmaple.example" v-model="dataEmployee.employeeEmail">
         </div>
         <div class="col-md-3">
+          <label>Salary</label>
+          <input type="number" class="form-control" placeholder="numberic" v-model="dataEmployee.salary"> 
+        </div>
+        <div class="col-md-3">
+          <label>Stock</label>          
+          <select class="form-control" v-model="dataEmployee.stockID">
+            <option value="00000001">Bangkok</option>
+            <option value="00000002">Suphanburi</option>
+            <option value="00000003">Ratchaburi</option>
+            <option value="00000004">Chonburi</option>
+            <option value="00000005">Songkla</option>
+            <option value="00000006">Nakornratchsima</option>
+            <option value="00000007">Khonkaen</option>
+            <option value="00000008">Phisanulok</option>
+            <option value="00000009">Changmai</option>
+            <option value="00000010">Phuket</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
           <label>Username</label>
           <input type="text" class="form-control" placeholder="username" v-model="dataEmployee.username"> 
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <label>Password</label>
           <input type="text" class="form-control" placeholder="password" v-model="dataEmployee.password">
           <button class="btn btn-success" @click="fetchEmployee()">test fetch</button>
         </div>
-      </div>
-      <div class="form-row">
-        
       </div>
     </layout>
   <!-- Position select / add -->
@@ -104,7 +122,7 @@
     </layout>
     <div class="row">
       <div class="col-auto ml-auto">
-        <button class="btn btn-success">Create</button>
+        <button class="btn btn-success" @click="putAllData()">Create</button>
       </div>
     </div>
     <!-- Modal for select position-->
@@ -228,6 +246,7 @@
       </template>
     </base-modal>
 
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
@@ -237,10 +256,11 @@ import TheModal from '@/components/TheModal'
 import BaseTable from '@/components/BaseTable'
 import BaseModal from '@/components/BaseModal'
 import { $api } from '@/service/api'
+import BaseAlert from '@/components/BaseAlert'
 
 export default {
   components: {
-    layout,TheModal,BaseTable,BaseModal
+    layout,TheModal,BaseTable,BaseModal,BaseAlert
   },
   data() {
     return {
@@ -289,13 +309,20 @@ export default {
         newAddress:{}
 
       },
-      dataEmployee:{}
+      dataEmployee:{
+        stockID: '00000001'
+      },
+      alert:{
+        show: false,
+        msg: '',
+        color: 'danger'
+      }
     }
   },
   methods: {
     // position Methods
     fetchPos() {
-      $api({path: '/positions', methods: 'get'})
+      $api({path: '/positions', method: 'get'})
       .then(data => {
         this.selectPosition.body = data.result
         console.log(data)
@@ -314,7 +341,7 @@ export default {
     },
     // Address Methods
     fetchAddress() {
-      $api({path: '/addresses', methods: 'get'})
+      $api({path: '/addresses', method: 'get'})
       .then(data => {
         this.selectAddress.body = data.result
         console.log(data)
@@ -334,7 +361,7 @@ export default {
     },
     // Employees Methods
     fetchEmployee() {
-      $api({path: '/employees/0000000001', methods: 'get'})
+      $api({path: '/employees/0000000001', method: 'get'})
       .then(data => {
         this.dataEmployee.body = data.result
         console.log(data)
@@ -342,7 +369,51 @@ export default {
       })
     },
     putAllData() {
+      let employeeData = this.dataEmployee
+      let newData = {
+        employeeData,
+      }      
+      if (this.selectPosition.Pos.positionID) {
+        // old
+        newData.newPosition = null
+        newData.oldPosition = {positionID: this.selectPosition.Pos.positionID}
+      } else {
+        //new
+        newData.newPosition = {
+          positionName: this.selectPosition.Pos.positionName,
+          positionSpecific: this.selectPosition.Pos.positionSpecific
+        }
+      }
+      if (this.selectAddress.address.addressID) {
+        //old
+        newData.newAddress = null
+        newData.oldAddress = { addressID: this.selectAddress.address.addressID }
+      } else {
+        // new
+        newData.newAddress = {
+          addressDetail: this.selectAddress.address.addressID,
+          subDistrict: this.selectAddress.address.subDistrict,
+          district: this.selectAddress.address.district,
+          province: this.selectAddress.address.province,
+          postalCode: this.selectAddress.address.postalCode
+        }
+      }
+      console.log(newData)
 
+      $api({ path : '/employees', method : 'post', data: newData})
+      .then(data => {
+        if(data.success) {
+          this.alert.show = true
+          this.alert.msg = 'Created Employee information'
+          this.alert.color = 'success'
+        } else {
+          this.alert.show = true
+          this.alert.msg = 'Create Employee information Error'
+          this.alert.color = 'danger'
+        }
+        console.log(data)
+        
+      })
     }
 
     // create employee
