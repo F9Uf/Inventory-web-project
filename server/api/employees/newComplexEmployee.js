@@ -46,63 +46,58 @@ module.exports = (req, res) => {
                 success: false,
                 message: 'Create position is error!'
             })
-        } 
-        else if(!newPos || oldPos){
+        }
+        else if (!newPos || oldPos) {
             return res.json({
                 success: false,
                 message: 'This position has existed.'
             })
 
-        } 
-        else {
-            return res.json({
-                success: true,
-                message: 'Create position is successful!'
-            })
         }
-    })
-    if (dataPos) {
-        //insert address
-        db.query(sqlAddress, [addressDetail, subDistrict, district, province, postalCode], (err, dataAddress) => {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: 'Create address is error!'
-                })
-            } 
-            else if(!newAddress || oldAddress){
-                return res.json({
-                    success: false,
-                    message: 'This address has existed.'
-                })
-            }  
-            
-            else {
-                return res.json({
-                    success: true,
-                    message: 'Create address is successful!'
+        else {
+            if (dataPos) {
+                //insert address
+                db.query(sqlAddress, [addressDetail, subDistrict, district, province, postalCode], (err, dataAddress) => {
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            message: 'Create address is error!'
+                        })
+                    }
+                    else if (!newAddress || oldAddress) {
+                        return res.json({
+                            success: false,
+                            message: 'This address has existed.'
+                        })
+                    }
+
+                    else {//insert emp
+                        if (dataAddress) {
+                            db.query(sqlEmp, [empFirstName, empLastName, empPhotoUrl, empPhone, empEmail, empSalary, empUsername, empPassword, empSex, stockID, positionID, status, addressID], (err, dataEmp) => {
+                                if (err) {
+                                    return res.json({
+                                        success: false,
+                                        message: 'Create employee is error!'
+                                    })
+                                }
+                                else {
+                                    return res.json({
+                                        success: true,
+                                        message: 'Create employee is successful!'
+                                    })
+                                }
+                            })
+                        }
+
+                    }
                 })
             }
-        })
-    }
 
-    //insert emp
-    else if(dataAddress){
-    db.query(sqlEmp, [empFirstName, empLastName, empPhotoUrl, empPhone, empEmail, empSalary, empUsername, empPassword, empSex, stockID, positionID,status, addressID], (err, dataEmp) => {
-        if (err) {
-            return res.json({
-                success: false,
-                message: 'Create employee is error!'
-            })
-        }
-        else if (new{
-            return res.json({
-                success: true,
-                message: 'Create employee is successful!'
-            })
         }
     })
-    }
+
+
+
 
 
 
