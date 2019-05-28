@@ -2,61 +2,39 @@
   <layout>
     <div class="row justify-content-between">
       <div class="col-auto">
-        <h3>Cars Information</h3>
+        <h3>Stock Information</h3>
         </div>
       <div class="col-auto">
-        <button class="btn btn-success" @click="$router.push('/cars/new')">+ New Car</button>
+        <button class="btn btn-success" @click="$router.push('/Stocks/new')">+ New Stock</button>
+        <!-- there is no adding new stock -->
       </div>
     </div>
     <br>
 
-    <base-table v-if="body.length" :header="header" :body="body" idName="carID" :hasAction="true">
+    <base-table v-if="body.length" :header="header" :body="body" idName="stockID" :hasAction="true">
       <template v-slot="row">
         <div class="btn-group" role="group">
           <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+          <button class="btn btn-success" @click="$router.push(`/stocks/${row.rowId}`)">view</button>
           <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
         </div>
       </template>
     </base-table>
-    <h5 v-if="!body">No Cars</h5>
+    <h5 v-if="!body.length">No Stock</h5>
 
     <!-- modal for edit data -->
     <the-modal id="editModal" v-if="showModalEdit" @close="showModalEdit = false" @update="updateData">
       <template v-slot:header>
-        <h5>Edit Car #{{editCar.carID}}</h5>
+        <h5>Edit Stock #{{editStock.stockID}}</h5>
       </template>
       <template v-slot:body>
         <div class="form-row">
           <div class="col">
-             <label >Area</label>
-            <input type="number" class="form-control" min="0"
-              :class="{'is-invalid': $v.editCar.carArea.$error}"
-              v-model="$v.editCar.carArea.$model">
-            <div class="invalid-feedback">Please enter car area</div>
-          </div>
-          <div class="col">
-             <label >Weight</label>
-            <input type="number" class="form-control" min="0"
-             :class="{'is-invalid': $v.editCar.carWeight.$error}"
-              v-model="$v.editCar.carWeight.$model">
-            <div class="invalid-feedback">Please enter car weight</div>
-          </div>
-        </div><br>
-        <div class="form-row">
-          <div class="col">
-             <label >License Plate</label>
+            <label >Stock Name</label>
             <input type="text" class="form-control"
-              :class="{'is-invalid': $v.editCar.licensePlate.$error}"
-              v-model="$v.editCar.licensePlate.$model"
-            >
-            <div class="invalid-feedback">Please enter License Plate</div>
-          </div>
-          <div class="col">
-            <label >Model</label>
-            <input type="text" class="form-control"
-              :class="{'is-invalid': $v.editCar.model.$error}"
-              v-model="$v.editCar.model.$model">
-            <div class="invalid-feedback">Please enter Model</div>
+              :class="{'is-invalid': $v.editStock.stockName.$error}"
+              v-model="$v.editStock.stockName.$model">
+            <div class="invalid-feedback">Please enter Stock's name</div>
           </div>
         </div>
       </template>
@@ -71,7 +49,7 @@ import layout from '../LAYOUT'
 import BaseTable from '@/components/BaseTable'
 import TheModal from '@/components/TheModal'
 import { $api } from '@/service/api'
-import { required, decimal, minValue } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 import BaseAlert from '@/components/BaseAlert'
 
 export default {
@@ -81,17 +59,12 @@ export default {
   data() {
     return {
       header: [
-        { name: 'carID', label: 'Car ID'},
-        { name: 'model', label: 'Model'},
-        { name: 'licensePlate', label: 'License Plate'},
-        { name: 'carWeight', label: 'Weight (KG)'},
-        { name: 'carArea', label: 'Area (m^2)'},
-        { name: 'carStatus', label: 'Status'}
+        { name: 'stockID', label: 'Stock ID'},
+        { name: 'stockName', label: 'Stock Name'},
       ],
       body: [],
-      editCar: {},
+      editStock: {},
       showModalEdit: false,
-      showModalNew: false,
       alert: {
         show: false,
         msg: '',
@@ -100,22 +73,18 @@ export default {
     }
   },
   validations: {
-    editCar: {
-      carArea: {required, decimal, minValue: minValue(0)	},
-      carWeight: {required, decimal, minValue: minValue(0) },
-      carStatus: {required},
-      licensePlate: {required},
-      model: {required}
+    editStock: {
+      stockName: {required}
     }
   },
   created() {
-    this.fetchCars()
+    this.fetchStock()
   },
   methods: {
     deleteData (value) {
-      let isConfirm = confirm(`Are you sure to delete this car #${value}`)
+      let isConfirm = confirm(`Are you sure to delete this stock #${value}`)
       if (isConfirm) {
-        $api({ path: `/cars/${value}`, method: 'delete'})
+        $api({ path: `/stocks/${value}`, method: 'delete'})
         .then(data => {
           if (data.success) {
             this.alert = {
@@ -123,7 +92,7 @@ export default {
               msg: data.message,
               color: 'success'
             }
-            this.fetchCars()
+            this.fetchStock()
           } else {
             this.alert = {
               show: false,
@@ -136,10 +105,10 @@ export default {
     },
     editData (value) {
       this.showModalEdit = true
-      this.editCar = JSON.parse(JSON.stringify(this.body.filter(e => e.carID === value)[0]))
+      this.editStock = JSON.parse(JSON.stringify(this.body.filter(e => e.stockID === value)[0]))
     },
-    fetchCars () {
-      $api({ path: '/cars', method: 'get'})
+    fetchStock () {
+      $api({ path: `/stocks`, method: 'get'})
       .then( data => {
         if (data.success) {
           this.body = data.result
@@ -155,17 +124,17 @@ export default {
     },
     updateData () {
       if (!this.$v.$invalid) {
-        $api({ path: `/cars/${this.editCar.carID}`, method: 'put', data: this.editCar})
+        $api({ path: `/stocks/${this.editStock.stockID}`, method: 'put', data: this.editStock})
         .then( data => {
           if (data.success) {
             this.showModalEdit = false
-            this.editCar = {}
+            this.editStock = {}
             this.alert = {
               show: true,
               msg: data.message || 'success',
               color: 'success'
             }
-            this.fetchCars()
+            this.fetchStock()
           } else {
             this.alert = {
               show: true,
