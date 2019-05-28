@@ -29,8 +29,8 @@ module.exports = (req, res) => {
     const postalCode = req.body.postalCode;
 
     //new-old
-    const newPos = req.body.newPos;
-    const oldPos = req.body.oldPos;
+    const newPosition = req.body.newPosition;
+    const oldPosition = req.body.oldPosition;
     const newAddress = req.body.newAddress;
     const oldAddress = req.body.oldAddress;
 
@@ -47,7 +47,7 @@ module.exports = (req, res) => {
                 message: 'Create position is error!'
             })
         }
-        else if (!newPos || oldPos) {
+        else if (newPosition && !oldPosition) {
             return res.json({
                 success: false,
                 message: 'This position has existed.'
@@ -64,7 +64,7 @@ module.exports = (req, res) => {
                             message: 'Create address is error!'
                         })
                     }
-                    else if (!newAddress || oldAddress) {
+                    else if (newAddress && !oldAddress) {
                         return res.json({
                             success: false,
                             message: 'This address has existed.'
