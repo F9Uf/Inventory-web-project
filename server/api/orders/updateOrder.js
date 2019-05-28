@@ -19,7 +19,6 @@ module.exports = (req, res) => {
   db.query(sql_Update + sql_value + sql_WHERE, arr_value, (err, data) => {
     if (err) {
       console.log(err);
-
       return res.json({
         success: false,
         message: 'Update order is error!'
