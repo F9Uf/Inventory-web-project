@@ -45,16 +45,15 @@ module.exports = (req, res) => {
                     message: 'Add item is error : ' + err + 'Delete order : ' + resulFromDelete
                 })
             } else {
-                sql_value_item = valueCreate(newItem)
-            }
-        })
-    }
-
-        db.query(sql_order, [orderType, oldShop], (err, data) => {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: 'Add order is error : ' + err 
+                sql_value_item = valueCreate(newItem);
+                db.query(sql_orderDetail + sql_value_item[0], sql_value_item[1], (err, data) => {
+                    if(err) {
+                        const resulFromDelete = deleteOrder(orderID);
+                        return res.json({
+                            success: false,
+                            message: 'Add '
+                        })
+                    }
                 })
             } else {
                 orderID = data.insertId;
