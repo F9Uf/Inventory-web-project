@@ -13,6 +13,7 @@ module.exports = (req, res) => {
         let sql_statusCarOld = `UPDATE car SET status = "ready" WHERE carID = (SELECT carID FROM shipping WHERE shippingID = ?)`
         db.query(sql_statusCarOld, [shippingID], (err, data) => {
             if (err) {
+                console.log(err)
                 return res.json({ success: false, message: 'Cannot change status car!' })
             } else {
                 const sql_newCar = `UPDATE shipping SET carID = ? WHERE shippingID = ?`
