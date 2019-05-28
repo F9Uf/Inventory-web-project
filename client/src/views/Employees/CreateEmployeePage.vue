@@ -381,8 +381,8 @@ export default {
     // },
     putAllData() {      
       if(
-          this.dataEmployee.employeeFirstName !== "" && this.employeeData.employeeLastName !== "" &&
-          this.dataEmployee.sex !== "" && this.employeeData.employeePhone !== "" &&
+          this.dataEmployee.employeeFirstName !== "" && this.dataEmployee.employeeLastName !== "" &&
+          this.dataEmployee.sex !== "" && this.dataEmployee.employeePhone !== "" &&
           this.dataEmployee.employeeEmail !== "" && this.dataEmployee.salary !== "" &&
           this.dataEmployee.username !== "" && this.dataEmployee.password !== "" &&
           this.selectPosition.Pos.positionName !== "" && this.selectPosition.Pos.positionSpecific !== "" &&
@@ -390,6 +390,8 @@ export default {
           this.selectAddress.address.subDistrict !== "" && this.selectAddress.address.province !== "" &&
           this.selectAddress.address.postalCode !== ""
         ) {
+            console.log("haaaa sapen ya");
+            
             let employeeData = this.dataEmployee
             let newData = {
               ...employeeData,
