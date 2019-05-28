@@ -68,7 +68,6 @@ export default {
   margin: 20px 0;
   max-height: 60vh;
   overflow: auto;
-  position: relative;
 }
 
 .modal-default-button {
