@@ -52,12 +52,12 @@
       <div class="form-row">
         <div class="col-md-5">
           <input type="text" class="form-control" placeholder="role ex.manager, staff, .." disabled v-model="selectPosition.Pos.positionName"><br>
-          
+
           <button class="btn btn-success" @click="selectPosition.showModalSelect = true; fetchPos()">Select position</button>
           <button class="btn btn-success" @click="selectPosition.showModalCreate = true">Add position</button>
         </div>
-        <div class="col-md-5">          
-          <input type="text" class="form-control" placeholder="position ex.manager, staff, .." disabled v-model="selectPosition.Pos.positionSpecific">          
+        <div class="col-md-5">
+          <input type="text" class="form-control" placeholder="position ex.manager, staff, .." disabled v-model="selectPosition.Pos.positionSpecific">
         </div>
       </div>
     </layout>
@@ -67,7 +67,7 @@
       <div class="form-row">
         <div class="col-md-11">
           <label for="">Address Detail</label>
-          <input type="text" class="form-control" placeholder="Address " disabled v-model="selectAddress.address.addressDetail">          
+          <input type="text" class="form-control" placeholder="Address " disabled v-model="selectAddress.address.addressDetail">
         </div>
       </div>
       <div class="form-row">
@@ -78,7 +78,7 @@
         <div class="col-md-5">
           <label for="">Sub District</label>
           <input type="text" class="form-control" placeholder="Sub-District" disabled v-model="selectAddress.address.subDistrict">
-        </div>        
+        </div>
       </div>
       <div class="form-row">
         <div class="col-md-6">
@@ -88,7 +88,7 @@
         <div class="col-md-5">
           <label for="">Zip code</label>
           <input type="number" class="form-control" placeholder="Zip" disabled v-model="selectAddress.address.postalCode">
-        </div>        
+        </div>
       </div>
       <div class="form-row">
         <div class="col-md mr-auto">
@@ -100,16 +100,16 @@
     </layout>
     <div class="row">
       <div class="col-auto ml-auto">
-        <button class="btn btn-success">Create</button>  
+        <button class="btn btn-success">Create</button>
       </div>
-    </div> 
+    </div>
     <!-- Modal for select position-->
     <base-modal v-if="selectPosition.showModalSelect" @close="selectPosition.showModalSelect = false">
       <template v-slot:header>
         <h5>Select position</h5>
       </template>
       <template v-slot:body>
-        <base-table :header="selectPosition.header" :body="selectPosition.body" 
+        <base-table :header="selectPosition.header" :body="selectPosition.body"
         :hasAction="true" :hasIndex="true"
         idName="positionID">
           <template v-slot="row">
@@ -120,10 +120,10 @@
       <template v-slot:footer>
         <div class="row">
           <div class="col-auto ml-auto">
-            <button class="btn btn-danger" @click="selectPosition.showModalSelect= false">Close</button>  
+            <button class="btn btn-danger" @click="selectPosition.showModalSelect= false">Close</button>
           </div>
         </div>
-      </template>        
+      </template>
     </base-modal>
 
     <!--Modal for add Position  -->
@@ -143,28 +143,28 @@
           </div>
           <div class="col-md">
             <label for="">Position</label>
-            <input type="text" class="form-control" placeholder="enter employee position" 
+            <input type="text" class="form-control" placeholder="enter employee position"
             v-model="selectPosition.newPos.positionSpecific">
           </div>
-        </div>          
+        </div>
       </template>
       <template v-slot:footer>
         <div class="row">
           <div class="col-auto ml-auto">
             <button class="btn btn-success" @click="addPos(); selectPosition.showModalCreate= false">Submit</button>
-            <button class="btn btn-danger" @click="selectPosition.showModalCreate= false">Close</button>  
+            <button class="btn btn-danger" @click="selectPosition.showModalCreate= false">Close</button>
           </div>
         </div>
-      </template>        
+      </template>
     </base-modal>
-    
+
     <!-- Modal for select Address -->
     <base-modal v-if="selectAddress.showModalSelect" @close="selectAddress.showModalSelect = false">
       <template v-slot:header>
         <h5>Select Address</h5>
       </template>
       <template v-slot:body>
-        <base-table :header="selectAddress.header" :body="selectAddress.body" 
+        <base-table :header="selectAddress.header" :body="selectAddress.body"
         :hasAction="true" :hasIndex="true"
         idName="addressID">
           <template v-slot="row">
@@ -175,10 +175,10 @@
       <template v-slot:footer>
         <div class="row">
           <div class="col-auto ml-auto">
-            <button class="btn btn-danger" @click="selectAddress.showModalSelect = false">Close</button>  
+            <button class="btn btn-danger" @click="selectAddress.showModalSelect = false">Close</button>
           </div>
         </div>
-      </template>        
+      </template>
     </base-modal>
 
     <!-- Modal fo Add Address -->
@@ -190,7 +190,7 @@
         <div class="form-row">
         <div class="col-md">
           <label for="">Address Detail</label>
-          <input type="text" class="form-control" placeholder="Address " v-model="selectAddress.newAddress.addressDetail">          
+          <input type="text" class="form-control" placeholder="Address " v-model="selectAddress.newAddress.addressDetail">
         </div>
       </div>
       <div class="form-row">
@@ -201,7 +201,7 @@
         <div class="col-md">
           <label for="">Sub District</label>
           <input type="text" class="form-control" placeholder="Sub-District" v-model="selectAddress.newAddress.subDistrict">
-        </div>        
+        </div>
       </div>
       <div class="form-row">
         <div class="col-md">
@@ -211,19 +211,19 @@
         <div class="col-md">
           <label for="">Zip code</label>
           <input type="number" class="form-control" placeholder="Zip" v-model="selectAddress.newAddress.postalCode">
-        </div>        
-      </div>          
+        </div>
+      </div>
       </template>
       <template v-slot:footer>
         <div class="row">
           <div class="col-auto ml-auto">
             <button class="btn btn-success" @click="addAddress(); selectAddress.showModalCreate= false">Submit</button>
-            <button class="btn btn-danger" @click="selectAddress.showModalCreate= false">Close</button>  
+            <button class="btn btn-danger" @click="selectAddress.showModalCreate= false">Close</button>
           </div>
         </div>
-      </template>        
+      </template>
     </base-modal>
-    
+
   </layout>
 </template>
 
@@ -237,7 +237,7 @@ import { $api } from '@/service/api'
 export default {
   components: {
     layout,TheModal,BaseTable,BaseModal
-  },  
+  },
   data() {
     return {
       selectPosition: {
@@ -266,7 +266,7 @@ export default {
       selectAddress: {
         showModalSelect: false,
         showModalCreate: false,
-        header: [          
+        header: [
           {
             name: 'addressDetail',
             label: 'Detail'
@@ -291,7 +291,7 @@ export default {
         body:[],
         address:{},
         newAddress:{}
-        
+
       }
     }
   },
@@ -308,7 +308,7 @@ export default {
       console.log(id)
       this.selectPosition.showModalSelect = false
       this.selectPosition.Pos = {...this.selectPosition.body.filter(e => e.positionID === id)[0]}
-      
+
     },
     addPos() {
       this.selectPosition.Pos = {...this.selectPosition.newPos}
@@ -321,14 +321,14 @@ export default {
       .then(data => {
         this.selectAddress.body = data.result
         console.log(data)
-        
+
       })
     },
     chooseAddress(id){
       console.log(id)
       this.selectAddress.address = {...this.selectAddress.body.filter(e => e.addressID === id)[0]}
       this.selectAddress.showModalSelect = false
-      
+
     },
     addAddress() {
       this.selectAddress.address = {...this.selectAddress.newAddress}
@@ -336,6 +336,40 @@ export default {
       this.selectAddress.showModalCreate = false
     },
     // create employee
+
+      /**
+       *
+       * let newData = {
+       *  firtsName: this.firstName,
+       *  lastName: this.lastlklk;,
+       *  ...,
+       * }
+       *
+       * if (this.selectPos.Pos.postionID) {
+       *  // select old positoin
+       *  newData.newPosition = null
+       *  newData.oldPosition = {positionID: this.selectPos.Pos.postionID}
+       * } else {
+       *  // new position
+       *  newData.newPosition = {
+       *  postionName: this.selectPos.Pos.postionnName,
+       *  positionSpecific: this.selclk......
+       * }
+       * newData.oldPosition = null
+       * }
+       *
+       *
+       * if(addressID) {
+       *
+       * }else {
+       *
+       * }
+       *
+       * $api({ path: '/' ,method: 'post', data: newData})
+       * .then(data => {
+       *  if( data.success)
+       * })
+       */
   }
 
 }
