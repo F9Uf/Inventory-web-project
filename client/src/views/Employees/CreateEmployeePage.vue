@@ -8,6 +8,7 @@
         <div class="col-md-4">
           <label>First Name</label>
           <input type="text" class="form-control" placeholder="firsr name" v-model="dataEmployee.employeeFirstName">
+          <div></div>
         </div>
         <div class="col-md-4">
           <label>Last Name</label>
@@ -378,60 +379,72 @@ export default {
         
     //   })
     // },
-    putAllData() {
-      let employeeData = this.dataEmployee
-      let newData = {
-        ...employeeData,
-      }
-      // if(
-      //     this.dataEmployee.employeeFirstName !== "" && this.employeeData.employeeLastName !== "" &&
-      //     this.dataEmployee.sex !== "" && this.employeeData.employeePhone !== "" &&
-      //     this.dataEmployee.employeeEmail !== "" && this.dataEmployee.salary !== "" &&
-      //     this.dataEmployee.username !== "" && this.dataEmployee.password !== ""
-      //   )      
-      if (this.selectPosition.Pos.positionID) {
-        // old
-        newData.newPosition = null
-        newData.oldPosition = {positionID: this.selectPosition.Pos.positionID}
-      } else {
-        //new
-        newData.newPosition = {
-          positionName: this.selectPosition.Pos.positionName,
-          positionSpecific: this.selectPosition.Pos.positionSpecific
-        }
-      }
-      if (this.selectAddress.address.addressID) {
-        //old
-        newData.newAddress = null
-        newData.oldAddress = { addressID: this.selectAddress.address.addressID }
-      } else {
-        // new
-        newData.newAddress = {
-          addressDetail: this.selectAddress.address.addressDetail,
-          subDistrict: this.selectAddress.address.subDistrict,
-          district: this.selectAddress.address.district,
-          province: this.selectAddress.address.province,
-          postalCode: this.selectAddress.address.postalCode
-        }
-      }
-      console.log(newData)
+    putAllData() {      
+      if(
+          this.dataEmployee.employeeFirstName !== "" && this.employeeData.employeeLastName !== "" &&
+          this.dataEmployee.sex !== "" && this.employeeData.employeePhone !== "" &&
+          this.dataEmployee.employeeEmail !== "" && this.dataEmployee.salary !== "" &&
+          this.dataEmployee.username !== "" && this.dataEmployee.password !== "" &&
+          this.selectPosition.Pos.positionName !== "" && this.selectPosition.Pos.positionSpecific !== "" &&
+          this.selectAddress.address.addressDetail !== "" && this.selectAddress.address.district !=="" &&
+          this.selectAddress.address.subDistrict !== "" && this.selectAddress.address.province !== "" &&
+          this.selectAddress.address.postalCode !== ""
+        ) {
+            let employeeData = this.dataEmployee
+            let newData = {
+              ...employeeData,
+            }
 
-      $api({ path : '/employees', method : 'post', data: newData})
-      .then(data => {
-        if(data.success) {
-          this.alert.show = true
-          this.alert.msg = 'Created Employee information Commpleted'
-          this.alert.color = 'success'
+            if (this.selectPosition.Pos.positionID) {
+              // old
+              newData.newPosition = null
+              newData.oldPosition = {positionID: this.selectPosition.Pos.positionID}
+            } else {
+              //new
+              newData.newPosition = {
+                positionName: this.selectPosition.Pos.positionName,
+                positionSpecific: this.selectPosition.Pos.positionSpecific
+              }
+            }
+            if (this.selectAddress.address.addressID) {
+              //old
+              newData.newAddress = null
+              newData.oldAddress = { addressID: this.selectAddress.address.addressID }
+            } else {
+              // new
+              newData.newAddress = {
+                addressDetail: this.selectAddress.address.addressDetail,
+                subDistrict: this.selectAddress.address.subDistrict,
+                district: this.selectAddress.address.district,
+                province: this.selectAddress.address.province,
+                postalCode: this.selectAddress.address.postalCode
+              }
+            }
+            console.log(newData)
+
+            $api({ path : '/employees', method : 'post', data: newData})
+            .then(data => {
+              if(data.success) {
+                this.alert.show = true
+                this.alert.msg = 'Created Employee information Commpleted'
+                this.alert.color = 'success'
+              } else {
+                this.alert.show = true
+                this.alert.msg = 'Create Employee information Error'
+                this.alert.color = 'danger'
+                this.selectPosition.Pos = {}
+                this.selectAddress.address = {}
+              }
+              console.log(data)
+              
+            })
         } else {
           this.alert.show = true
-          this.alert.msg = 'Create Employee information Error'
+          this.alert.msg = 'Please fill all information'
           this.alert.color = 'danger'
-          this.selectPosition.Pos = {}
-          this.selectAddress.address = {}
-        }
-        console.log(data)
-        
-      })
+        }    
+      
+      
     }
 
     // create employee
