@@ -9,7 +9,23 @@ module.exports = (req, res) => {
     const sql_orderDetail = 'INSERT INTO orderDetail (locationID, itemCount, itemID, orderID) VALUES ';
     var shopID;
     var orderID;
+    var checkOrder = [];
+    let temp;
     let resultFromDelete;
+    /*for (let i = 0; i < orderDetail.length, i++) {
+        checkOrder.push('{'+orderDetail[i].itemID+','+orderDetail[i].locationID+'}');
+        for (let j = 0; j < checkOrder.length - 1; j++) {
+            temp = '{'+orderDetail[i].itemID+','+orderDetail[i].locationID+'}';
+            console.log(temp);
+            console.log(checkOrder[j]);
+            if (temp === checkOrder[j]) {
+                return res.json({
+                    success: false,
+                    message: 'Duplicate order !!'
+                })
+            }
+        }
+    }*/
     if (oldShop) {
         db.query(sql_order, [oldShop.shopID], (err, data) => {
             if (err) {
@@ -24,7 +40,7 @@ module.exports = (req, res) => {
                 for (let i = 0 ; i < orderDetail.length ; i++) {
                     sql_value += '(?,?,?,?), ';
                     arr_value.push(eval('orderDetail' + '[' + i + '].' + 'locationID'));
-                    arr_value.push(eval('orderDetail' + '[' + i + '].' + 'itemCount'));
+                    arr_value.push(eval('orderDetail' + '[' + i + '].' + 'selectCount'));
                     arr_value.push(eval('orderDetail' + '[' + i + '].' + 'itemID'));
                     arr_value.push(orderID);
                 }
