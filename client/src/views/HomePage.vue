@@ -5,12 +5,14 @@
       <!-- Total Item -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand item</h6>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
-              <label>Total</label>
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
             </div>
             <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
               <input type="text" class="form-control" v-model="item.body[0].count" disabled>
             </div>
             <div class="col-auto ml-auto">
@@ -24,12 +26,14 @@
       <!-- total Catagoey -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand Category</h6>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
-              <label>Total</label>
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
             </div>
             <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
               <input type="text" class="form-control" v-model="category.body[0].count" disabled>
             </div>
             <div class="col-auto ml-auto">
@@ -49,11 +53,11 @@
           <div class="form-row">
             <div class="col-md ">
               <label>category</label>
-              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+              <input type="text" class="form-control" v-model="maxUsed.body[0].categoryName" disabled>
             </div>
             <div class="col-md" >
               <label>count</label>
-              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+              <input type="text" class="form-control" v-model="maxUsed.body[0]['max(a.MaxcategoryName)']" disabled>
             </div>
             <div class="col-auto ml-auto">
               <button class="btn btn-success" @click="this">View Qeury</button>
@@ -83,7 +87,250 @@
         </layout>
       </div>
       <!--  --------->
-    </div> 
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
+
+    <div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+      </div> 
 
     
   </layout>
@@ -107,33 +354,36 @@ export default {
     return {
       item:{
         header: [
-        {
-          name: 'itemID',
-          label: 'item id'
-        },
-        {
-          name: 'itemName',
-          label: 'Name'
-        },
-        {
-          name: 'totalCount',
-          label: 'Total count'
-        }
-      ],
-      body: null,
+          {
+            name: 'itemID',
+            label: 'item id'
+          },
+          {
+            name: 'itemName',
+            label: 'Name'
+          },
+          {
+            name: 'totalCount',
+            label: 'Total count'
+          }
+        ],
+        body: null,
       },
       category: {
         header: [
-        {
-          name: 'categoryID',
-          label: 'ID'
-        },
-        {
-          name: 'categoryName',
-          label: 'Name'
-        }
-      ],
-      body: null,
+          {
+            name: 'categoryID',
+            label: 'ID'
+          },
+          {
+            name: 'categoryName',
+            label: 'Name'
+          }
+        ],
+        body: null,
+      },
+      maxUsed: {
+        body: null
       }
       
     }
@@ -158,12 +408,69 @@ export default {
         
         
       })
+    },
+    fetchMostused() {
+      $api({ path: '/analysis3max', method: 'get'})
+      .then( data => {
+        this.maxUsed.body = data.result
+        console.log(data);
+        console.log(this.maxUsed.body);
+        
+        
+      })
     }
 
   },
   created() {
     this.fetchItems()
     this.fetchCategory()
+    this.fetchMostused()
   },
 }
 </script>
+
+
+
+<div class="form-row">
+      <!-- Total Item -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label  Name--->
+              <input type="text" class="form-control" v-model="item.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  -->
+
+      <!-- total Catagoey -->
+      <div class="col-6">
+        <layout>
+          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <div class="form-row">
+            <div class="col-md ">
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-md" >
+              <label>Total</label> <!--label 01 Name--->
+              <input type="text" class="form-control" v-model="category.body[0].count" disabled>
+            </div>
+            <div class="col-auto ml-auto">
+              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+            </div>
+          </div>
+        </layout>
+      </div>
+      <!--  --------->
+    </div>
