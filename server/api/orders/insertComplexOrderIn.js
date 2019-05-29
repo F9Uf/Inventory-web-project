@@ -90,10 +90,9 @@ module.exports = (req, res) => {
                     }
                 })
             } else {
-                resultFromDelete = deleteOrder(orderID);
                 return res.json({
-                    success: false,
-                    message: 'There are no item'
+                    success: true,
+                    message: 'Add order is successful'
                 })
             }
         }
