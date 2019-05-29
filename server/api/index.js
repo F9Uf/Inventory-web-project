@@ -83,12 +83,21 @@ const shippingById = require('./shippings/shippingById');
 
 //analysis
 const ana5 = require('./analysis/5');
+const ana5Max = require('./analysis/5max');
 const ana3show = require('./analysis/3show_all');
 const ana3group = require('./analysis/3group_by');
+const ana3max = require('./analysis/3max');
 const locationArea = require('./analysis/locationArea');
 const ana4show = require('./analysis/4show');
 const ana4group = require('./analysis/4group');
+const ana8mostCategoryInSupplier = require('./analysis/8mostCategoryInSupplier');
 const ana6 = require('./analysis/6');
+const ana15 = require('./analysis/15');
+const ana14 = require('./analysis/14');
+const ana14max = require('./analysis/14max');
+const ana15max = require('./analysis/15max');
+
+
 
 
 
@@ -180,11 +189,19 @@ router.get('/shippings/:shippingID',permit(),shippingById);
 
 //analysis
 router.get('/analysis5',permit(),ana5);
+router.get('/analysis5max',permit(),ana5Max);
 router.get('/analysis3show',permit(),ana3show);
 router.get('/analysis3group',permit(),ana3group);
+router.get('/analysis3max',permit(),ana3max);
 router.get('/location/area',permit(),locationArea);
 router.get('/analysis4show',permit(),ana4show);
 router.get('/analysis4group',permit(),ana4group);
+router.get('/analysis8most',permit(),ana8mostCategoryInSupplier);
 router.get('/analysis6',permit(),ana6);
+router.get('/analysis15',permit(),ana15);
+router.get('/analysis15max',permit(),ana15max);
+router.get('/analysis14',permit(),ana14);
+router.get('/analysis14max',permit(),ana14max);
+
 
 module.exports = router;
