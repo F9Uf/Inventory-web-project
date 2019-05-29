@@ -6,65 +6,121 @@
 
       <base-table :hasAction="true" :header="header" :body="body" idName="itemID" valueName="itemCount">
         <template v-slot="row">
-          <div class="row">
-            <div class="col-md-5">
-              <input type="text" class="form-control input-normal" />
-            </div>
-            <div class="col-auto">
-              <div class="btn-group">
-                <button class="btn btn-danger" @click="deleteData(row.rowIndex)">delete</button>
-                <button class="btn btn-warning">select location</button>
-              </div>
-            </div>
-          </div>
+          <button class="btn btn-danger" @click="deleteData(row.rowIndex)">delete</button>
         </template>
       </base-table><br>
 
       <div class="row">
         <div class="col-auto mr-auto">
-          <button class="btn btn-success" @click="showModalView = true; fetchItem()">Selet Item</button>
-          <button class="btn btn-success">+ Add Item</button>
+          <button class="btn btn-success" @click="showModalView = true">select item</button>
+          <button class="btn btn-success" @click="showModalNew = true; fetchCat(); fetchSup(); fetchLoc();">+ add item</button>
         </div>
       </div>
     </layout>
-    <div class="row">
-      <div class="col-auto ml-auto">
-        <button class="btn btn-primary">Create</button>
-      </div>
-    </div>
+
 
     <!-- modal select item -->
-    <base-modal v-if="showModalView" @click="showModalView = false;">
-      <template v-slot:header><h5>Select Item</h5></template>
+    <base-modal v-if="showModalView">
+      <template v-slot:header><h5 v-if="!next">Select Item</h5><h5 v-else>Select Location</h5></template>
       <template v-slot:body>
-        <base-table :header="item.header" :body="item.body" :hasAction="true" idName="itemID">
+        <base-table :header="selectItem.headerItem" :body="selectItem.bodyItem" :hasAction="true" idName="itemID" v-if="!next">
           <template v-slot="row">
-            <button class="btn btn-warning" v-if="!isInSelectOrder(row.rowId)"
-              @click="item.temp.push({...item.body.filter(e => e.itemID === row.rowId)[0]})">
+            <button class="btn btn-warning"
+              @click="selectItem.item = {...selectItem.bodyItem.filter(e => e.itemID === row.rowId)[0]}; next = true; fetchLocation()">
               select
-              </button>
-            <button class="btn btn-outline-warning" @click="item.temp = [...item.temp.filter(e => e.itemID !== row.rowId)]" v-else>cancel</button>
+            </button>
           </template>
         </base-table>
 
+        <template v-if="next">
+          ItemName: {{ selectItem.item.itemName }}
+          <div class="form-group">
+            <label>Count of Item</label>
+            <input type="number" class="form-control" min="0" v-model="selectItem.item.itemCount">
+          </div>
+          Total Area: {{ totalArea }} <br>
+
+          <base-table :hasIndex="false" :hasAction="true" idName="locationID" :header="selectItem.headerLoc" :body="selectItem.bodyLoc">
+            <template v-slot="row">
+              <button class="btn btn-warning" @click="selectLocationJa(row.rowId)" v-if="selectItem.location.locationID !== row.rowId">select</button>
+              <button class="btn btn-outline-warning" @click="selectItem.location = {}" v-else>cancel</button>
+            </template>
+          </base-table>
+        </template>
       </template>
       <template v-slot:footer>
-        <button class="btn btn-primary" @click="chooseItem()">select</button>
-        <button @click="showModalView = false" class="btn btn-danger">close</button>
+        <button class="btn btn-primary" @click="pushOldItem()" v-if="next">submit</button>
+        <button @click="closeModalView()" class="btn btn-danger">close</button>
       </template>
     </base-modal>
 
     <!-- modal create item -->
-    <base-modal v-if="showModalCreate" @click="showModalCreate = false;">
-      <template v-slot:header><h5>Add Item</h5></template>
+    <base-modal v-if="showModalNew">
+      <template v-slot:header><h5>New Item</h5></template>
       <template v-slot:body>
+        <div class="form-row">
+          <div class="col-6">
+            <label>Item Name</label>
+            <input type="text" class="form-control" placeholder="Item Name" v-model="createItem.item.itemName">
+          </div>
+          <div class="col-3">
+            <label>Weight</label>
+            <input type="number" class="form-control" placeholder="Item weight" v-model="createItem.item.weight">
+          </div>
+          <div class="col-3">
+            <label>Area</label>
+            <input type="number" class="form-control" placeholder="Item Area" v-model="createItem.item.area">
+          </div>
+        </div>
+        <br>
 
+        <div class="row">
+
+          <div class="col">
+            <h5>Category</h5>
+            <base-table :hasIndex="false" :hasAction="true" :header="createItem.headerCat" :body="createItem.bodyCat" idName="categoryID">
+              <template v-slot="row">
+                <button class="btn btn-warning" v-if="createItem.selectCat.categoryID !== row.rowId" @click="createItem.selectCat = {...createItem.bodyCat.filter(e => e.categoryID === row.rowId)[0]}">select</button>
+                <button class="btn btn-outline-warning" @click="createItem.selectCat = {}" v-else>cancle</button>
+              </template>
+            </base-table>
+          </div>
+
+          <div class="col">
+            <h5>Supplier</h5>
+            <base-table :hasIndex="false" :hasAction="true" :header="createItem.headerSup" :body="createItem.bodySup" idName="supplierID">
+              <template v-slot="row">
+                <button class="btn btn-warning" v-if="createItem.selectSup.supplierID !== row.rowId" @click="createItem.selectSup = {...createItem.bodySup.filter(e => e.supplierID === row.rowId)[0]}">select</button>
+                <button class="btn btn-outline-warning" @click="createItem.selectSup = {}" v-else>cancle</button>
+              </template>
+            </base-table>
+          </div>
+        </div>
+
+        <h5>Select Location</h5>
+        <div class="form-group">
+          <label>Count of Item</label>
+          <input type="number" min="0" class="form-control" v-model="createItem.item.itemCount">
+        </div>
+        <h6>Total Area: {{ newTotalArea }}</h6>
+        <base-table :hasIndex="false" :hasAction="true" :header="createItem.headerLoc" :body="createItem.bodyLoc" idName="locationID">
+          <template v-slot="row">
+            <button class="btn btn-warning" v-if="createItem.selectLoc.locationID !== row.rowId" @click="createItem.selectLoc = {...createItem.bodyLoc.filter(e => e.locationID === row.rowId)[0]}">select</button>
+            <button class="btn btn-outline-warning" @click="createItem.selectLoc = {}" v-else>cancle</button>
+          </template>
+        </base-table>
       </template>
       <template v-slot:footer>
-        <button class="btn btn-primary" @click="chooseOrderDetail()">select</button>
-        <button @click="showModalCreate = false" class="btn btn-danger">close</button>
+        <button class="btn btn-primary" @click="pushNewItem();">create</button>
+        <button class="btn btn-danger" @click="closeModalNew()">close</button>
       </template>
     </base-modal>
+
+    <div class="row">
+      <div class="col-auto ml-auto">
+        <button class="btn btn-primary" @click="createOrder()">Create</button>
+      </div>
+    </div>
   </layout>
 
 </template>
@@ -83,28 +139,62 @@ export default {
   data() {
     return {
       header: [
-        {name: 'itemID', label: 'Item ID'},
         {name: 'itemName', label: 'Item Name'},
         {name: 'area', label: 'Item Area (M^2)'},
         {name: 'locationName', label: 'Location'},
-        {name: 'locationArea', label: 'Location Area (M^2)'}
+        {name: 'itemCount', label: 'count'}
       ],
       body: [],
       newItem: [],
       oldItem: [],
+      next: false,
       showModalView: false,
-      item: {
-        header: [
+      showModalNew: false,
+      selectItem: {
+        headerItem: [
+          {name: 'itemID', label: 'Item ID'},
           {name: 'itemName', label: 'Item Name'},
-          {name: 'area', label: 'Area (M^2)'}
+          {name: 'area', label: 'Area'},
+          {name: 'weight', label: 'Weight'}
         ],
-        body: [],
-        temp: []
+        bodyItem: [],
+
+        headerLoc: [
+          {name: 'stockName', label: 'Stock'},
+          {name: 'locationName', label: 'Location'},
+          {name: 'leftArea', label: 'Area Left'}
+        ],
+        bodyLoc: [],
+
+        item: {},
+        location: {}
       },
       createItem: {
+        item: {},
+        headerCat: [
+          {name:'categoryName', label: 'Category'}
+        ],
+        bodyCat: [],
+        selectCat: {},
 
+        headerSup: [
+          {name: 'supplierName', label: 'Supplier'}
+        ],
+        bodySup: [],
+        selectSup: {},
+
+        headerLoc: [
+          {name: 'stockName', label: 'Stock'},
+          {name: 'locationName', label: 'Location'},
+          {name: 'leftArea', label: 'Area Left'}
+        ],
+        bodyLoc: [],
+        selectLoc: {}
       }
     }
+  },
+  created() {
+    this.fetchItem()
   },
   watch: {
     oldItem (newV, oldV) {
@@ -115,13 +205,58 @@ export default {
     }
   },
   methods: {
-    closeModal () {
-      this.item.temp = []
-      this.item.body = []
+    selectLocationJa (locationID) {
+      let element = this.selectItem.bodyLoc.filter(e => e.locationID === locationID)[0]
+      if (element.leftArea < this.totalArea) {
+        console.log('More than');
+      } else {
+        this.selectItem.location = element
+      }
+    },
+    pushOldItem () {
+      let item = this.selectItem.item
+      let location = this.selectItem.location
+      if (Object.keys(item).length > 0 && Object.keys(location).length > 0 && item.itemCount > 0) {
+        let newItem = { ...item, ...location, oldIndex: this.oldItem.length}
+        this.oldItem.push(newItem)
+        this.closeModalView()
+      } else {
+        console.log('can not select this!')
+      }
+
+    },
+    pushNewItem () {
+      let item = this.createItem.item
+      let location = this.createItem.selectLoc
+      let supplier = this.createItem.selectSup
+      let category = this.createItem.selectCat
+
+      if (Object.keys(item).length >0 && Object.keys(location).length > 0 && Object.keys(supplier).length >0 && Object.keys(category).length > 0) {
+        // all input complete
+        if (this.newTotalArea > location.leftArea) {
+          console.log('more than left area');
+        } else {
+          let newItem = { ...item, ...location, ...supplier, ...category, newIndex: this.newItem.length }
+          this.newItem.push(newItem)
+          this.closeModalNew()
+        }
+      } else {
+        console.log('all input aren\'t not complete');
+
+      }
+    },
+    closeModalView () {
+      this.selectItem.item = {}
+      this.selectItem.location = {}
+      this.next = false
       this.showModalView = false
     },
-    isInSelectOrder (id) {
-      return this.item.temp.map(e => e.itemID).indexOf(id) > -1 // check if id is selected
+    closeModalNew () {
+      this.createItem.item = {}
+      this.createItem.selectLoc = {}
+      this.createItem.selectSup = {}
+      this.createItem.selectCat = {}
+      this.showModalNew = false
     },
     deleteData (index) {
       if (this.body[index].itemID) {
@@ -129,21 +264,78 @@ export default {
         this.oldItem = [...this.oldItem.filter(e => e.itemID !== this.body[index].itemID)]
       } else {
         // new Item
+        this.newItem = [...this.newItem.filter(e => e.newIndex !== this.body[index].newIndex)]
       }
     },
     fetchItem () {
       $api({ path: '/items', method: 'get'})
       .then(data => {
         if (data.success) {
-          this.item.body = data.result
+          this.selectItem.bodyItem = data.result
         }
       })
     },
-    chooseItem () {
-      this.oldItem = this.oldItem.concat(this.item.temp)
-      this.closeModal()
+    fetchLocation () {
+      $api({ path: '/location/area', method: 'get'})
+      .then(data => {
+        if (data.success) {
+          this.selectItem.bodyLoc = data.result
+        }
+      })
+    },
+    fetchCat () {
+      $api({ path: '/category', method: 'get'})
+      .then(data => {
+        if (data.success) {
+          this.createItem.bodyCat = data.result
+        } else {
+          console.log(data)
+        }
+      })
+    },
+    fetchSup () {
+      $api({ path: '/suppliers', methods: 'get'})
+      .then(data => {
+        if (data.success) {
+          this.createItem.bodySup = data.result
+        } else {
+          console.log(data)
+        }
+      })
+    },
+    fetchLoc () {
+      $api({ path: '/location/area', method: 'get'})
+      .then(data => {
+        if (data.success) {
+          this.createItem.bodyLoc = data.result
+        } else {
+          console.log('error fetchLoc')
+        }
+      })
+    },
+    createOrder () {
+      let newOrderIn = { newItem: this.newItem, oldItem: this.oldItem}
+      $api({ path: '/orders/in', method: 'post', data: newOrderIn})
+      .then(data => {
+        if (data.success) {
+          console.log('success')
+          this.newItem = []
+          this.oldItem = []
+        } else {
+          console.log('create order fail')
+        }
+      })
     }
   },
+  computed: {
+    totalArea () {
+      return this.selectItem.item.itemCount*this.selectItem.item.area || 0
+    },
+    newTotalArea () {
+      return this.createItem.item.area * this.createItem.item.itemCount || 0
+    }
+  },
+
 }
 </script>
 
