@@ -94,6 +94,9 @@ const ana6 = require('./analysis/6');
 const ana15 = require('./analysis/15');
 const ana14 = require('./analysis/14');
 const ana14max = require('./analysis/14max');
+const ana15max = require('./analysis/15max');
+
+
 
 
 
@@ -194,6 +197,7 @@ router.get('/analysis4group',permit(),ana4group);
 router.get('/analysis8most',permit(),ana8mostCategoryInSupplier);
 router.get('/analysis6',permit(),ana6);
 router.get('/analysis15',permit(),ana15);
+router.get('/analysis15max',permit(),ana15max);
 router.get('/analysis14',permit(),ana14);
 router.get('/analysis14max',permit(),ana14max);
 
