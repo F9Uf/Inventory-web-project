@@ -211,8 +211,8 @@ router.get('/analysis14max',permit(),ana14max);
 router.get('/analysisAvgCategoryArea',permit(),avgCategoryArea);
 router.get('/analysis/addressemployee',permit(),addressEmployee);
 router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
-
-
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
+
+
 
 module.exports = router;

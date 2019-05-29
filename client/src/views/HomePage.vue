@@ -1,20 +1,20 @@
 <template>
   <layout>
-    <h4>Sumary</h4>
+    <h4>Analysis Forms</h4>
     <div class="form-row">
       <!-- Total Item -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <h6>Total Items</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
-              <label>Total</label> <!--label 01 Name--->
+              <label>Result</label> <!--label 01 Name--->
               <input type="text" class="form-control" v-model="item.body[0].count" disabled>
             </div>
-            <div class="col-md" >
-              <label>Total</label> <!--label  Name--->
+            <!-- <div class="col-md" >
+              <label>Total</label> 
               <input type="text" class="form-control" v-model="item.body[0].count" disabled>
-            </div>
+            </div> -->
             <div class="col-auto ml-auto">
               <button class="btn btn-success" @click="$router.push('/items')">View Items</button>
             </div>
@@ -26,18 +26,18 @@
       <!-- total Catagoey -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <h6>Total Categories</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
               <label>Total</label> <!--label 01 Name--->
               <input type="text" class="form-control" v-model="category.body[0].count" disabled>
             </div>
-            <div class="col-md" >
-              <label>Total</label> <!--label 01 Name--->
+            <!-- <div class="col-md" >
+              <label>Total</label> 
               <input type="text" class="form-control" v-model="category.body[0].count" disabled>
-            </div>
+            </div> -->
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+              <button class="btn btn-success" @click="$router.push('/category')">View Category</button>
             </div>
           </div>
         </layout>
@@ -60,7 +60,7 @@
               <input type="text" class="form-control" v-model="maxUsed.body[0]['max(a.MaxcategoryName)']" disabled>
             </div>
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="this">View Qeury</button>
+              <button class="btn btn-success" @click="this">View Query</button>
             </div>
           </div>
         </layout>
