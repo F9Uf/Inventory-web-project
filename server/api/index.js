@@ -98,6 +98,8 @@ const ana14 = require('./analysis/14');
 const ana14max = require('./analysis/14max');
 const ana15max = require('./analysis/15max');
 const avgCategoryArea = require('./analysis/avgCategoryArea');
+const addressEmployee = require('./analysis/addressEmployee');
+const addressEmployeeMax = require('./analysis/addressEmployeeMax');
 
 const ana1Avgsalary = require('./analysis/1salaryInposition');
 
@@ -207,6 +209,9 @@ router.get('/analysis15max',permit(),ana15max);
 router.get('/analysis14',permit(),ana14);
 router.get('/analysis14max',permit(),ana14max);
 router.get('/analysisAvgCategoryArea',permit(),avgCategoryArea);
+router.get('/analysis/addressemployee',permit(),addressEmployee);
+router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
+
 
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
 
