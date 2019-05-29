@@ -62,10 +62,15 @@
       <h5>Select Order Detail</h5>
       <base-table :header="selectItem.header" :hasAction="true" :body="selectItem.body" idName="orderDetailID">
         <template v-slot="row">
-          <button class="btn btn-danger" @click="deleteOrderSelect(row.rowId)">delete</button>
+          <button class="btn btn-danger" @click="deleteOrderSelect(row.rowId)"
+            :disabled="isSelected(selectItem.body[row.rowIndex]['status'])" >delete</button>
+          <label class="switch">
+            <input type="checkbox" :checked="isSelected(selectItem.body[row.rowIndex]['status'])" @click="toggleOrder(row.rowId, row.rowIndex)">
+            <span class="slider"></span>
+          </label>
         </template>
       </base-table>
-      <button class="btn btn-success" @click="selectItem.showModalView = true; fetchOrder()">+ Select Order Detail</button>
+      <button class="btn btn-success" :disabled="showSelectOrder" @click="selectItem.showModalView = true; fetchOrder()">+ Select Order Detail</button>
     </layout>
     <!-- end select order detail -->
 
@@ -81,41 +86,6 @@
       </template>
       <template v-slot:footer>
         <button class="btn btn-danger" @click="selectCar.showModalView = false">close</button>
-      </template>
-    </base-modal>
-
-    <!-- modal create car -->
-    <base-modal v-if="selectCar.showModalCreate" @close="selectCar.showModalCreate = false">
-      <template v-slot:header><h5>Add Car</h5></template>
-      <template v-slot:body>
-        <div class="form-row">
-        <div class="col">
-          <label >Area</label>
-          <input type="number" class="form-control" min="0" v-model="selectCar.newCar.carArea"
-            placeholder="Enter area of this car (number)">
-        </div>
-        <div class="col">
-          <label >Weight</label>
-          <input type="number" class="form-control" min="0" v-model="selectCar.newCar.carWeight"
-            placeholder="Enter max weight for this car">
-        </div>
-      </div><br>
-      <div class="form-row">
-        <div class="col">
-          <label >License Plate</label>
-          <input type="text" class="form-control" v-model="selectCar.newCar.licensePlate"
-            placeholder="Ex. AB 2512">
-        </div>
-        <div class="col">
-          <label >Model</label>
-          <input type="text" class="form-control" v-model="selectCar.newCar.model"
-            placeholder="Enter Car Model">
-        </div>
-      </div>
-      </template>
-      <template v-slot:footer>
-        <button class="btn btn-primary" @click="addCar()">submit</button>
-        <button class="btn btn-danger" @click="selectCar.showModalCreate = false">close</button>
       </template>
     </base-modal>
 
@@ -188,6 +158,7 @@ export default {
   },
   data() {
     return {
+      showSelectOrder: true,
       alert: {
         show: false,
         msg: '',
@@ -222,7 +193,8 @@ export default {
           {name: 'orderDetailID', label: 'Order Detail'},
           {name: 'itemName', label: 'Item Name'},
           {name: 'itemCount', label: 'Count'},
-          {name: 'area', label: 'Area'}
+          {name: 'area', label: 'Area'},
+          {name: 'status', label: 'Status'}
         ],
         body: [], // body for show
 
@@ -253,11 +225,26 @@ export default {
     this.fetchShipping(this.$route.params.shipping_id)
   },
   methods: {
+    isSelected (status) {
+      if (status === 'done') return true
+      else return false
+    },
     fetchShipping (shippingID) {
       $api({ path: `/shippings/${shippingID}`, method: 'get'})
       .then(data => {
-        console.log(data);
+        if (data.success) {
+          this.selectCar.car = data.result.car
+          this.selectDriver.driver = data.result.driver
+          this.selectItem.body = data.result.orderDetail
+          this.showSelectOrder = this.isOrderFinish(data.result.orderDetail)
+        }
       })
+    },
+    isOrderFinish (array) {
+      for (let i = 0; i<array.length; i++) {
+        if (array[i].status === 'shipping') return false
+      }
+      return true
     },
     fetchCar () {
       // fetch only cars which status ready
@@ -275,13 +262,13 @@ export default {
       })
     },
     chooseCar (id) {
+      let car = {
+        car: {oldCar: this.selectCar.car.carID, newCar: id}
+      }
+      this.editShipping(car)
       this.selectCar.showModalView = false
-      this.selectCar.car = {...this.selectCar.body.filter(e => e.carID === id)[0]}
-    },
-    addCar () {
-      this.selectCar.car = { ...this.selectCar.newCar }
-      this.selectCar.newCar = {}
-      this.selectCar.showModalCreate = false
+
+      // this.selectCar.car = {...this.selectCar.body.filter(e => e.carID === id)[0]}
     },
     fetchDriver () {
       $api({ path: '/employees?positionName=driver&status=ready', method: 'get'})
@@ -298,13 +285,11 @@ export default {
       })
     },
     chooseDriver (id) {
-      $api({ path: `/employees/${id}`})
-      .then(data => {
-        if (data.success) {
-          this.selectDriver.driver = data.result
-          this.selectDriver.showModalView = false
-        }
-      })
+      let driver = {
+        driver: {oldDriver: this.selectDriver.driver.employeeID, newDriver: id}
+      }
+      this.editShipping(driver)
+      this.selectDriver.showModalView = false
     },
     fetchOrder () {
       $api({ path: '/orders?orderType=out', method: 'get'})
@@ -345,13 +330,36 @@ export default {
       this.closeModalSelectOrder()
     },
     deleteOrderSelect (id) {
-      this.selectItem.body = [ ...this.selectItem.body.filter(e => e.orderDetailID !== id)]
+      // this.selectItem.body = [ ...this.selectItem.body.filter(e => e.orderDetailID !== id)]
+      let deleteOrder = {
+        deleteOrderdetail: [id]
+      }
+      this.editShipping(deleteOrder)
     },
-    editShipping ({car, driver, addOrderdetail, deleteOrderdetail, finishOrderdetail, notFinishOrderdetail}) {
-      $api({ path: '/shipping', methods: 'put'})
+    toggleOrder (id, index) {
+      let element = this.selectItem.body[index]
+      // toggle from done to shipping (notFinishOrderdetail)
+      // toggle from shipping to done (finishOrderdetail)
+      var toggle = element.status === 'done' ? {notFinishOrderdetail: id} : {finishOrderdetail: id}
+      this.editShipping(toggle)
+    },
+    editShipping (newData) {
+      // newData = {car, driver, addOrderdetail, deleteOrderdetail, finishOrderdetail, notFinishOrderdetail}
+      $api({ path: `/shippings/${this.$route.params.shipping_id}`, method: 'put', data: newData})
       .then(data => {
         if (data.success) {
-          console.log(data)
+          this.alert = {
+            show: true,
+            msg: data.message,
+            color: 'success'
+          }
+          this.fetchShipping(this.$route.params.shipping_id)
+        } else {
+          this.alert = {
+            show: true,
+            msg: data.message,
+            color: 'danger'
+          }
         }
       })
     },
@@ -362,5 +370,58 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 </style>
