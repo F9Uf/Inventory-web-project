@@ -4,7 +4,7 @@ const queryToStringCondition = require('../../services/queryToStringCondition');
 module.exports = (req, res) => {
     const orderID = req.params.order_id;
     let sql = `
-    SELECT DISTINCT o.orderID, o.orderType, o.shopID, od.orderDetailID, od.status, od.itemCount, l.locationID, l.locationName, od.shippingID
+    SELECT DISTINCT i.itemID, i.itemName, i.area, o.orderID, o.orderType, o.shopID, od.orderDetailID, od.status, od.itemCount, l.locationID, l.locationName, od.shippingID
     FROM orderdetail od
     LEFT JOIN ordermain o ON od.orderID = o.orderID
     LEFT JOIN location l ON od.locationID = l.locationID
@@ -32,6 +32,6 @@ module.exports = (req, res) => {
                 result: data
             })
         }
-            
+
     })
 }

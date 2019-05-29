@@ -2,8 +2,8 @@ const db = require('../../db');
 
 module.exports = (req, res) => {
     const shippingID = req.params.shippingID;
-    const sql = `select * from shipping s, employee e, car c, orderdetail o
-    where s.carID = c.carID and s.employeeID = e.employeeID and s.shippingID = o.shippingID and s.shippingID = ?`
+    const sql = `select * from shipping s, employee e, car c, orderdetail o, item i
+    where s.carID = c.carID and s.employeeID = e.employeeID and s.shippingID = o.shippingID and i.itemID = o.itemID and s.shippingID = ?`
     db.query(sql,[shippingID], (err, data) => {
         if(err) {
             return res.json({
@@ -41,7 +41,7 @@ module.exports = (req, res) => {
                             addressID: data[0].addressID
 
                         },
-                                    
+
                         orderDetail: data
                     }
                 })
