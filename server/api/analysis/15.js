@@ -1,10 +1,11 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const sql = `select s.stockName, sum(l.maxArea) as areaOfStock 
-  from stock s, location l
-  where l.stockID = s.stockID
-  group by l.stockID`;
+  const sql = `select s.stockName,count(employeeID) as countEmployee
+  from employee e, stock s
+  where e.stockID = s.stockID
+  group by e.stockID
+  order by countEmployee desc`;
 
   db.query(sql, (err, data) => {
     if (err) {
