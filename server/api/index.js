@@ -109,7 +109,7 @@ const stockArea = require('./analysis/stockArea');
 const ana7show = require('./analysis/7show');
 const addressEmployee = require('./analysis/addressEmployee');
 const addressEmployeeMax = require('./analysis/addressEmployeeMax');
-
+const mostProvinceOrder = require('./analysis/mostProvinceOrder');
 
 
 
@@ -228,6 +228,7 @@ router.get('/analysis/addressemployee',permit(),addressEmployee);
 router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
 router.get('/stockarea', permit(), stockArea);
+router.get('/mostProvinceOrder',permit(),mostProvinceOrder);
 
 
 module.exports = router;
