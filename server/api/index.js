@@ -209,11 +209,8 @@ router.get('/analysis15',permit(),ana15);
 router.get('/analysis15max',permit(),ana15max);
 router.get('/analysis14',permit(),ana14);
 router.get('/analysis14max',permit(),ana14max);
-<<<<<<< HEAD
 router.get('/analysisAvgCategoryArea',permit(),avgCategoryArea);
 
-=======
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
->>>>>>> 9156676366dd4f094e968343b79c47fe6d5f4972
 
 module.exports = router;
