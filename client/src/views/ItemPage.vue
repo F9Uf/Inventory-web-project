@@ -1,15 +1,28 @@
 <template>
   <layout>
-    <h3>item Information</h3><br>
-    <base-table v-if="body.length" :header="header" :body="body" :hasAction="true" idName="itemID" :hasIndex="true">
-        <template v-slot="row">
-        <div class="btn-group" role="group">
-          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
-          <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+    <h3>item Information</h3><br> 
+    <layout>
+          <base-table :header="header" :body="body" :hasAction="false" idName="itemID" :hasIndex="true">
+              <template v-slot="row">
+              <div class="btn-group" role="group">
+                <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+                <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
+              </div>
+            </template>
+          </base-table>
+          <h5 v-if="!body">No Item</h5>
+    </layout>
+    <layout>
+      <div class="form-row">
+        <div class="col-md-4 ">
+          <button class="btn btn-success" v-on:click="isBtnHidden = !isBtnHidden">View/Hide Total items</button>
         </div>
-      </template>
-    </base-table>
-    <h5 v-if="!body">No Item</h5>
+        <div class="col-md-3" v-if="isBtnHidden">
+          <input type="text" class="form-control" v-model="body.length" disabled>
+        </div>
+
+      </div>
+    </layout>
 
     <!-- modal for edit item -->
     <the-modal id="editModal" v-if="showModalEdit" @close="showModalEdit = false" @update="updateData">
@@ -72,17 +85,14 @@ export default {
         {
           name: 'totalCount',
           label: 'Total count'
-        },
-        {
-          name: 'category',
-          label: 'Category'
         }
       ],
-      body: [],
+      body: null,
       editItem: {},
       showModalEdit: false,
       showModalNew: false,
-      alert: false
+      alert: false,
+      isBtnHidden: false
     }
   },
   validations: {
@@ -116,6 +126,10 @@ export default {
       $api({ path: '/items', method: 'get'})
       .then( data => {
         this.body = data.result
+        console.log(data);
+        console.log(this.body);
+        
+        
       })
     },
     updateData () {
@@ -128,8 +142,7 @@ export default {
 
       })
 
-    },
-    // new item
+    }
   },
 }
 </script>
