@@ -97,12 +97,9 @@ const ana15 = require('./analysis/15');
 const ana14 = require('./analysis/14');
 const ana14max = require('./analysis/14max');
 const ana15max = require('./analysis/15max');
-<<<<<<< HEAD
 const avgCategoryArea = require('./analysis/avgCategoryArea');
 
-=======
 const ana1Avgsalary = require('./analysis/1salaryInposition');
->>>>>>> 9156676366dd4f094e968343b79c47fe6d5f4972
 
 
 
