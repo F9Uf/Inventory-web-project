@@ -83,6 +83,7 @@ const shippingById = require('./shippings/shippingById');
 
 //analysis
 const ana5 = require('./analysis/5');
+const ana5Max = require('./analysis/5max');
 const ana3show = require('./analysis/3show_all');
 const ana3group = require('./analysis/3group_by');
 const locationArea = require('./analysis/locationArea');
@@ -182,6 +183,7 @@ router.get('/shippings/:shippingID',permit(),shippingById);
 
 //analysis
 router.get('/analysis5',permit(),ana5);
+router.get('/analysis5max',permit(),ana5Max);
 router.get('/analysis3show',permit(),ana3show);
 router.get('/analysis3group',permit(),ana3group);
 router.get('/location/area',permit(),locationArea);
