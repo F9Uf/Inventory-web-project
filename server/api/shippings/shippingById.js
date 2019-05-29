@@ -41,7 +41,7 @@ module.exports = (req, res) => {
                             addressID: data[0].addressID
 
                         },
-
+                                    
                         orderDetail: data
                     }
                 })
