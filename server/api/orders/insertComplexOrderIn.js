@@ -21,7 +21,7 @@ module.exports = (req, res) => {
             })
         } else {
             orderID = data.insertId;
-            if(newItem) {
+            if(newItem.length > 0) {
                 let except_item = ['itemCount', 'locationID'];
                 sql_value_item = valueCreate(newItem, 'newItem', [], except_item);
                 db.query(sql_item + sql_value_item[0] + 'VALUES' + sql_value_item[1], sql_value_item[2], (err, data) =>{
@@ -58,7 +58,7 @@ module.exports = (req, res) => {
                     }
                 })
             }
-            if (oldItem) {
+            if (oldItem.length > 0) {
                 arr_value = [];
                 sql_value = ' ';
                 for (let i = 0 ; i < oldItem.length ; i++) {
