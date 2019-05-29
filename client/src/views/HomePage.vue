@@ -354,33 +354,33 @@ export default {
     return {
       item:{
         header: [
-        {
-          name: 'itemID',
-          label: 'item id'
-        },
-        {
-          name: 'itemName',
-          label: 'Name'
-        },
-        {
-          name: 'totalCount',
-          label: 'Total count'
-        }
-      ],
-      body: null,
+          {
+            name: 'itemID',
+            label: 'item id'
+          },
+          {
+            name: 'itemName',
+            label: 'Name'
+          },
+          {
+            name: 'totalCount',
+            label: 'Total count'
+          }
+        ],
+        body: null,
       },
       category: {
         header: [
-        {
-          name: 'categoryID',
-          label: 'ID'
-        },
-        {
-          name: 'categoryName',
-          label: 'Name'
-        }
-      ],
-      body: null,
+          {
+            name: 'categoryID',
+            label: 'ID'
+          },
+          {
+            name: 'categoryName',
+            label: 'Name'
+          }
+        ],
+        body: null,
       },
       maxUsed: {
         body: null
