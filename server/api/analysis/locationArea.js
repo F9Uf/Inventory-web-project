@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const sql = `SELECT a.locationID, a.locationName, s.stockName, a.maxArea - IF(area > 0, area, 0) AS leftArea
+    const sql = `  SELECT a.locationID, a.locationName, s.stockName, ROUND((a.maxArea - IF(area > 0, area, 0)), 2) AS leftArea
         FROM ( 
         SELECT l.locationID, l.locationName, l.stockID, l.maxArea, SUM(i.area * od.itemCount) as area 
         FROM orderdetail od
@@ -14,7 +14,7 @@ module.exports = (req, res) => {
         if (err) {
             return res.json({
                 success: false,
-                message: 'Err !! : ' + err
+                message: 'Err !! : '
             })
         } else {
             return res.json({

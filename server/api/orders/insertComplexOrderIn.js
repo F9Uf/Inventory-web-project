@@ -17,7 +17,7 @@ module.exports = (req, res) => {
         if (err) {
             return res.json({
                 success: false,
-                message: 'Add order is error : ' + err 
+                message: 'Add order is error : '
             })
         } else {
             orderID = data.insertId;
@@ -29,7 +29,7 @@ module.exports = (req, res) => {
                         resultFromDelete = deleteOrder(orderID);
                         return res.json({
                             success: false,
-                            message: 'Add item is error !! : ' + err
+                            message: 'Add item is error !! : '
                         })
                     } else {
                         for (let i = 0; i < data.affectedRows; i++) {
@@ -144,7 +144,7 @@ module.exports = (req, res) => {
         function deleteOrder (orderID) {
             db.query('DELETE FROM ordermain WHERE orderID = ?', [orderID], (err, data) => {
                 if (err) {
-                    return('Delete order is error !! : ' + err);
+                    return('Delete order is error !! : ');
                 } else {
                     return('Delete order is successful');
                 }
@@ -160,7 +160,7 @@ module.exports = (req, res) => {
             sql_deleteItem += ')'
             db.query('DELETE FROM item WHERE itemID IN ' + sql_deleteItem, (err, data) => {
                 if(err) {
-                    return('Delete item is err !! : ') + err;
+                    return('Delete item is err !! : ');
                 } else {
                     return('Delete item is successful');
                 }

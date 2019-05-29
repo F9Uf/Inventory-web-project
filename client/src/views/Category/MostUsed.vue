@@ -3,7 +3,7 @@
     <h3>Most used category</h3>
     <layout>
       <h6>List</h6>
-      <base-table :header="header" :body="body" :hasAction="false" idName="orederID" :hasIndex="true">
+      <base-table :header="header" :body="ChartInfor.most" :hasAction="false" idName="orederID" :hasIndex="true">
               <template v-slot="row">
               <div class="btn-group" role="group">
                 <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
@@ -11,14 +11,14 @@
               </div>
             </template>
           </base-table>
-          <h5 v-if="!body">No Data</h5>
+          <h5 v-if="!ChartInfor.most">No Data</h5>
 
     </layout>
     <layout>
       <h6>Actions</h6>
       <div class="form-row">
         <div class="col">
-          <base-barchart :chartdata="ChartInfor.label" :options="ChartInfor.data">ggg</base-barchart>
+          <base-barchart :data="ChartInfor.group" :options="ChartInfor.group.catagoryName"/>
         </div>
       </div>
 
@@ -63,20 +63,11 @@ export default {
           label: 'Catagory'
         }
       ],
-      body: [
-        {
-          category:toy,
-          count: 20
-        },
-        {
-          category:toy,
-          count: 10
-        }
-
-      ],
       ChartInfor:{
-        label:["aa","bb","cc"],
-        data:[10,20,30]
+        most: [],
+        group:[],
+        max:null
+        
       },
     
       // editItem: {},
@@ -87,7 +78,33 @@ export default {
       loaded: false,
       chartdata: null
     }
-  }
+  },
+  methods: {
+    fetchMost() {
+    $api({ path: '/analysis3show', method: 'get'})
+      .then( data => {
+        this.ChartInfor.most = data.result
+        console.log(data);
+        console.log(this.ChartInfor.most);
+        
+        
+      })
+    },
+    fetchGroup() {
+      $api({ path: '/analysis3group', method: 'get'})
+      .then( data => {
+        this.ChartInfor.group = data.result
+        console.log(data);
+        console.log(this.ChartInfor.group);
+        
+        
+      })
+    }
+  },
+  created() {
+    this.fetchMost()
+    this.fetchGroup()
+  },
 }
 </script>
 
