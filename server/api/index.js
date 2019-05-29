@@ -91,6 +91,7 @@ const ana4group = require('./analysis/4group');
 const ana8mostCategoryInSupplier = require('./analysis/8mostCategoryInSupplier');
 const ana6 = require('./analysis/6');
 const ana15 = require('./analysis/15');
+const ana14 = require('./analysis/14');
 
 
 router.get('/', (req, res) => {
@@ -189,5 +190,6 @@ router.get('/analysis4group',permit(),ana4group);
 router.get('/analysis8most',permit(),ana8mostCategoryInSupplier);
 router.get('/analysis6',permit(),ana6);
 router.get('/analysis15',permit(),ana15);
+router.get('/analysis14',permit(),ana14);
 
 module.exports = router;
