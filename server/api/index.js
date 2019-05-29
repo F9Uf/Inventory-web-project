@@ -100,6 +100,9 @@ const ana15max = require('./analysis/15max');
 const avgCategoryArea = require('./analysis/avgCategoryArea');
 const ana1Avgsalary = require('./analysis/1salaryInposition');
 const ana7show = require('./analysis/7show');
+const addressEmployee = require('./analysis/addressEmployee');
+const addressEmployeeMax = require('./analysis/addressEmployeeMax');
+
 
 
 
