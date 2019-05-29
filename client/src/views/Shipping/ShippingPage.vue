@@ -1,84 +1,68 @@
 <template>
-    <layout>
-        <h3>Shipping</h3>
-        <the-table :header="header" :body="body"  @onDelete="deleteData" @onEdit="editData" id="shippingID"></the-table>
-        <h5 v-if="!body">No Shipping</h5>
-        <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
-          <template v-slot:header>
-            <h5>Edit Shipping</h5>
-          </template>
-          <template v-slot:body>
-            <div class="form-row">
-              <div class="col">
-                <label >Shipping ID</label>
-                <input type="number" class="form-control" v-model="editShipping.shippingID">
-              </div>
-              <div class="col">
-                <label >Car ID</label>
-                <input type="number" class="form-control" v-model="editShipping.carID">
-              </div>
-              <div class="col">
-                <label >Driver</label>
-                <input type="number" class="form-control" v-model="editShipping.employeeID">
-              </div>
-            </div>
-          </template>
-        </the-modal>
+  <layout>
+    <h3>Shipping</h3>
 
-    </layout>
+    <base-table :header="header" :body="body" :hasAction="true" idName="shippingID">
+      <template v-slot="row">
+        <div class="btn-group">
+          <button class="btn btn-warning" @click="$router.push(`/shippings/edit/${row.rowId}`)">edit</button>
+          <button class="btn btn-danger">delete</button>
+        </div>
+      </template>
+    </base-table>
+
+    <h5 v-if="!body">No Shipping</h5>
+  </layout>
 </template>
 
 <script>
-import layout from '../LAYOUT'
-import TheTable from '@/components/TheTable'
-import TheModal from '@/components/TheModal'
-import { $api} from '@/service/api'
+import layout from "../LAYOUT"
+import BaseTable from "@/components/BaseTable"
+import { $api } from "@/service/api"
+
 export default {
-    components: {
-    layout, TheTable, TheModal
+  components: {
+    layout,
+    BaseTable,
   },
   data() {
     return {
-      header: ['Shipping ID', 'Car ID','Driver'],
-       body:null
-      // { shipid:'0001',carid: '00000002', driver: '00001'
-      // }
-      ,
+      header: [
+        { name: "shippingID", label: "Shipping ID" },
+        { name: "model", label: "Car" },
+        { name: "shippingDate", label: "Shipping Date" },
+        { name: "employeeID", label: "Driver" }
+      ],
+      body: [],
       editShipping: {},
       showModal: false
-    }
+    };
   },
-  create() {
-    this.fetchShipping()
+  created() {
+    this.fetchShipping();
   },
   methods: {
-    deleteData (value) {
-      $api({ path: `/shipping/${value}`, method: `delete`})
-      .then(data => {
-        this.fetchShipping()
-      })
-      console.log(value)
+    deleteData(value) {
+      $api({ path: `/shipping/${value}`, method: `delete` }).then(data => {
+        this.fetchShipping();
+      });
+      console.log(value);
     },
-    editData (value) {
-      this.showModal = true
-      this.editShipping = JSON.parse(stringtify(this.body.fliter(e => e.shippingID ===value)[0]))
+    editData(value) {
+      this.showModal = true;
+      this.editShipping = JSON.parse(
+        stringtify(this.body.fliter(e => e.shippingID === value)[0])
+      );
     },
-    // waiting for api
-    fatchShipping () {
-      $api({path: '/shipping', method: 'get'})
-      .then( dara => {
-        this.body = data.result
-      })
-    },
-    updateData () {
-      $api({ path: `/shipping/${this.editShipping.shippingID}`, method: 'put', data: this.editShipping})
-      .then( data => {
-        this.showModal = false
-        this.fetchShipping()
-      })
+    fetchShipping() {
+      $api({ path: "/shippings", method: "get" }).then(data => {
+        if (data.success) {
+          this.body = data.result;
+        }
+      });
     }
   }
-}
+};
 </script>
 
 <style>
