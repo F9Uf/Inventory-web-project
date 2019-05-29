@@ -67,6 +67,7 @@ const allLocation = require('./locations/allLocation');
 const addOneLocation = require('./locations/addOneLocation');
 const deleteLocation = require('./locations/deleteLocation');
 const updateLocation = require('./locations/updateLocation');
+const itemInLocation = require('./locations/itemInLocation');
 
 //address
 const allAddress = require('./addresses/allAddress');
@@ -79,6 +80,11 @@ const addOneShipping = require('./shippings/addOneShipping');
 const insertcomplexship = require('./shippings/insertcomplexship');
 const updateShippingComplex = require('./shippings/updateShippingComplex');
 const shippingById = require('./shippings/shippingById');
+
+//shop
+const allShop = require('./shop/allShop');
+const addShop = require('./shop/addOneShop');
+
 
 
 //analysis
@@ -180,6 +186,7 @@ router.get('/locations',permit(),allLocation);
 router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
 router.put('/locations/:location_id',permit(),updateLocation);
+router.get('/:item_id/locations',permit(),itemInLocation);
 
 //address
 router.get('/addresses',permit(),allAddress);
@@ -194,6 +201,9 @@ router.post('/shippings',permit(),insertcomplexship);
 router.put('/shippings/:shipping_id',permit(), updateShippingComplex);
 router.get('/shippings/:shippingID',permit(),shippingById);
 
+//shop
+router.get('/shops',permit(),allShop);
+router.post('/shops',permit(),addShop);
 
 //analysis
 router.get('/analysis5',permit(),ana5);
