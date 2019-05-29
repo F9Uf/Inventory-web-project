@@ -40,7 +40,7 @@ module.exports = (req, res) => {
                 for (let i = 0 ; i < orderDetail.length ; i++) {
                     sql_value += '(?,?,?,?), ';
                     arr_value.push(eval('orderDetail' + '[' + i + '].' + 'locationID'));
-                    arr_value.push(eval('orderDetail' + '[' + i + '].' + 'itemCount'));
+                    arr_value.push(eval('orderDetail' + '[' + i + '].' + 'selectCount'));
                     arr_value.push(eval('orderDetail' + '[' + i + '].' + 'itemID'));
                     arr_value.push(orderID);
                 }
