@@ -430,12 +430,12 @@ export default {
                 this.alert.show = true
                 this.alert.msg = 'Created Employee information Commpleted'
                 this.alert.color = 'success'
+                this.selectPosition.Pos = {}
+                this.selectAddress.address = {}
               } else {
                 this.alert.show = true
                 this.alert.msg = 'Create Employee information Error'
-                this.alert.color = 'danger'
-                this.selectPosition.Pos = {}
-                this.selectAddress.address = {}
+                this.alert.color = 'danger'                
               }
               console.log(data)
               
