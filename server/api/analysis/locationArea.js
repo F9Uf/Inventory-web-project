@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const sql = `SELECT a.locationID, a.locationName, s.stockName, a.maxArea - IF(area > 0, area, 0) AS area
+    const sql = `SELECT a.locationID, a.locationName, s.stockName, a.maxArea - IF(area > 0, area, 0) AS leftArea
         FROM ( 
         SELECT l.locationID, l.locationName, l.stockID, l.maxArea, SUM(i.area * od.itemCount) as area 
         FROM orderdetail od
