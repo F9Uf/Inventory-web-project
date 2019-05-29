@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-    const sql = 'SELECT * FROM shipping LEFT JOIN shipping.carID = car.carID'
+    const sql = 'SELECT * FROM shipping LEFT JOIN car ON shipping.carID = car.carID'
     db.query(sql, (err, data) => {
         if(err) {
             return res.json({
