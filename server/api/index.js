@@ -99,7 +99,11 @@ const ana14max = require('./analysis/14max');
 const ana15max = require('./analysis/15max');
 const avgCategoryArea = require('./analysis/avgCategoryArea');
 const ana1Avgsalary = require('./analysis/1salaryInposition');
+const stockArea = require('./analysis/stockArea');
 const ana7show = require('./analysis/7show');
+const addressEmployee = require('./analysis/addressEmployee');
+const addressEmployeeMax = require('./analysis/addressEmployeeMax');
+
 
 
 
@@ -213,7 +217,7 @@ router.get('/analysis7show',permit(),ana7show);
 //router.get('/analysis/addressemployee',permit(),addressEmployee);
 //router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
-
+router.get('/stockarea', permit(), stockArea);
 
 
 module.exports = router;
