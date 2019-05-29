@@ -65,15 +65,13 @@
         <div class="row">
           <div class="col">
             <label>First Name</label>
-            <input type="text" class="form-control" 
-            :class="{'is-nvalid' :$v.editEmployee.employeeFirstName.$error}"
-            v-model="$v.editEmployee.employeeFirstName.$model">
+            <input type="text" class="form-control"
+            v-model="editEmployee.employeeFirstName">
           </div>
           <div class="col">
             <label>Last Name</label>
-            <input type="text" class="form-control" 
-            :class="{'is=invalid' :$v.editEmployee.employeeLastName.$error}"
-            v-model="$v.editEmployee.employeeLastName.$model">
+            <input type="text" class="form-control"
+            v-model="editEmployee.employeeLastName">
             <div class="invalid-feedback">Please enter Lastname</div>
           </div>
           <br>
@@ -81,49 +79,48 @@
         <div class="row">
           <div class="col">
             <label>Photo URL</label>
-            <input type="text" class="form-control" 
-            :class="{'is-invalid' :$v.editEmployee.employeePhotoUrl.$error}"
-            v-model="$v.editEmployee.employeePhotoUrl.$model">
-            <div class="invalid-feedback">Please enter Url</div>
+            <input type="text" class="form-control"
+            v-model="editEmployee.employeePhotoUrl">
           </div>
           <br>
-        </div>
-        <div class="row">
-          <div class="col">
+          <div class="col-3">
             <label>Sex</label>
             <select v-model="editEmployee.sex" class="form-control">
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
           </div>
+        </div>
+        <div class="row">
           <div class="col">
             <label>Address</label>
-            <input type="text" class="form-control" v-model="editEmployee.employeeAddress">
-            <div class="invalid-feedback">Please enter information</div>
+            <select v-model="editEmployee.addressID" class="form-control">
+              <option v-for="(option, index) in optionAddress" :key="index" :value="option.addressID">
+                {{ option.addressDetail }}
+              </option>
+            </select>
           </div>
           <div class="col">
             <label>Position</label>
             <select v-model="editEmployee.positionID" class="form-control">
-              <option value="01">manager</option>
-              <option value="02">staff</option>
-              <option value="03">deliverer</option>
+              <option v-for="(option, index) in optionPostion" :key="index" :value="option.positionID">
+                {{ option.positionName }} | {{ option.positionSpecific }}
+              </option>
             </select>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <label>Phone</label>
-            <input type="text" class="form-control" 
-            :class="{'is-invalid': $v.editEmployee.employeePhone.$error}"
-            v-model="$v.editEmployee.employeePhone.$model"
+            <input type="text" class="form-control"
+            v-model="editEmployee.employeePhone"
             placeholder="Enter phone number ex.09xxxxxxxx">
             <div class="invalid-feedback">Please enter phone number</div>
           </div>
           <div class="col">
             <label>Email</label>
-            <input type="text" class="form-control" 
-            :class="{'is-invalid': $v.editEmployee.employeeEmail.$error}"
-            v-model="$v.editEmployee.employeeEmail.$model">
+            <input type="text" class="form-control"
+            v-model="editEmployee.employeeEmail">
             <div class="invalid-feedback">Please enter Email</div>
           </div>
         </div>
@@ -153,29 +150,23 @@ export default {
         show: false,
         msg: '',
         color: 'warning'
-      }
-    }
-  },
-  validations :{
-    editEmployee: {
-      employeeFirstName: {required},
-      employeeLastName: {required},
-      
-      employeeEmail: {required,email},
-      employeePhone: {required,decimal,minValue},
-      salary: {required,minValue,decimal}
-
+      },
+      optionPostion: [],
+      optionAddress: []
     }
 
   },
   created() {
     this.fetchEmployee();
+    this.fetchPositon()
+    this.fetchAddress()
   },
   methods: {
     editData() {
       this.showModal = true;
       this.editEmployee = { ...this.body };
       delete this.editEmployee['positionName']
+      delete this.editEmployee['positionSpecific']
       delete this.editEmployee['stockName']
     },
     fetchEmployee() {
@@ -191,12 +182,11 @@ export default {
             }
           }
           console.log(data);
-          
+
         }
       );
     },
     updateData() {
-      if (!this.$v.invalid) {
         $api({
           path: `/employees/${this.editEmployee.employeeID}`,
           method: "put",data: this.editEmployee})
@@ -207,7 +197,7 @@ export default {
               show: true,
               msg: data.message,
               color: 'success'
-            }            
+            }
             this.fetchEmployee();
           } else {
             this.alert = {
@@ -219,8 +209,22 @@ export default {
           this.showModal = false;
           console.log(data);
         });
-      }
-        
+
+    },
+    fetchPositon () {
+      $api({ path: '/positions', method: 'get'})
+      .then(data => {
+        this.optionPostion = data.result
+      })
+    },
+    fetchAddress () {
+      $api({ path: '/addresses', method: 'get'})
+      .then(data => {
+        if (data.success) {
+          this.optionAddress = data.result
+        }
+
+      })
     }
   }
 };
