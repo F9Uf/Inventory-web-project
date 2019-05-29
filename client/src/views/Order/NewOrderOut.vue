@@ -167,6 +167,7 @@
       </div>
     </div>
 
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 
 </template>
@@ -175,13 +176,20 @@
 import layout from '@/views/LAYOUT'
 import BaseTable from '@/components/BaseTable'
 import BaseModal from '@/components/BaseModal'
+import BaseAlert from '@/components/BaseAlert'
+
 import { $api } from '@/service/api'
 export default {
   components: {
-    layout,BaseTable, BaseModal
+    layout,BaseTable, BaseModal, BaseAlert
   },
   data() {
     return {
+      alert: {
+        show: false,
+        msg: '',
+        color: 'danger'
+      },
       header: [
         {name: 'itemName', label: 'Item Name'},
         {name: 'area', label: 'Item Area (M^2)'},
@@ -232,15 +240,23 @@ export default {
         this.selectShop.shop = {...this.selectShop.new}
         this.selectShop.showNew = false
         this.selectShop.new = {}
-        console.log('pass')
+
       } else {
-        console.log('not pass')
+        this.alert = {
+          show: true,
+          msg: 'Please fill all input',
+          color: 'warning'
+        }
       }
     },
     selectLocationJa (locationID) {
       let element = this.selectItem.bodyLoc.filter(e => e.locationID === locationID)[0]
       if (element.itemCount < this.selectItem.item.selectCount) {
-        console.log('More than');
+        this.alert = {
+          show: true,
+          msg: 'Item shouldn\'t more than stock',
+          color: 'warning'
+        }
       } else {
         this.selectItem.location = element
       }
@@ -256,9 +272,13 @@ export default {
       let location = this.selectItem.location
       if (Object.keys(item).length > 0 && Object.keys(location).length > 0 && item.selectCount > 0 && item.selectCount <= location.itemCount) {
         let newItem = { ...item, ...location, oldIndex: this.oldItem.length}
-        console.log(newItem);
+
         if (this.isSameItemLocation(newItem, this.oldItem)) {
-          console.log('same item location')
+          this.alert = {
+          show: true,
+          msg: 'Can not select same item same location!',
+          color: 'warning'
+        }
         } else {
           this.body.push(newItem)
           this.closeModalView()
@@ -294,6 +314,12 @@ export default {
       .then(data => {
         if (data.success) {
           this.selectItem.bodyItem = data.result
+        } else {
+          this.alert = {
+          show: true,
+          msg: 'Can not fetch item',
+          color: 'danger'
+        }
         }
       })
     },
@@ -301,7 +327,6 @@ export default {
       $api({ path: `/items/${itemID}/locations`, method: 'get'})
       .then(data => {
         if (data.success) {
-          console.log(data)
           this.selectItem.bodyLoc = data.result
         } else {
           console.log(data);
@@ -340,7 +365,10 @@ export default {
     },
     createOrder () {
       let shop = this.selectShop.shop
-      let orderDetail = this.body.map(e => e.selectCount*-1)
+      let orderDetail = this.body
+      for (let i = 0; i < orderDetail.length; i++) {
+        orderDetail[i].selectCount = orderDetail[i].selectCount*-1
+      }
       let newOrderOut = {}
       if (shop.shopID) {
         newOrderOut.oldShop = shop.shopID
@@ -351,16 +379,24 @@ export default {
       }
       newOrderOut.orderDetail = orderDetail
       console.log(newOrderOut);
-      // $api({ path: '/orders/out', method: 'post', data: newOrderOut})
-      // .then(data => {
-      //   if (data.success) {
-      //     console.log('success')
-      //     this.body = []
-      //     this.selectShop.shop = {}
-      //   } else {
-      //     console.log('create order fail')
-      //   }
-      // })
+      $api({ path: '/orders/out', method: 'post', data: newOrderOut})
+      .then(data => {
+        if (data.success) {
+          this.body = []
+          this.selectShop.shop = {}
+          this.alert = {
+            show: true,
+            msg: 'Create order-out success',
+            color: 'success'
+        }
+        } else {
+          this.alert = {
+            show: true,
+            msg: 'Fail to create order',
+            color: 'warning'
+          }
+        }
+      })
     },
     fetchShop () {
       $api({ path: '/shops', method: 'get'})
