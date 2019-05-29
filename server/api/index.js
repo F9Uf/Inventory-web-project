@@ -61,6 +61,7 @@ const updateOrder = require('./orders/updateOrder');
 const insertComplexOrderIn = require('./orders/insertComplexOrderIn');
 const readOneOrder = require('./orders/readOneOrder');
 const insertComplexOrderOut = require('./orders/insertComplexOrderOut');
+const deleteOrder = require('./orders/deleteOrder');
 
 //location
 const allLocation = require('./locations/allLocation');
@@ -180,6 +181,7 @@ router.put('/orders/:order_id',permit(),updateOrder);
 router.post('/orders/in',permit(),insertComplexOrderIn);
 router.post('/orders/out',permit(),insertComplexOrderOut);
 router.get('/orders/:order_id', permit(), readOneOrder);
+router.delete('/orders/:order_id',permit(),deleteOrder);
 
 //location
 router.get('/locations',permit(),allLocation);
