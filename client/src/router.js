@@ -75,7 +75,7 @@ const router = new Router({
       }
     },
     {
-      path: '/orders/neworderin',
+      path: '/orders/new/in',
       name: 'newordersIn',
       component: () => import('./views/Order/NewOrderIn.vue'),
       meta: {

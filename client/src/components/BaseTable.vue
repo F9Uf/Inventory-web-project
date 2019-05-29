@@ -18,7 +18,7 @@
           </template>
 
           <th v-if="hasAction">
-            <slot :row-id="item[idName]"></slot>
+            <slot :row-id="item[idName]" :row-value="item[valueName]" :row-index="body_index"></slot>
           </th>
         </tr>
       </tbody>
@@ -40,6 +40,7 @@ export default {
       default: true
     },
     idName: String,
+    valueName: String
 
   }
 }
