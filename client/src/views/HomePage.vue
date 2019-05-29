@@ -60,7 +60,7 @@
               <input type="text" class="form-control" v-model="maxUsed.body[0]['max(a.MaxcategoryName)']" disabled>
             </div>
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="$router.push('')">View Query</button>
+              <button class="btn btn-success" @click="$router.push('')">View Result</button>
             </div>
           </div>
         </layout>
@@ -81,7 +81,7 @@
               <input type="text" class="form-control" v-model="item.body[0].count" disabled>
             </div>
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="$router.push('/analysis3max')">View Query</button>
+              <button class="btn btn-success" @click="$router.push('/analysis3max')">View Result</button>
             </div>
           </div>
         </layout>
@@ -137,7 +137,7 @@
       <!-- Total Item -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <h6>Maximum Weight of Item </h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
               <label>Total</label> <!--label 01 Name--->

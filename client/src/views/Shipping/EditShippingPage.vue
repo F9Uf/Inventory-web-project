@@ -170,8 +170,8 @@ export default {
         showModalView: false,
         body: [],
         header: [
-          {name: 'carID', label: 'Car ID'},
           {name: 'model', label: 'Model'},
+          {name: 'licensePlate', label: 'License Plate'},
           {name: 'carWeight', label: 'Weight'},
           {name: 'carArea', label: 'Area'}
         ],
