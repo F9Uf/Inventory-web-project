@@ -1,7 +1,10 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const sql_group = `select o.shopID,count(o.shopID) as countShopID from ordermain o,orderdetail od,item i,category c where orderType = "out" and o.orderID=od.orderID and od.itemID = i.itemID and i.categoryID=c.categoryID group by o.shopID;`
+  const sql_group = `select s.shopID, s.shopName, count(*) as countShopID
+  from ordermain o, shop s
+  where o.shopID = s.shopID
+  group by o.shopID;`
   db.query(sql_group, (err, data) => { 
     if (err) {
       return res.json({success: false,message: 'Cannot query!'})
