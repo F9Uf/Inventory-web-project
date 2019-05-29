@@ -83,7 +83,9 @@ export default {
       // showModalEdit: false,
       // showModalNew: false,
       alert: false,
-      isBtnHidden: false
+      isBtnHidden: false,
+      loaded: false,
+      chartdata: null
     }
   }
 }

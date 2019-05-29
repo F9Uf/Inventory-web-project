@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     if (err) {
       return res.json({success: false,message: 'Cannot query!'})
     } else {
-      return res.json({success: true,message: 'Query success!'})
+      return res.json({success: true,message: 'Query success!',result:data})
     }
   })
 }
