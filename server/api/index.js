@@ -88,7 +88,7 @@ const ana3group = require('./analysis/3group_by');
 const locationArea = require('./analysis/locationArea');
 const ana4show = require('./analysis/4show');
 const ana4group = require('./analysis/4group');
-
+const ana8mostCategoryInSupplier = require('./analysis/8mostCategoryInSupplier');
 
 
 router.get('/', (req, res) => {
@@ -184,5 +184,6 @@ router.get('/analysis3group',permit(),ana3group);
 router.get('/location/area',permit(),locationArea);
 router.get('/analysis4show',permit(),ana4show);
 router.get('/analysis4group',permit(),ana4group);
+router.get('/analysis8most',permit(),ana8mostCategoryInSupplier);
 
 module.exports = router;
