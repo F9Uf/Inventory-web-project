@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <h3>Create Order Out</h3>
+    <h3>Create Order Out</h3><br>
 
     <layout>
 
@@ -14,11 +14,6 @@
         <div class="col-auto mr-auto">
           <button class="btn btn-success" @click="showModalView = true">select item</button>
         </div>
-        <div class="col-auto ml-auto">
-        <p class="text-muted">
-          Can not create with same location in same item!
-        </p>
-      </div>
       </div>
     </layout>
 
@@ -30,19 +25,19 @@
         <base-table :header="selectItem.headerItem" :body="selectItem.bodyItem" :hasAction="true" idName="itemID" v-if="!next">
           <template v-slot="row">
             <button class="btn btn-warning"
-              @click="selectItem.item = {...selectItem.bodyItem.filter(e => e.itemID === row.rowId)[0]}; next = true; fetchLocationByItem(row.rowId)">
+              @click="selectItem.item = {...selectItem.bodyItem.filter(e => e.itemID === row.rowId)[0]}; next = true; fetchLocation()">
               select
             </button>
           </template>
         </base-table>
 
         <template v-if="next">
-          <h6><b>ItemName:</b> {{ selectItem.item.itemName }}</h6>
+          ItemName: {{ selectItem.item.itemName }}
           <div class="form-group">
-            <label><b>Count for select</b></label>
-            <input type="number" class="form-control" min="0" v-model="selectItem.item.selectCount">
+            <label>Count of Item</label>
+            <input type="number" class="form-control" min="0" v-model="selectItem.item.itemCount">
           </div>
-          <b>Select</b> {{ selectItem.item.selectCount || 0 }} <b>from</b> {{ selectItem.location.itemCount }} <br>
+          Total Area: {{ totalArea }} <br>
 
           <base-table :hasIndex="false" :hasAction="true" idName="locationID" :header="selectItem.headerLoc" :body="selectItem.bodyLoc">
             <template v-slot="row">
@@ -59,114 +54,11 @@
     </base-modal>
 
 
-    <layout>
-      <h5>Select Shop</h5>
-
-      <div class="form-row">
-        <div class="col-md-4">
-          <label>Shop Name</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopName">
-        </div>
-        <div class="col-md-2">
-          <label>Address Detail</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopAddress">
-        </div>
-        <div class="col-md-3">
-          <label>District</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopDistrict">
-        </div>
-        <div class="col-md-3">
-          <label>Sub District</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopSubDistrict">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="col-md-3">
-          <label>Province</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopProvince">
-        </div>
-        <div class="col-md-2">
-          <label>Postal Code</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopPostalCode">
-        </div>
-        <div class="col-md-3">
-          <label>Phone</label>
-          <input type="text" class="form-control" disabled v-model="selectShop.shop.shopPhone">
-        </div>
-      </div>
-
-      <br>
-      <button class="btn btn-success" @click="selectShop.showSelect = true; fetchShop()">Select Shop</button>
-      <button class="btn btn-success" @click="selectShop.showNew = true">+ Add Shop</button>
-    </layout>
-
-    <base-modal v-if="selectShop.showSelect">
-      <template v-slot:header><h5>Select Shop</h5></template>
-      <template v-slot:body>
-        <base-table :header="selectShop.header" :body="selectShop.body" :hasIndex="false" :hasAction="true" idName="shopID">
-          <template v-slot="row">
-            <button class="btn btn-warning" @click="selectShop.showSelect = false; selectShop.shop = {...selectShop.body.filter(e => e.shopID === row.rowId)[0]}">select</button>
-          </template>
-        </base-table>
-      </template>
-      <template v-slot:footer>
-        <button class="btn btn-danger" @click="selectShop.showSelect = false">close</button>
-      </template>
-
-    </base-modal>
-
-
-    <base-modal v-if="selectShop.showNew">
-      <template v-slot:header><h5>Add Shop</h5></template>
-      <template v-slot:body>
-        <div class="form-row">
-          <div class="col-md-4">
-            <label>Shop Name</label>
-            <input type="text" class="form-control" v-model="selectShop.new.shopName">
-          </div>
-          <div class="col-md-2">
-            <label>Address Detail</label>
-            <input type="text" class="form-control" v-model="selectShop.new.shopAddress">
-          </div>
-          <div class="col-md-3">
-            <label>District</label>
-            <input type="text" class="form-control" v-model="selectShop.new.shopDistrict">
-          </div>
-          <div class="col-md-3">
-            <label>Sub District</label>
-            <input type="text" class="form-control" v-model="selectShop.new.shopSubDistrict">
-          </div>
-        </div><br>
-
-        <div class="form-row">
-          <div class="col-md-3">
-            <label>Province</label>
-            <input type="text" class="form-control"  v-model="selectShop.new.shopProvince">
-          </div>
-          <div class="col-md-2">
-            <label>Postal Code</label>
-            <input type="text" class="form-control"  v-model="selectShop.new.shopPostalCode">
-          </div>
-          <div class="col-md-3">
-            <label>Phone</label>
-            <input type="text" class="form-control"  v-model="selectShop.new.shopPhone">
-          </div>
-        </div>
-      </template>
-      <template v-slot:footer>
-        <button class="btn btn-primary" @click="addShop()">Add</button>
-        <button class="btn btn-danger" @click="selectShop.showNew = false">close</button>
-      </template>
-
-    </base-modal>
-
     <div class="row">
       <div class="col-auto ml-auto">
         <button class="btn btn-primary" @click="createOrder()">Create</button>
       </div>
     </div>
-
   </layout>
 
 </template>
@@ -188,9 +80,10 @@ export default {
         {name: 'itemName', label: 'Item Name'},
         {name: 'area', label: 'Item Area (M^2)'},
         {name: 'locationName', label: 'Location'},
-        {name: 'selectCount', label: 'count'}
+        {name: 'itemCount', label: 'count'}
       ],
       body: [],
+      newItem: [],
       oldItem: [],
       next: false,
       showModalView: false,
@@ -200,80 +93,95 @@ export default {
           {name: 'itemID', label: 'Item ID'},
           {name: 'itemName', label: 'Item Name'},
           {name: 'area', label: 'Area'},
-          {name: 'weight', label: 'Weight'},
-          {name: 'totalCount', label: 'Count'}
+          {name: 'weight', label: 'Weight'}
         ],
         bodyItem: [],
 
         headerLoc: [
+          {name: 'stockName', label: 'Stock'},
           {name: 'locationName', label: 'Location'},
-          {name: 'itemCount', label: 'Item Count'}
+          {name: 'leftArea', label: 'Area Left'}
         ],
         bodyLoc: [],
 
         item: {},
         location: {}
       },
-      selectShop: {
-        shop: {},
-        showSelect: false,
-        showNew: false,
-        header: [
-          {name: 'shopID', label: 'Shop ID'},
-          {name: 'shopName', label: 'Shop Name'}
+      createItem: {
+        item: {},
+        headerCat: [
+          {name:'categoryName', label: 'Category'}
         ],
-        body: [],
-        new:{}
+        bodyCat: [],
+        selectCat: {},
 
+        headerSup: [
+          {name: 'supplierName', label: 'Supplier'}
+        ],
+        bodySup: [],
+        selectSup: {},
+
+        headerLoc: [
+          {name: 'stockName', label: 'Stock'},
+          {name: 'locationName', label: 'Location'},
+          {name: 'leftArea', label: 'Area Left'}
+        ],
+        bodyLoc: [],
+        selectLoc: {}
       }
     }
   },
   created() {
     this.fetchItem()
   },
-  methods: {
-    addShop () {
-      if (Object.keys(this.selectShop.new).length >= 7 ) {
-        this.selectShop.shop = {...this.selectShop.new}
-        this.selectShop.showNew = false
-        this.selectShop.new = {}
-        console.log('pass')
-      } else {
-        console.log('not pass')
-      }
+  watch: {
+    oldItem (newV, oldV) {
+      this.body = newV.concat(this.newItem)
     },
+    newItem (newV, oldV) {
+      this.body = newV.concat(this.oldItem)
+    }
+  },
+  methods: {
     selectLocationJa (locationID) {
       let element = this.selectItem.bodyLoc.filter(e => e.locationID === locationID)[0]
-      if (element.itemCount < this.selectItem.item.selectCount) {
+      if (element.leftArea < this.totalArea) {
         console.log('More than');
       } else {
         this.selectItem.location = element
       }
     },
-    isSameItemLocation (item, arr) {
-      for (let i = 0; i < arr.length ; i++) {
-        if (arr[i].itemID === item.itemID && arr[i].locationID === item.locationID) return true
-        else return false
-      }
-    },
     pushOldItem () {
       let item = this.selectItem.item
       let location = this.selectItem.location
-      if (Object.keys(item).length > 0 && Object.keys(location).length > 0 && item.selectCount > 0 && item.selectCount <= location.itemCount) {
+      if (Object.keys(item).length > 0 && Object.keys(location).length > 0 && item.itemCount > 0) {
         let newItem = { ...item, ...location, oldIndex: this.oldItem.length}
-        console.log(newItem);
-
-        if (this.isSameItemLocation(newItem, this.oldItem)) {
-          console.log('same item location')
-        } else {
-          this.body.push(newItem)
-          this.closeModalView()
-        }
-
+        this.oldItem.push(newItem)
+        this.closeModalView()
       } else {
         console.log('can not select this!')
       }
 
+    },
+    pushNewItem () {
+      let item = this.createItem.item
+      let location = this.createItem.selectLoc
+      let supplier = this.createItem.selectSup
+      let category = this.createItem.selectCat
+
+      if (Object.keys(item).length >0 && Object.keys(location).length > 0 && Object.keys(supplier).length >0 && Object.keys(category).length > 0) {
+        // all input complete
+        if (this.newTotalArea > location.leftArea) {
+          console.log('more than left area');
+        } else {
+          let newItem = { ...item, ...location, ...supplier, ...category, newIndex: this.newItem.length }
+          this.newItem.push(newItem)
+          this.closeModalNew()
+        }
+      } else {
+        console.log('all input aren\'t not complete');
+
+      }
     },
     closeModalView () {
       this.selectItem.item = {}
@@ -305,15 +213,11 @@ export default {
         }
       })
     },
-    fetchLocationByItem (itemID) {
-      $api({ path: `/items/${itemID}/locations`, method: 'get'})
+    fetchLocation () {
+      $api({ path: '/location/area', method: 'get'})
       .then(data => {
         if (data.success) {
-          console.log(data)
           this.selectItem.bodyLoc = data.result
-        } else {
-          console.log(data);
-
         }
       })
     },
@@ -348,40 +252,15 @@ export default {
       })
     },
     createOrder () {
-      let shop = this.selectShop.shop
-      let orderDetail = this.body.map(e => e.selectCount*-1)
-      let newOrderOut = {}
-
-      if (shop.shopID) {
-        newOrderOut.oldShop = shop.shopID
-        newOrderOut.newShop = null
-      } else {
-        newOrderOut.oldShop = null
-        newOrderOut.newShop = shop
-      }
-
-      newOrderOut.orderDetail = orderDetail
-
-      console.log(newOrderOut);
-
-      // $api({ path: '/orders/out', method: 'post', data: newOrderOut})
-      // .then(data => {
-      //   if (data.success) {
-      //     console.log('success')
-      //     this.body = []
-      //     this.selectShop.shop = {}
-      //   } else {
-      //     console.log('create order fail')
-      //   }
-      // })
-    },
-    fetchShop () {
-      $api({ path: '/shops', method: 'get'})
+      let newOrderIn = { newItem: this.newItem, oldItem: this.oldItem}
+      $api({ path: '/orders/in', method: 'post', data: newOrderIn})
       .then(data => {
         if (data.success) {
-          this.selectShop.body = data.result
+          console.log('success')
+          this.newItem = []
+          this.oldItem = []
         } else {
-          console.log(data)
+          console.log('create order fail')
         }
       })
     }
