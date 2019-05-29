@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const sql = 'SELECT DISTINCT a.itemID, a.itemName, SUM(b.itemCount) as totalCount, a.category FROM item a LEFT JOIN orderdetail b ON a.itemID = b.itemID GROUP BY a.itemID;'
+  const sql = 'SELECT DISTINCT a.itemID, a.itemName, SUM(b.itemCount) as totalCount, a.categoryID FROM item a LEFT JOIN orderdetail b ON a.itemID = b.itemID GROUP BY a.itemID;'
 
   db.query(sql, (err, data) => {
     if (err) {
