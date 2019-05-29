@@ -13,14 +13,19 @@
           <h5 v-if="!body">No Item</h5>
     </layout>
     <layout>
+      <h6>Total Items</h6>
       <div class="form-row">
         <div class="col-md-4 ">
-          <button class="btn btn-success" v-on:click="isBtnHidden = !isBtnHidden">View/Hide Total items</button>
+          <button class="btn btn-success" v-on:click="isBtnHidden = !isBtnHidden">View/Hide Total items</button><br>
         </div>
         <div class="col-md-3" v-if="isBtnHidden">
-          <input type="text" class="form-control" v-model="body.length" disabled>
+          <input type="text" class="form-control" v-model="body[0].count" disabled>
         </div>
-
+      </div>
+      <div class="form-row">
+        <div class="col-auto ml-auto">
+          <button class="btn btn-success" @click="$router.push('/category')">View category</button>
+        </div>
       </div>
     </layout>
 

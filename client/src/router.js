@@ -172,6 +172,22 @@ const router = new Router({
       }
     },
     {
+      path: '/category',
+      name: 'category',
+      component: () => import('./views/Category/CategoryPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/category/mostmonthly',
+      name: 'categorymonthly',
+      component: () => import('./views/Category/MostUsed.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '*',
       name: '404',
       component: () => import('./views/404.vue')
