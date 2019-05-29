@@ -74,9 +74,6 @@
       <div class="col-auto ml-auto">
         <button class="btn btn-primary" @click="createShipping()">Create</button>
       </div>
-      <div class="col-auto mr-auto">
-        <div class="btn btn-danger" @click="clear()">clear</div>
-      </div>
     </div>
 
     <!-- modal select car -->
