@@ -5,7 +5,7 @@
         <h3>Stock #{{$route.params.id}}</h3>
         </div>
       <div class="col-auto">
-        <button class="btn btn-success" @click="$router.push('/cars/new')">+ New Location</button>
+        <button class="btn btn-success" @click="$router.push(`/stocks/${$route.params.id}/new`)">+ New Location</button>
       </div>
     </div>
     <br>

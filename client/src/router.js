@@ -164,9 +164,25 @@ const router = new Router({
       }
     },
     {
+      path: '/stocks/new',
+      name: 'newStock',
+      component: () => import('./views/Stock/NewStockPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/stocks/:id',
       name: 'viewOneStock',
       component: () => import('./views/Stock/ViewStockPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/stocks/:id/new',
+      name: 'addLocationInStock',
+      component: () => import('./views/Stock/NewLocationPage.vue'),
       meta: {
         requireAuth: true
       }

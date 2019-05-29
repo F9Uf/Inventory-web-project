@@ -3,21 +3,25 @@
     <h3>Add New Stock</h3><br>
     <div class="form-row">
       <div class="col-8">
-        <label >Stock Name</label>
+        <label >Location Name</label>
         <input type="text" class="form-control"
-          v-model="newStock.stockName"
+          v-model="newLoc.locationName"
           placeholder="Stock Name"
         >
+      </div>
+      <div class="col-4">
+        <label>Max Area</label>
+        <input type="number" placeholder="Enter Area of this location" class="form-control" min="0" v-model="newLoc.maxArea">
       </div>
     </div>
 
     <br>
     <div class="row justify-content-between">
       <div class="col-auto">
-        <button class="btn btn-success" @click="$router.push('/stocks')">« Back to Stock</button>
+        <button class="btn btn-success" @click="$router.push(`/stocks/${$route.params.id}`)">« Back to Stock #{{ $route.params.id }}</button>
         </div>
       <div class="col-auto">
-        <button class="btn btn-primary" @click="addNewStock()">+ New</button>
+        <button class="btn btn-primary" @click="addNewLoc()">+ New</button>
       </div>
     </div>
 
@@ -37,9 +41,7 @@ export default {
   },
   data() {
     return {
-      newStock: {
-        stockName: ''
-      },
+      newLoc: {},
       alert: {
         show: false,
         msg: '',
@@ -48,20 +50,20 @@ export default {
     }
   },
   methods: {
-    addNewStock () {
-      $api({ path: '/stocks', method: 'post', data: this.newStock})
+    addNewLoc () {
+      $api({ path: `/stocks/${this.$route.params.id}/`, method: 'post', data: this.newLoc})
       .then(data => {
         if (data.success) {
           this.alert = {
             show: true,
-            msg: 'Create stock successfully' ,
+            msg: 'Create location successfully' ,
             color: 'success'
           }
-          this.newStock = {}
+          this.newLoc = {}
         } else {
           this.alert = {
             show: true,
-            msg: 'Can not create new stock',
+            msg: 'Can not create new location',
             color: 'danger'
           }
         }
