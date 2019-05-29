@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 module.exports = (req, res) => {
-  const sql = 'SELECT * FROM category'
+  const sql = 'SELECT *, (SELECT COUNT(*) FROM category) AS count FROM category'
 
   db.query(sql, (err, data) => {
     if (err) {
