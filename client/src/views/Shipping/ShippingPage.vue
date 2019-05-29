@@ -29,13 +29,11 @@ export default {
     return {
       header: [
         { name: "shippingID", label: "Shipping ID" },
-        { name: "model", label: "Car" },
         { name: "shippingDate", label: "Shipping Date" },
+        { name: "model", label: "Car" },
         { name: "employeeID", label: "Driver" }
       ],
-      body: [],
-      editShipping: {},
-      showModal: false
+      body: []
     };
   },
   created() {
@@ -47,12 +45,6 @@ export default {
         this.fetchShipping();
       });
       console.log(value);
-    },
-    editData(value) {
-      this.showModal = true;
-      this.editShipping = JSON.parse(
-        stringtify(this.body.fliter(e => e.shippingID === value)[0])
-      );
     },
     fetchShipping() {
       $api({ path: "/shippings", method: "get" }).then(data => {
