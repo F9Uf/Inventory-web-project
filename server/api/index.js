@@ -81,6 +81,12 @@ const updateShippingComplex = require('./shippings/updateShippingComplex');
 const shippingById = require('./shippings/shippingById');
 
 
+//analysis
+const ana5 = require('./analysis/5');
+const ana3show = require('./analysis/3show_all');
+const ana3group = require('./analysis/3group_by');
+
+
 
 
 router.get('/', (req, res) => {
@@ -167,6 +173,12 @@ router.get('/shippings', permit(), allShipping);
 router.post('/shippings',permit(),insertcomplexship);
 router.put('/shippings/:shipping_id',permit(), updateShippingComplex);
 router.get('/shippings/:shippingID',permit(),shippingById);
+
+
+//analysis
+router.get('/analysis5',permit(),ana5);
+router.get('/analysis3show',permit(),ana3show);
+router.get('/analysis3group',permit(),ana3group);
 
 
 module.exports = router;
