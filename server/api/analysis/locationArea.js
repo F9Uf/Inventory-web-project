@@ -17,7 +17,7 @@ module.exports = (req, res) => {
         if (err) {
             return res.json({
                 success: false,
-                message: 'Err !! : ' + err
+                message: 'Err !! : '
             })
         } else {
             return res.json({
