@@ -49,18 +49,18 @@
       <!-- Most Used category-->
       <div class="col-6">
         <layout>
-          <h6>Most Used category</h6>
+          <h6>Most Used Category</h6>
           <div class="form-row">
             <div class="col-md ">
-              <label>category</label>
+              <label>Category</label>
               <input type="text" class="form-control" v-model="maxUsed.body[0].categoryName" disabled>
             </div>
             <div class="col-md" >
-              <label>count</label>
+              <label>Count</label>
               <input type="text" class="form-control" v-model="maxUsed.body[0]['max(a.MaxcategoryName)']" disabled>
             </div>
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="this">View Query</button>
+              <button class="btn btn-success" @click="$router.push('')">View Query</button>
             </div>
           </div>
         </layout>
@@ -70,7 +70,7 @@
       <!--Most export shop -->
       <div class="col-6">
         <layout>
-          <h6>Most export shop</h6>
+          <h6>Most Exported Shop</h6>
           <div class="form-row">
             <div class="col-md ">
               <label>Shop</label>
@@ -81,7 +81,7 @@
               <input type="text" class="form-control" v-model="item.body[0].count" disabled>
             </div>
             <div class="col-auto ml-auto">
-              <button class="btn btn-success" @click="this">View Query</button>
+              <button class="btn btn-success" @click="$router.push('/analysis3max')">View Query</button>
             </div>
           </div>
         </layout>
@@ -93,7 +93,7 @@
       <!-- Total Item -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand item</h6> <!--Analysis Name--->
+          <h6>Shop which has maximum orders.</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
               <label>Total</label> <!--label 01 Name--->
@@ -114,7 +114,7 @@
       <!-- total Catagoey -->
       <div class="col-6">
         <layout>
-          <h6>Total on hand Category</h6> <!--Analysis Name--->
+          <h6>Stock which has maximun area</h6> <!--Analysis Name--->
           <div class="form-row">
             <div class="col-md ">
               <label>Total</label> <!--label 01 Name--->
