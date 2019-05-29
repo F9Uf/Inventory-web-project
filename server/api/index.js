@@ -214,8 +214,8 @@ router.get('/analysis14max',permit(),ana14max);
 router.get('/analysisAvgCategoryArea',permit(),avgCategoryArea);
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
 router.get('/analysis7show',permit(),ana7show);
-//router.get('/analysis/addressemployee',permit(),addressEmployee);
-//router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
+router.get('/analysis/addressemployee',permit(),addressEmployee);
+router.get('/analysis/addressemployee/max',permit(),addressEmployeeMax);
 router.get('/analysis1avgsalary', permit(), ana1Avgsalary);
 router.get('/stockarea', permit(), stockArea);
 
