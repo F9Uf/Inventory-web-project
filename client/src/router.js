@@ -105,8 +105,15 @@ const router = new Router({
       meta: {
         requireAuth: true
       }
-    }
-    ,
+    },
+    {
+      path: '/shippings/edit/:shipping_id',
+      name: 'editShipping',
+      component: () => import('./views/Shipping/EditShippingPage.vue'),
+      meta: {
+        requireAuth: true
+      }
+    },
     {
       path: '/employees',
       name: 'employees',
