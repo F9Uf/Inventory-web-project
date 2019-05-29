@@ -80,6 +80,11 @@ const insertcomplexship = require('./shippings/insertcomplexship');
 const updateShippingComplex = require('./shippings/updateShippingComplex');
 const shippingById = require('./shippings/shippingById');
 
+//shop
+const allShop = require('./shop/allShop');
+const addShop = require('./shop/addOneShop');
+
+
 
 //analysis
 const ana5 = require('./analysis/5');
@@ -194,6 +199,9 @@ router.post('/shippings',permit(),insertcomplexship);
 router.put('/shippings/:shipping_id',permit(), updateShippingComplex);
 router.get('/shippings/:shippingID',permit(),shippingById);
 
+//shop
+router.get('/shops',permit(),allShop);
+router.post('/shops',permit(),addShop);
 
 //analysis
 router.get('/analysis5',permit(),ana5);
