@@ -1,8 +1,16 @@
 <template>
   <layout>
-    <h3>Shipping</h3>
+    <div class="row">
+      <div class="col">
+        <h3>Shipping</h3>
+      </div>
+      <div class="col-auto ml-auto">
+        <button class="btn btn-success" @click="$router.push('/shippings/new')">+ New Shipping</button>
+      </div>
+    </div>
+    <br>
 
-    <base-table :header="header" :body="body" :hasAction="true" idName="shippingID">
+    <base-table v-if="body.length && !loading" :header="header" :body="body" :hasAction="true" idName="shippingID">
       <template v-slot="row">
         <div class="btn-group">
           <button class="btn btn-warning" @click="$router.push(`/shippings/edit/${row.rowId}`)">edit</button>
@@ -11,19 +19,23 @@
       </template>
     </base-table>
 
-    <h5 v-if="!body">No Shipping</h5>
+    <base-loading v-if="loading"></base-loading>
+
+    <h5 v-if="!body.length && !loading">No Shipping</h5>
   </layout>
 </template>
 
 <script>
 import layout from "../LAYOUT"
 import BaseTable from "@/components/BaseTable"
+import BaseLoading from '@/components/BaseLoading'
+
 import { $api } from "@/service/api"
 
 export default {
   components: {
     layout,
-    BaseTable,
+    BaseTable, BaseLoading
   },
   data() {
     return {
@@ -33,7 +45,8 @@ export default {
         { name: "model", label: "Car" },
         { name: "employeeID", label: "Driver" }
       ],
-      body: []
+      body: [],
+      loading: false
     };
   },
   created() {
@@ -47,9 +60,11 @@ export default {
       console.log(value);
     },
     fetchShipping() {
+      this.loading = true
       $api({ path: "/shippings", method: "get" }).then(data => {
         if (data.success) {
           this.body = data.result;
+          this.loading = false
         }
       });
     }

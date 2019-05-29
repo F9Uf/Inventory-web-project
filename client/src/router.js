@@ -83,7 +83,7 @@ const router = new Router({
       }
     },
     {
-      path: '/orders/neworderout',
+      path: '/orders/new/out',
       name: 'newordersOut',
       component: () => import('./views/Order/NewOrderOut.vue'),
       meta: {
