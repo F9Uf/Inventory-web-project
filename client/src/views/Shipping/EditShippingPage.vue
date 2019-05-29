@@ -1,8 +1,8 @@
 <template>
   <layout>
     <h3>Edit Shipping #{{$route.params.shipping_id}}</h3>
-    <layout>
-      <!-- select car -->
+    <!-- select car -->
+    <layout v-if="!loading">
       <h5>Select Car</h5>
       <div class="form-row">
         <div class="col-md-3">
@@ -31,7 +31,7 @@
     <!-- end select car -->
 
     <!-- select driver -->
-    <layout>
+    <layout v-if="!loading">
       <h5>Select Driver</h5>
       <div class="row">
         <div class="col-md-2 ">
@@ -58,7 +58,7 @@
     <!-- end select driver -->
 
     <!-- select order detail -->
-    <layout>
+    <layout v-if="!loading">
       <h5>Select Order Detail</h5>
       <base-table :header="selectItem.header" :hasAction="true" :body="selectItem.body" idName="orderDetailID">
         <template v-slot="row">
@@ -73,7 +73,7 @@
       <button class="btn btn-success" :disabled="showSelectOrder" @click="selectItem.showModalView = true; fetchOrder()">+ Select Order Detail</button>
     </layout>
     <!-- end select order detail -->
-
+    <base-loading v-if="loading"></base-loading>
     <!-- modal select car -->
     <base-modal v-if="selectCar.showModalView" @close="selectCar.showModalView = false">
       <template v-slot:header><h5>Select Car</h5></template>
@@ -141,7 +141,7 @@
       </template>
     </base-modal>
 
-  <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false;alert.msg = '';"></base-alert>
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false;alert.msg = '';"></base-alert>
   </layout>
 </template>
 
@@ -150,14 +150,16 @@ import layout from '../LAYOUT'
 import BaseTable from '@/components/BaseTable'
 import BaseModal from '@/components/BaseModal'
 import BaseAlert from '@/components/BaseAlert'
+import BaseLoading from '@/components/BaseLoading'
 
 import { $api } from '@/service/api'
 export default {
   components: {
-    layout, BaseTable, BaseModal, BaseAlert
+    layout, BaseTable, BaseModal, BaseAlert, BaseLoading
   },
   data() {
     return {
+      loading: false,
       showSelectOrder: true,
       alert: {
         show: false,
@@ -230,6 +232,7 @@ export default {
       else return false
     },
     fetchShipping (shippingID) {
+      this.loading = true
       $api({ path: `/shippings/${shippingID}`, method: 'get'})
       .then(data => {
         if (data.success) {
@@ -238,6 +241,7 @@ export default {
           this.selectItem.body = data.result.orderDetail
           this.showSelectOrder = this.isOrderFinish(data.result.orderDetail)
         }
+        this.loading = false
       })
     },
     isOrderFinish (array) {
