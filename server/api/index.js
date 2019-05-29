@@ -76,8 +76,8 @@ const addAddress = require('./addresses/addAddress');
 //shipping
 const allShipping = require('./shippings/allShipping');
 const addOneShipping = require('./shippings/addOneShipping');
-const updateShippingComplex = require('./shippings/updateShippingComplex');
 const insertcomplexship = require('./shippings/insertcomplexship');
+const updateShippingComplex = require('./shippings/updateShippingComplex');
 
 
 
@@ -164,7 +164,7 @@ router.get('/shippings', permit(), allShipping);
 // router.post('/shippings',permit(),addOneShipping);
 //router.put('/shippings/:shippingID',permit(),updateShipping);
 router.post('/shippings',permit(),insertcomplexship);
-router.put('/shippings/:shippingID',permit(), updateShippingComplex);
+router.put('/shippings/:shipping_id',permit(), updateShippingComplex);
 
 
 module.exports = router;
