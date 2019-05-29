@@ -186,7 +186,7 @@ router.get('/locations',permit(),allLocation);
 router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
 router.put('/locations/:location_id',permit(),updateLocation);
-router.get('/:item_id/locations',permit(),itemInLocation);
+router.get('/items/:item_id/locations',permit(),itemInLocation);
 
 //address
 router.get('/addresses',permit(),allAddress);
