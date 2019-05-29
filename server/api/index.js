@@ -67,6 +67,7 @@ const allLocation = require('./locations/allLocation');
 const addOneLocation = require('./locations/addOneLocation');
 const deleteLocation = require('./locations/deleteLocation');
 const updateLocation = require('./locations/updateLocation');
+const itemInLocation = require('./locations/itemInLocation');
 
 //address
 const allAddress = require('./addresses/allAddress');
@@ -185,6 +186,7 @@ router.get('/locations',permit(),allLocation);
 router.delete('/locations/:location_id',permit(),deleteLocation);
 router.post('/locations',permit(),addOneLocation);
 router.put('/locations/:location_id',permit(),updateLocation);
+router.get('/:item_id/locations',permit(),itemInLocation);
 
 //address
 router.get('/addresses',permit(),allAddress);
