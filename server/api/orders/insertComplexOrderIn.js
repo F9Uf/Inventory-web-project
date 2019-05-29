@@ -72,7 +72,7 @@ module.exports = (req, res) => {
                 db.query(sql_orderDetail + sql_value, arr_value, (err ,data) => {
                     if (err) {
                         itemID = [];
-                        let 
+                        // let
                         for (let i = 0; i < oldItem.length; i++) {
                             itemID.push(oldItem[i].itemID);
                         }
@@ -97,7 +97,7 @@ module.exports = (req, res) => {
             }
         }
     })
-    
+
     function valueCreate (data, dataName, id, except) {
         let sql_value = ' ';
         let sql_col = '(';
@@ -108,7 +108,7 @@ module.exports = (req, res) => {
             for (let j = 0 ; j < except.length ; j++) {
                 if(`${key}` === except[j] ) {
                     check = false
-                } 
+                }
             }
             if (check == true) {
                 sql_col += `${key}, `;
@@ -123,7 +123,7 @@ module.exports = (req, res) => {
                     for (let j = 0 ; j < except.length ; j++) {
                         if(`${key}` === except[j] ) {
                             check = false
-                        } 
+                        }
                     }
                     if (check === true) {
                         sql_value += '?, ';
@@ -155,7 +155,7 @@ module.exports = (req, res) => {
             let sql_deleteItem = '(';
             for (let i = 0; i < itemID; i++) {
                 sql_deleteItem += itemID[i] + ', ';
-            } 
+            }
             sql_deleteItem = sql_deleteItem.slice(0, -2);
             sql_deleteItem += ')'
             db.query('DELETE FROM item WHERE itemID IN ' + sql_deleteItem, (err, data) => {
