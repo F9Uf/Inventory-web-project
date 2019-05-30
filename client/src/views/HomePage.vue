@@ -55,7 +55,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="maxUsed.modal = !maxUsed.modal; fetchforTB3()">View Result</button>
+              <button class="btn btn-success" @click="maxUsed.modal = !maxUsed.modal; fetchforTB3()">View Results</button>
             </div>
           </div>
         </layout>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="mostExport2Shop.modal = true">View Result</button>
+              <button class="btn btn-success" @click="mostExport2Shop.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -102,7 +102,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="stockMaxArea.modal = true">View category</button>
+              <button class="btn btn-success" @click="stockMaxArea.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -148,7 +148,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="mostProvinceOrder.modal = true">View category</button>
+              <button class="btn btn-success" @click="mostProvinceOrder.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -174,7 +174,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="mostCateSupp.modal = true; fetchforTB8()">View result</button>
+              <button class="btn btn-success" @click="mostCateSupp.modal = true; fetchforTB8()">View Results</button>
             </div>
           </div>
         </layout>
@@ -191,7 +191,7 @@
             
             <div class="col-auto mx-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="locateAreaLeft.modal = true">View Result</button>
+              <button class="btn btn-success" @click="locateAreaLeft.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -205,7 +205,7 @@
           <div class="form-row">            
             <div class="col-auto mx-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="avgCateArea.modal = true">View Result</button>
+              <button class="btn btn-success" @click="avgCateArea.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -221,7 +221,7 @@
           <div class="form-row">
             <div class="col-auto mx-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="avgSalary.modal = true">View Result</button>
+              <button class="btn btn-success" @click="avgSalary.modal = true">View Results</button>
             </div>
           </div>
         </layout>
@@ -243,7 +243,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="maxEmpProvince.modal = true; fetchforTB11()">View Result</button>
+              <button class="btn btn-success" @click="maxEmpProvince.modal = true; fetchforTB11()">View Results</button>
             </div>
           </div>
         </layout>
@@ -281,7 +281,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="maxShopOrder.modal = true; fetchforTB14()">View Result</button>
+              <button class="btn btn-success" @click="maxShopOrder.modal = true; fetchforTB14()">View Results</button>
             </div>
           </div>
         </layout>
@@ -305,7 +305,7 @@
             </div>
             <div class="col-auto ml-auto">
               <label>Action</label><br>
-              <button class="btn btn-success" @click="maxStockEmp.modal = true; fetchforTB15()">View Result</button>
+              <button class="btn btn-success" @click="maxStockEmp.modal = true; fetchforTB15()">View Results</button>
             </div>
           </div>
         </layout>
