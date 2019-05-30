@@ -1,6 +1,14 @@
 <template>
-    <layout>
-    <h3>Employees Information</h3><br>
+  <layout>
+      <div class="row">
+        <div class="col">
+          <h3>Employees Information</h3>
+        </div>
+        <div class="col-auto ml-auto">
+          <button class="btn btn-success" @click="$router.push('/employees/create')">+ New Employee</button>
+        </div>
+      </div>
+    <br>
 
     <base-table :header="header" :body="body" :hasAction="true" idName="employeeID" :hasIndex="true">
       <template v-slot="row">
@@ -10,7 +18,7 @@
         </div>
       </template>
     </base-table>
-    
+
     <h5 v-if="!body">No Employee</h5>
 
     <the-modal v-if="showModal" @close="showModal = false" @update="updateData">
@@ -90,7 +98,7 @@ export default {
                 name: 'positionName',
                 label: 'Position'
               },
-              
+
               ],
             body: null,
             editEmployee: {},
@@ -108,8 +116,8 @@ export default {
             .then(data => {
                 this.fetchEmployees()
                 console.log(data);
-                
-            }) 
+
+            })
         },
         fetchEmployees() {
             $api({path: '/employees', method:'get'})
@@ -117,7 +125,7 @@ export default {
                 this.body = data.result
                 console.log(this.body);
             })
-                        
+
         }
     }
 

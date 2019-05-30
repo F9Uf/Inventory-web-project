@@ -1,16 +1,13 @@
 <template>
   <layout>
-    <h3>item Information</h3><br> 
+    <h3>item Information</h3><br>
     <layout>
-          <base-table :header="header" :body="body" :hasAction="false" idName="itemID" :hasIndex="true">
-              <template v-slot="row">
-              <div class="btn-group" role="group">
-                <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
-                <button class="btn btn-danger" @click="deleteData(row.rowId)">delete</button>
-              </div>
-            </template>
-          </base-table>
-          <h5 v-if="!body">No Item</h5>
+      <base-table :header="header" :body="body" :hasAction="true" idName="itemID" :hasIndex="true">
+        <template v-slot="row">
+          <button class="btn btn-warning" @click="editData(row.rowId)">edit</button>
+        </template>
+      </base-table>
+      <h5 v-if="!body">No Item</h5>
     </layout>
     <layout>
       <h6>Total Items</h6>
@@ -30,43 +27,41 @@
     </layout>
 
     <!-- modal for edit item -->
-    <the-modal id="editModal" v-if="showModalEdit" @close="showModalEdit = false" @update="updateData">
+    <base-modal id="editModal" v-if="showModalEdit">
       <template v-slot:header>
         <h5>Edit item #{{editItem.itemID}}</h5>
       </template>
       <template v-slot:body>
         <div class="form-row">
-          <div class="col">
-             <label >Name</label>
-              <input type="text" class="form-control"
-              :class="{'is-invalid':$v.editItem.itemName.$error}"
-              v-model="$v.editItem.itemName.$model">
-              <div class="invalid-feedback">Please enter item name</div>
+          <div class="col-6">
+            <label >Name</label>
+            <input type="text" class="form-control" v-model="editItem.itemName">
+          </div>
+          <div class="col-3">
+            <label >Area</label>
+            <input type="number" class="form-control" min="0"
+            v-model="editItem.area">
+          </div>
+          <div class="col-3">
+            <label >Weight</label>
+            <input type="number" min="0" class="form-control"
+            v-model="editItem.weight">
           </div>
         </div>
-        <div class="form-row">
-          <div class="col">
-             <label >Count</label>
-              <input type="number" class="form-control" min="0"
-              :class="{'is-invalid': $v.editItem.totalCount.$error}"
-              v-model="$v.editItem.totalCount.$model">
-              <div class="invalid-feedback">Please total count</div>
-          </div>
-          <div class="col">
-             <label >Category</label>
-            <input type="text" class="form-control"
-            :class="{'is-invalid':$v.editItem.category.$error}"
-            v-model="$v.editItem.category.$model">
-          </div>
-        </div>
-        </template>
-    </the-modal>
+      </template>
+      <template v-slot:footer>
+        <button class="btn btn-primary" @click="updateItem()">submit</button>
+        <button class="btn btn-danger" @click="showModalEdit = false">close</button>
+      </template>
+    </base-modal>
+
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 </template>
 
 <script>
 import layout from './LAYOUT'
-import TheModal from '../components/TheModal'
+import BaseModal from '../components/BaseModal'
 import { $api } from '../service/api'
 import BaseTable from '../components/BaseTable'
 import { required, decimal, minValue } from 'vuelidate/lib/validators'
@@ -74,10 +69,15 @@ import BaseAlert from '../components/BaseAlert'
 
 export default {
   components: {
-    layout, TheModal, BaseTable, BaseAlert
+    layout, BaseModal, BaseTable, BaseAlert
   },
   data() {
     return {
+      alert: {
+        show: false,
+        msg: '',
+        color: 'danger'
+      },
       header: [
         {
           name: 'itemID',
@@ -90,21 +90,20 @@ export default {
         {
           name: 'totalCount',
           label: 'Total count'
+        },
+        {
+          name: 'area',
+          label: 'Area'
+        },
+        {
+          name: 'weight',
+          label: 'Weight'
         }
       ],
       body: null,
       editItem: {},
       showModalEdit: false,
-      showModalNew: false,
-      alert: false,
       isBtnHidden: false
-    }
-  },
-  validations: {
-    editItem: {
-      itemName: {required},
-      totalCount: {required},
-      category: {required}
     }
   },
   created() {
@@ -131,22 +130,33 @@ export default {
       $api({ path: '/items', method: 'get'})
       .then( data => {
         this.body = data.result
-        console.log(data);
-        console.log(this.body);
-        
-        
       })
     },
-    updateData () {
-      $api({ path: `/items/${this.editItem.itemID}`, method: 'put', data: this.editItem})
-      .then( data => {
+    updateItem () {
+      let newItem = {
+        itemName: this.editItem.itemName,
+        area: this.editItem.area,
+        weight: this.editItem.weight
+      }
+      $api({ path: `/items/${this.editItem.itemID}`, method: 'put', data: newItem })
+      .then(data => {
+
         if (data.success) {
-          this.showModal = false
-        this.fetchItems()
-        }else console.log(data)
-
+          this.fetchItems()
+          this.alert = {
+            show: true,
+            msg: 'Update success!',
+            color: 'success'
+          }
+          this.showModalEdit = false
+        } else {
+          this.alert = {
+            show: true,
+            msg: 'Update fail',
+            color: 'danger'
+          }
+        }
       })
-
     }
   },
 }

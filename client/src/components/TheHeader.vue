@@ -63,14 +63,14 @@ export default {
   data () {
     return {
       menus: [
-        { text: 'Orders', to: '/orders', auth: ['staff', 'manager'] },
-        { text: 'Shipping', to: '/shippings', auth: ['staff', 'manager'] },
-        { text: 'Items', to: '/items', auth: ['staff', 'manager'] },
+        { text: 'Orders', to: '/orders', auth: ['manager', 'staff'] },
+        { text: 'Shipping', to: '/shippings', auth: ['manager', 'driver'] },
+        { text: 'Items', to: '/items', auth: ['staff', 'manager', 'driver'] },
         { text: 'Employee', to: '/employees', auth: ['manager'] },
-        { text: 'Stock', to: '/stocks', auth: ['manager'] },
-        { text: 'Cars', to: '/cars', auth: ['manager']},
-        { text: 'Suppliers', to: '/suppliers', auth: ['manager']},
-        { text: 'About', to: '/about', auth: ['manager']}
+        { text: 'Stock', to: '/stocks', auth: ['manager', 'staff'] },
+        { text: 'Cars', to: '/cars', auth: ['manager', 'driver']},
+        { text: 'Suppliers', to: '/suppliers', auth: ['manager', 'staff']},
+        { text: 'About', to: '/about', auth: []}
       ]
     }
   },

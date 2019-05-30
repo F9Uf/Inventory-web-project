@@ -5,7 +5,7 @@
         <h3>Stock Information</h3>
         </div>
       <div class="col-auto">
-        <button class="btn btn-success" @click="$router.push('/Stocks/new')">+ New Stock</button>
+        <button class="btn btn-success" @click="$router.push('/stocks/new')">+ New Stock</button>
         <!-- there is no adding new stock -->
       </div>
     </div>
