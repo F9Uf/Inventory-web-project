@@ -121,6 +121,8 @@
         <button class="btn btn-primary" @click="createOrder()">Create</button>
       </div>
     </div>
+
+    <base-alert v-if="alert.show" :msg="alert.msg" :color="alert.color" @close="alert.show = false"></base-alert>
   </layout>
 
 </template>
@@ -129,15 +131,21 @@
 import layout from '@/views/LAYOUT'
 import BaseTable from '@/components/BaseTable'
 import BaseModal from '@/components/BaseModal'
+import BaseAlert from '@/components/BaseAlert'
 
 import { $api } from '@/service/api'
 
 export default {
   components: {
-    layout,BaseTable, BaseModal
+    layout,BaseTable, BaseModal, BaseAlert
   },
   data() {
     return {
+      alert: {
+        show: false,
+        msg: '',
+        color: 'danger'
+      },
       header: [
         {name: 'itemName', label: 'Item Name'},
         {name: 'area', label: 'Item Area (M^2)'},
@@ -208,7 +216,11 @@ export default {
     selectLocationJa (locationID) {
       let element = this.selectItem.bodyLoc.filter(e => e.locationID === locationID)[0]
       if (element.leftArea < this.totalArea) {
-        console.log('More than');
+        this.alert = {
+          show: true,
+          msg: 'Area is exceeded',
+          color: 'warning'
+        }
       } else {
         this.selectItem.location = element
       }
@@ -221,7 +233,11 @@ export default {
         this.oldItem.push(newItem)
         this.closeModalView()
       } else {
-        console.log('can not select this!')
+        this.alert = {
+          show: true,
+          msg: 'Can not submit, please choose one stock',
+          color: 'warning'
+        }
       }
 
     },
@@ -241,8 +257,11 @@ export default {
           this.closeModalNew()
         }
       } else {
-        console.log('all input aren\'t not complete');
-
+        this.alert = {
+          show: true,
+          msg: 'all input aren\'t not complete',
+          color: 'warning'
+        }
       }
     },
     closeModalView () {
@@ -314,17 +333,34 @@ export default {
       })
     },
     createOrder () {
-      let newOrderIn = { newItem: this.newItem, oldItem: this.oldItem}
-      $api({ path: '/orders/in', method: 'post', data: newOrderIn})
-      .then(data => {
-        if (data.success) {
-          console.log('success')
-          this.newItem = []
-          this.oldItem = []
-        } else {
-          console.log('create order fail')
+      if (this.newItem.length === 0 || this.oldItem.length === 0) {
+        this.alert = {
+          show: true,
+          msg: 'Select any item',
+          color: 'warning'
         }
-      })
+      } else {
+        let newOrderIn = { newItem: this.newItem, oldItem: this.oldItem}
+
+        $api({ path: '/orders/in', method: 'post', data: newOrderIn})
+        .then(data => {
+          if (data.success) {
+            this.alert = {
+              show: true,
+              msg: data.message,
+              color: 'success'
+            }
+            this.newItem = []
+            this.oldItem = []
+          } else {
+            this.alert = {
+              show: true,
+              msg: 'Create order in fail',
+              color: 'danger'
+            }
+          }
+        })
+      }
     }
   },
   computed: {
