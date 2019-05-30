@@ -333,13 +333,37 @@ export default {
       })
     },
     createOrder () {
-      if (this.newItem.length === 0 || this.oldItem.length === 0) {
+      if (this.newItem.length === 0 && this.oldItem.length === 0) {
         this.alert = {
           show: true,
           msg: 'Select any item',
           color: 'warning'
         }
       } else {
+        let newItem = this.newItem
+        let oldItem = this.oldItem
+        for (let i = 0; i< newItem.length; i++) {
+          let {itemName, categoryID, weight, area, supplierID, itemCount, locationID} = newItem[i]
+              // itemName: e.itemName,
+              // categoryID: e.categoryID,
+              // weight: e.weight,
+              // area: e.area,
+              // supplierID: e.supplierID,
+              // itemCount: e.itemCount,
+              // locationID: e.locationID
+          newItem[i] = {
+            itemName: itemName,
+            categoryID: categoryID,
+            weight: weight,
+            area: area,
+            supplierID: supplierID,
+            itemCount: itemCount,
+            locationID: locationID
+          }
+
+        }
+        console.log(newItem);
+
         let newOrderIn = { newItem: this.newItem, oldItem: this.oldItem}
 
         $api({ path: '/orders/in', method: 'post', data: newOrderIn})
