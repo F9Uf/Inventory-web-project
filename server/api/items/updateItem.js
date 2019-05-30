@@ -7,7 +7,7 @@ module.exports = (req, res) => {
   const sql_Update = 'UPDATE item SET'
   let sql_value = ' '
   let arr_value = []
-  const sql_WHERE = 'WHERE itemID = ?'
+  const sql_WHERE = ' WHERE itemID = ?'
 
   for (key in newUpdate) {
     sql_value += `${key} = ?, `

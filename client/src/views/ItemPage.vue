@@ -140,7 +140,6 @@ export default {
       }
       $api({ path: `/items/${this.editItem.itemID}`, method: 'put', data: newItem })
       .then(data => {
-
         if (data.success) {
           this.fetchItems()
           this.alert = {
