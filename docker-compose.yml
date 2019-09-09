@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  db:
+    build:
+      context: db/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'inventory'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db2:/var/lib/mysql
+
+  server:
+    build:
+      context: server/
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+      
+volumes:
+  db2:
