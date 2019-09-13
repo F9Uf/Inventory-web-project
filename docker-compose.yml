@@ -1,28 +1,41 @@
 version: '3.3'
 services:
   db:
+    container_name: invetory_db
     build:
       context: db/
     restart: always
     environment:
       MYSQL_DATABASE: 'inventory'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: ''
       MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      - '3306:3306'
-    expose:
-      - '3306'
+    # expose:
+    #  - '3306'
     volumes:
       - db2:/var/lib/mysql
 
   server:
+    container_name: invertory_server      
     build:
       context: server/
     depends_on:
       - db
     ports:
       - "5000:5000"
-      
+    environment:
+      NODE_ENV: 'production'
+      DB_host: 'db'
+      DB_user: 'root'
+      DB_password: 'root'
+      DB_database: 'inventory'
+  
+  client:
+    container_name: inventory_client
+    build:
+      context: client/
+    environment:
+      VUE_APP_API_BASE_URL: 'http://localhost:5000'
+    ports:
+      - '80:80'
+
 volumes:
   db2:

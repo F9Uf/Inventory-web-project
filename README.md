@@ -19,3 +19,13 @@ Project for CPE231 Database System
   $ npm install
   $ npm run dev (for dev with nodemon)
   $ npm start (for start)
+  ```
+## How to run with docker
+  For start
+  ```
+  $ docker-compose up -d
+  ```
+  For stop & remove containers
+  ```
+  $ docker-compose down
+  ```

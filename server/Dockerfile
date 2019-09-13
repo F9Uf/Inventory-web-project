@@ -1,4 +1,4 @@
-FROM node:10.16
+FROM node:10.16-alpine
 
 WORKDIR /www/server
 
