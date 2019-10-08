@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    container_name: invetory_db
+    container_name: inventory_db
     build:
       context: db/
     restart: always
@@ -14,7 +14,7 @@ services:
       - db2:/var/lib/mysql
 
   server:
-    container_name: invertory_server      
+    container_name: inventory_server      
     build:
       context: server/
     depends_on:
